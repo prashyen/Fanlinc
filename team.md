@@ -7,6 +7,6 @@ Team name: Team Rocket
 * Abel Debalkew - debalke1
 * Prashyen Kanagarajah - kanaga60
 * Rahul Ramani - ramanira
-* Ruidan Ki - jirui3
+* Ruidan Ji - jirui3
 * Tahasun Tarannum - tarannu7
 * Carl Alvares - alvaresc
