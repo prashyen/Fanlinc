@@ -7,4 +7,9 @@ public class ExampleResponse {
     public ExampleResponse(String id) {
         this.id = id;
     }
+
+    public String getId() {
+        return id;
+    }
+
 }
