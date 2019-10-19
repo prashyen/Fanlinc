@@ -5,10 +5,10 @@ import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Service
 public class AccountService {
 
     private UserRepository userRepository;
