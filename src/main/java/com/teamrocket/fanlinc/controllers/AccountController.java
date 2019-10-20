@@ -1,9 +1,8 @@
 package com.teamrocket.fanlinc.controllers;
 
-import com.teamrocket.fanlinc.requests.ExampleRequest;
-import com.teamrocket.fanlinc.responses.ExampleResponse;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.Session;
+import com.teamrocket.fanlinc.requests.ValidateUserRequest;
+import com.teamrocket.fanlinc.responses.ValidateUserResponse;
+import com.teamrocket.fanlinc.services.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,19 +10,18 @@ import javax.validation.Valid;
 @RestController
 public class AccountController {
 
-    private Driver driver;
+    private static final String BASE_PATH = "/account";
 
-    public AccountController(Driver driver) {
-        this.driver = driver;
+    private AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
-    @RequestMapping(value = "/example", method = RequestMethod.GET)
+    @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.GET)
     @ResponseBody
-    public ExampleResponse example(@Valid @RequestBody ExampleRequest request) {
-        try (Session session = driver.session()) {
-            session.run("MATCH (n) RETURN n");
-            return new ExampleResponse(request.getId());
-        }
+    public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
+        return accountService.validateUser(request);
     }
 
 }
