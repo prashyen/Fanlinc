@@ -30,7 +30,7 @@ class Register extends Component{
   handleSubmit(event) {
     event.preventDefault();
     const {firstName, lastName, password, password_confirmation, username} = this.state;
-    fetch('http://localhost:7474/register', {
+    fetch('http://localhost:7474/addUser', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: {
