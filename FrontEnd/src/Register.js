@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import TextField from '@material-ui/core/TextField';
 
 class Register extends Component{
   constructor(props) {
@@ -57,29 +60,33 @@ class Register extends Component{
   render() {
     return (
       <div className="form-wrapper col-sm-6 text-center shadow p-3 mb-5 bg-white rounded">
-        <h3>Register</h3>
+        <h3>Sign Up</h3>
         <Form onSubmit={this.handleSubmit} className="form-horizontal"> 
           <Row>
             <Col>
               <Form.Group>
-                <Form.Control 
-                  type="name"
+                <TextField 
+                  id="standard-name"
+                  label="First Name"
                   name="firstName"
-                  placeholder="First Name"
-                  value={this.state.name}
+                  margin="normal"
+                  value={this.state.firstName}
                   onChange={this.handleChange}
+                  fullWidth
                   required
                 />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group>
-                <Form.Control 
-                  type="name"
-                  name="Lastname"
-                  placeholder="Last Name"
-                  value={this.state.name}
+                <TextField
+                  id="standard-name"
+                  label="Last Name"
+                  name="lastName"
+                  margin="normal"
+                  value={this.state.lastName}
                   onChange={this.handleChange}
+                  fullWidth
                   required
                 />
               </Form.Group>
@@ -88,12 +95,14 @@ class Register extends Component{
           <Row>
             <Col>
               <Form.Group>
-                <Form.Control 
-                  type="name"
+                <TextField
+                  id="standard-name"
+                  label="User Name"
                   name="username"
-                  placeholder="Username"
-                  value={this.state.name}
+                  margin="normal"
+                  value={this.state.username}
                   onChange={this.handleChange}
+                  fullWidth
                   required
                 />
               </Form.Group>
@@ -102,12 +111,15 @@ class Register extends Component{
           <Row>
             <Col>
               <Form.Group>
-                <Form.Control 
-                  type="password"
+                <TextField
+                  id="standard-password-input"
+                  label="Password"
                   name="password"
-                  placeholder="Password"
+                  margin="normal"
+                  type="password"
                   value={this.state.password}
                   onChange={this.handleChange}
+                  fullWidth
                   required
                 />
               </Form.Group>
@@ -116,12 +128,15 @@ class Register extends Component{
           <Row>
             <Col>
               <Form.Group>
-                <Form.Control 
-                  type="password"
+                <TextField
+                  id="standard-password-input"
+                  label="Password Confirmation"
                   name="password_confirmation"
-                  placeholder="Password Confirmation"
+                  margin="normal"
+                  type="password"
                   value={this.state.password_confirmation}
                   onChange={this.handleChange}
+                  fullWidth
                   required
                 />
               </Form.Group>
@@ -129,9 +144,23 @@ class Register extends Component{
           </Row>
           <Row>
             <Col>
-              <Button type="submit">Register</Button> 
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                >
+                  Sign Up
+              </Button>
             </Col>
           </Row>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
         </Form>
       </div>
     )
