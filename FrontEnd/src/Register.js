@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 class Register extends Component{
   constructor(props) {
@@ -17,14 +18,6 @@ class Register extends Component{
   }
 
   handleChange(event) {
-    // const {
-    //   email,
-    //   password,
-    //   password_confirmation,
-    //   name
-    // } = this.state;
-
-    // send a post request to the api and handle the logic
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -37,43 +30,51 @@ class Register extends Component{
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input 
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleChange}
-            required
-          />
-          <input 
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            required
-          />
-          <input 
-            type="password"
-            name="password_confirmation"
-            placeholder="Password Confirmation"
-            value={this.state.password_confirmation}
-            onChange={this.handleChange}
-            required
-          />
-          <input 
-            type="name"
-            name="name"
-            placeholder="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            required
-          />
-
-          <button type="submit">Register</button> 
-        </form>
+      <div className="form-wrapper col-sm-6 text-center shadow p-3 mb-5 bg-white rounded">
+        <h3>Create Account</h3>
+        <Form onSubmit={this.handleSubmit} className="form-horizontal">
+          <Form.Group>
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={this.state.email}
+              onChange={this.handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control 
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              required
+            />
+          </Form.Group>  
+          <Form.Group>
+            <Form.Control 
+              type="password"
+              name="password_confirmation"
+              placeholder="Password Confirmation"
+              value={this.state.password_confirmation}
+              onChange={this.handleChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Control 
+              type="name"
+              name="name"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={this.handleChange}
+              required
+            />
+          </Form.Group>
+          <Button type="submit">Register</Button> 
+        </Form>
       </div>
     )
   }
