@@ -4,9 +4,11 @@ import './index.css';
 import './css/login.css'
 import App from './App';
 import LoginPage from './Login'
+import Logout from './Logout'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<LoginPage/>, document.getElementById('root'));
+//ReactDOM.render(<LoginPage/>, document.getElementById('root'));
+ReactDOM.render(<Logout/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
