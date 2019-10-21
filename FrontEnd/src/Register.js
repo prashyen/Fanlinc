@@ -45,6 +45,11 @@ class Register extends Component {
       username
     } = this.state;
 
+    if (password !== password_confirmation) {
+      alert("Passwords don't match");
+      return;
+    }
+
     fetch('http://localhost:8080/account/addUser', {
       method: 'post',
       mode: 'no-cors',
@@ -78,13 +83,13 @@ class Register extends Component {
   render() {
     return (
       <div className={
-        "form-wrapper" +
-        "col-sm-6" +
-        "text-center" +
-        "shadow" +
-        "p-3" +
-        "mb-5" +
-        "bg-white" +
+        "form-wrapper " +
+        "col-sm-6 " +
+        "text-center " +
+        "shadow " +
+        "p-3 " +
+        "mb-5 " +
+        "bg-white " +
         "rounded"}>
         <h3>Sign Up</h3>
         <Form onSubmit={this.handleSubmit} className="form-horizontal">
