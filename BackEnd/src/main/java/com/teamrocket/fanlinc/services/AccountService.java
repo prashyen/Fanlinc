@@ -47,7 +47,7 @@ public class AccountService {
      * @throws UsernameNotUniqueException if user with given username already exists
      */
     @Transactional(readOnly = true)
-    public AddUserResponse validateRegistration(AddUserRequest request){
+    public AddUserResponse addUser(AddUserRequest request){
         // check to see if the user with the given username already exists
         User requestedUser = this.userRepository.findByUsername(request.getUsername());
         // ensure the requested username is unique if it is not throw an exception

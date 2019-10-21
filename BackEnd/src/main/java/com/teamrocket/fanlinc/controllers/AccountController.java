@@ -27,8 +27,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = BASE_PATH + "/addUser", method = RequestMethod.POST)
-    public AddUserResponse validateRegistration(@Valid @RequestBody AddUserRequest request) {
-        return accountService.validateRegistration(request);
+    @ResponseBody
+    public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
+        return accountService.addUser(request);
     }
 
 }
