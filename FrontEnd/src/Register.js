@@ -30,14 +30,28 @@ class Register extends Component{
     });
   }
 
-
+  /**
+   * Handles the clicking of the submit button and sends a post request to the url:
+   * http://localhost:8080/account/addUser
+   */
   handleSubmit(event) {
     event.preventDefault();
-    const {firstName, lastName, password, password_confirmation, username} = this.state;
+    
+    const {
+      firstName,
+      lastName,
+      password,
+      password_confirmation,
+      username
+    } = this.state;
+
     fetch('http://localhost:8080/account/addUser', {
       method: 'post',
       mode: 'no-cors',
-      headers: {'Content-Type':'application/json', 'Accept': 'application/json'},
+      headers: {
+        'Content-Type':'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({
         "firstName": firstName,
         "lastName": lastName,
@@ -63,7 +77,15 @@ class Register extends Component{
 
   render() {
     return (
-      <div className="form-wrapper col-sm-6 text-center shadow p-3 mb-5 bg-white rounded">
+      <div className={
+        "form-wrapper" +
+        "col-sm-6" +
+        "text-center" +
+        "shadow" +
+        "p-3" +
+        "mb-5" +
+        "bg-white" +
+        "rounded"}>
         <h3>Sign Up</h3>
         <Form onSubmit={this.handleSubmit} className="form-horizontal"> 
           <Row>
