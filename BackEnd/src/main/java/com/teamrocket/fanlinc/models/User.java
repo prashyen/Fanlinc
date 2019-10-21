@@ -4,6 +4,7 @@ import java.util.Date;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 
 @NodeEntity
 public class User {
@@ -13,13 +14,14 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String dateOfBirth;
+    @DateLong
+    private Date dateOfBirth;
     private String location;
     private String bio;
     private String profilePhotoUrl;
 
     public User(String username, String password, String firstName, String lastName,
-        String dateOfBirth, String location, String bio, String profilePhotoUrl) {
+        Date dateOfBirth, String location, String bio, String profilePhotoUrl) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -50,7 +52,7 @@ public class User {
         return lastName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -86,7 +88,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -18,7 +18,7 @@ public class AddUserRequest {
     private String lastName;
 
     @NotNull
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
     @NotNull
     private String location;
@@ -37,7 +37,7 @@ public class AddUserRequest {
         return lastName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
