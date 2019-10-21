@@ -19,6 +19,18 @@ public class User {
     private String bio;
     private String profilePhotoUrl;
 
+    public User(String username, String password, String firstName, String lastName,
+        LocalDate dateOfBirth, String location, String bio, String profilePhotoUrl) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.location = location;
+        this.bio = bio;
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
     public Long getId() {
         return id;
     }

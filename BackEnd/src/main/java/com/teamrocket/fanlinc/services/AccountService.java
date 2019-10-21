@@ -1,10 +1,13 @@
 package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
+import com.teamrocket.fanlinc.exceptions.UsernameNotUniqueException;
 import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.ValidateUserRequest;
+import com.teamrocket.fanlinc.requests.AddUserRequest;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
+import com.teamrocket.fanlinc.responses.AddUserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,5 +37,29 @@ public class AccountService {
         }
         // compare given password with password stored in the database and save this result in the response object
         return new ValidateUserResponse(request.getUsername(), requestedUser.getPassword().equals(request.getPassword()));
+    }
+
+    /**
+     * Checks if a username with a given username exists in the database and if not it will add the user
+     *
+     * @param request a {@link ValidateUserRequest} object containing all user registration information
+     * @return a {@link AddUserResponse} object containing the given username of the new user
+     * @throws UsernameNotUniqueException if user with given username already exists
+     */
+    @Transactional(readOnly = true)
+    public AddUserResponse validateRegistration(AddUserRequest request){
+        // check to see if the user with the given username already exists
+        User requestedUser = this.userRepository.findByUsername(request.getUsername());
+        // ensure the requested username is unique if it is not throw an exception
+        if (requestedUser != null){
+            throw new UsernameNotUniqueException(
+                "User with username " + request.getUsername() + "already exists");
+        }
+        // otherwise create a new user and save the user into the repo
+        User newUser =  this.userRepository.save(new User(request.getUsername(), request.getPassword(),
+            request.getFirstName(), request.getLastName(), request.getDateOfBirth(),request.getLocation(),
+            request.getBio(), request.getProfilePhotoUrl()));
+        return new AddUserResponse(request.getUsername());
+
     }
 }
