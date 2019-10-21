@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
-class Register extends Component{
+class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +19,7 @@ class Register extends Component{
       password_confirmation: "",
       name: ""
     };
-    
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -36,7 +36,7 @@ class Register extends Component{
    */
   handleSubmit(event) {
     event.preventDefault();
-    
+
     const {
       firstName,
       lastName,
@@ -49,7 +49,7 @@ class Register extends Component{
       method: 'post',
       mode: 'no-cors',
       headers: {
-        'Content-Type':'application/json',
+        'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
       body: JSON.stringify({
@@ -65,7 +65,7 @@ class Register extends Component{
       })
     }).then(response => {
       console.log("registration response:", response);
-      if(response.status === 200) {
+      if (response.status === 200) {
         // go to login view
       } else {
         alert("Invalid Information");
@@ -87,11 +87,11 @@ class Register extends Component{
         "bg-white" +
         "rounded"}>
         <h3>Sign Up</h3>
-        <Form onSubmit={this.handleSubmit} className="form-horizontal"> 
+        <Form onSubmit={this.handleSubmit} className="form-horizontal">
           <Row>
             <Col>
               <Form.Group>
-                <TextField 
+                <TextField
                   id="standard-name"
                   label="First Name"
                   name="firstName"
@@ -175,8 +175,8 @@ class Register extends Component{
                 fullWidth
                 variant="contained"
                 color="primary"
-                >
-                  Sign Up
+              >
+                Sign Up
               </Button>
             </Col>
           </Row>
