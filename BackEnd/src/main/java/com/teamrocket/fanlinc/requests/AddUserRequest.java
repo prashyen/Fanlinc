@@ -1,7 +1,7 @@
 package com.teamrocket.fanlinc.requests;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 public class AddUserRequest {
 
@@ -18,7 +18,7 @@ public class AddUserRequest {
     private String lastName;
 
     @NotNull
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @NotNull
     private String location;
@@ -37,7 +37,7 @@ public class AddUserRequest {
         return lastName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
