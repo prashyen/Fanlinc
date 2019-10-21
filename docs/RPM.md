@@ -30,4 +30,4 @@ Backlog:
 
 Release Goals:
 
-The goal for our release is to have at least all of the above user stories completed. This will mean that our completed application will let users sign up, log in, join fandoms, post to these fandoms, and interact (view, like, etc.) with other people's posts. We should be able to demo our application end-to-end on release day with these features. If we have added bandwith, we will consider expanding this feature set.
+The goal for our release is to have at least all of the above user stories completed. This will mean that our completed application will let users sign up, log in, edit and view their profile, join fandoms, post to these fandoms, and interact (view, like, etc.) with other people's posts. We should be able to demo our application end-to-end on release day with these features. If we have added bandwith, we will consider expanding this feature set.
