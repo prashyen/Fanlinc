@@ -1,63 +1,64 @@
 package com.teamrocket.fanlinc.requests;
 
 import java.util.Date;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AddUserRequest {
 
-    @NotNull
-    private String username;
+  @NotEmpty
+  private String username;
 
-    @NotNull
-    private String password;
+  @NotEmpty
+  private String password;
 
-    @NotNull
-    private String firstName;
+  @NotEmpty
+  private String firstName;
 
-    @NotNull
-    private String lastName;
+  @NotEmpty
+  private String lastName;
 
-    @NotNull
-    private Date dateOfBirth;
+  @NotNull
+  private Date dateOfBirth;
 
-    @NotNull
-    private String location;
+  @NotNull
+  private String location;
 
-    @NotNull
-    private String bio;
+  @NotNull
+  private String bio;
 
-    @NotNull
-    private String profilePhotoUrl;
+  @NotNull
+  private String profilePhotoUrl;
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+  public Date getDateOfBirth() {
+    return dateOfBirth;
+  }
 
-    public String getLocation() {
-        return location;
-    }
+  public String getLocation() {
+    return location;
+  }
 
-    public String getBio() {
-        return bio;
-    }
+  public String getBio() {
+    return bio;
+  }
 
-    public String getProfilePhotoUrl() {
-        return profilePhotoUrl;
-    }
+  public String getProfilePhotoUrl() {
+    return profilePhotoUrl;
+  }
 
-    public String getFirstName() {
-        return firstName;
-    }
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public String getUsername() {
+    return username;
+  }
 }

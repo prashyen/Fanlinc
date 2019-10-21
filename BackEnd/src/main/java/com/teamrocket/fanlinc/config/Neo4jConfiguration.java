@@ -14,20 +14,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class Neo4jConfiguration {
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        return new SessionFactory(configuration(), "com.teamrocket.fanlinc.models");
-    }
+  @Bean
+  public SessionFactory sessionFactory() {
+    return new SessionFactory(configuration(), "com.teamrocket.fanlinc.models");
+  }
 
-    @Bean
-    public org.neo4j.ogm.config.Configuration configuration() {
-        ConfigurationSource properties = new ClasspathConfigurationSource("application.properties");
-        org.neo4j.ogm.config.Configuration configuration = new org.neo4j.ogm.config.Configuration.Builder(properties).build();
-        return configuration;
-    }
+  @Bean
+  public org.neo4j.ogm.config.Configuration configuration() {
+    ConfigurationSource properties = new ClasspathConfigurationSource("application.properties");
+    org.neo4j.ogm.config.Configuration configuration = new org.neo4j.ogm.config.Configuration.Builder(
+        properties).build();
+    return configuration;
+  }
 
-    @Bean
-    public Neo4jTransactionManager transactionManager() {
-        return new Neo4jTransactionManager(sessionFactory());
-    }
+  @Bean
+  public Neo4jTransactionManager transactionManager() {
+    return new Neo4jTransactionManager(sessionFactory());
+  }
 }

@@ -1,5 +1,6 @@
 package com.teamrocket.fanlinc.services;
 
+import com.teamrocket.fanlinc.builders.UserBuilder;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UsernameNotUniqueException;
 import com.teamrocket.fanlinc.models.User;
@@ -59,10 +60,11 @@ public class AccountService {
           "User with username " + request.getUsername() + " already exists");
     }
     // otherwise create a new user and save the user into the repo
-    userRepository.save(new User(request.getUsername(), request.getPassword(),
-        request.getFirstName(), request.getLastName(), request.getDateOfBirth(),
-        request.getLocation(),
-        request.getBio(), request.getProfilePhotoUrl()));
+    userRepository.save(
+        new UserBuilder().username(request.getUsername()).password(request.getPassword())
+            .firstName(request.getFirstName()).lastName(request.getLastName())
+            .dateOfBirth(request.getDateOfBirth()).bio(request.getBio())
+            .location(request.getLocation()).profilePhotoUrl(request.getProfilePhotoUrl()).build());
     return new AddUserResponse(request.getUsername());
 
   }
