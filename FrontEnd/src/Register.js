@@ -61,7 +61,6 @@ class Register extends Component {
         "firstName": firstName,
         "lastName": lastName,
         "password": password,
-        "password_confirmation": password_confirmation,
         "username": username,
         "dateOfBirth": "",
         "bio": "",
