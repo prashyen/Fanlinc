@@ -69,10 +69,15 @@ class Register extends Component {
       })
     }).then(response => {
       console.log("registration response:", response);
-      if (response.status === 200) {
-        // go to login view
-      } else {
-        alert("Invalid Information");
+      switch(response.status) {
+        case 200:
+            // go to login or view
+            break;
+        case 409:
+          alert("User with that username already exists.");
+          break;
+        default:
+          alert("Something went wrong creating the user.");
       }
     }).catch(err => {
       alert("Error sending the request. ", err);
