@@ -33,10 +33,11 @@ class Register extends Component{
   handleSubmit(event) {
     event.preventDefault();
     const {firstName, lastName, password, password_confirmation, username} = this.state;
-    fetch('http://localhost:7474/addUser', {
+    fetch('http://localhost:8080/account/addUser', {
       method: 'post',
-      headers: {'Content-Type':'application/json'},
-      body: {
+      mode: 'no-cors',
+      headers: {'Content-Type':'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
         "firstName": firstName,
         "lastName": lastName,
         "password": password,
@@ -46,7 +47,7 @@ class Register extends Component{
         "bio": "",
         "location": "",
         "profilePhotoUrl": ""
-      }
+      })
     }).then(response => {
       console.log("registration response:", response);
       if(response.status === 200) {
