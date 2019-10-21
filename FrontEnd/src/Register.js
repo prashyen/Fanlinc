@@ -30,6 +30,7 @@ class Register extends Component{
     });
   }
 
+
   handleSubmit(event) {
     event.preventDefault();
     const {firstName, lastName, password, password_confirmation, username} = this.state;
@@ -52,9 +53,11 @@ class Register extends Component{
       console.log("registration response:", response);
       if(response.status === 200) {
         // go to login view
+      } else {
+        alert("Invalid Information");
       }
     }).catch(err => {
-      console.log("error: ", err);
+      alert("Error sending the request. ", err);
     });
   }
 
