@@ -1,4 +1,5 @@
 Sprint1 Planning Meeting 
+Meeting Minutes
 	
 Participants:
 	Aamir Haroon, 
@@ -7,19 +8,16 @@ Participants:
 	Rahul Ramani, 
 	Ruidan Ji, 
 	Tahasun Tarannum, 
-	Carl Alvares
+	Carl Alvares                                                     |
 
-Sprint1 Backlog:
+Setting Up the Project
+We explored the options of technologies for the frontend, backend, and the database. After deliberating the pros and cons of each technology, we decided to use React, Java, and Neo4j respectively.
 
-StoryID| Priority |                                                                               Story                                                                              | Story Points | Criteria of Satisfaction                                                                                                                     |
-|------|----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------:|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------|
-|TEAM-1| Highest  | As a new user, I would like to sign up to Fanlinc and create a profile so that I can use the application.                                                        |            8 | Type in username, password and user info, and creates new profile and feed page is displayed.                                                |
-|TEAM-2| High     | As a user, I should be able to login so that I can access my account.                                                                                            |            3 | Type in username and password and Fanlinc feed page is displayed.                                                                            |
-|TEAM-3| High     | As a logged in user, I should be able to log out so that someone else using my device can not access my account.                                                 |            2 | Select Logout button and sign in page is displayed, with account logged out message.                                                         |
+Database Design
+We outlined the nodes and their relationships for our NoSQL database. With thoughtful analysis, we reached a consensus on the properties of our nodes and relationships which were further to be examined and outlined on System-Design.doc. 
 
-Meeting Minutes:
-	Started at:Oct 8, 2019 12:20 pm
-	Ended at: Oct 8, 2019 12:55 pm
+Task Assignment
+We set priorities for the sprint and divided tasks among ourselves as outlined below. Furthermore, stories were added to Jira, divided into tasks and assigned equally to all team members.
 
 
 	User stories to be completed in Sprint 1:
@@ -43,3 +41,11 @@ Meeting Minutes:
 
 	User Story c) TEAM-3:Logout of account is broken down into the following tasks:
 		i) Implement UI for logout buttion and redirect to login page. [ASSIGNED TO: Ruidan Ji]
+
+		Sprint1 Backlog:
+
+StoryID| Priority |                                                                               Story                                                                              | Story Points | Criteria of Satisfaction                                                                                                                     |
+|------|----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------:|-------------:|----------------------------------------------------------------------------------------------------------------------------------------------|
+|TEAM-1| Highest  | As a new user, I would like to sign up to Fanlinc and create a profile so that I can use the application.                                                        |            8 | Type in username, password and user info, and creates new profile and feed page is displayed.                                                |
+|TEAM-2| High     | As a user, I should be able to login so that I can access my account.                                                                                            |            3 | Type in username and password and Fanlinc feed page is displayed.                                                                            |
+|TEAM-3| High     | As a logged in user, I should be able to log out so that someone else using my device can not access my account.                                                 |            2 | Select Logout button and sign in page is displayed, with account logged out message.    
