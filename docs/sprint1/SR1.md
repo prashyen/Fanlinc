@@ -1,12 +1,12 @@
 Sprint 1 Retrospective Meeting (SRI)
 Participants: 
   Aamir Haroon, 
-	Abel Debalkew, 
-	Prashyen Kanagarajah, 
-	Rahul Ramani, 
-	Ruidan Ji, 
-	Tahasun Tarannum, 
-	Carl Alvares
+  Abel Debalkew, 
+  Prashyen Kanagarajah, 
+  Rahul Ramani, 
+  Ruidan Ji, 
+  Tahasun Tarannum, 
+  Carl Alvares
 
 Unfinished Tasks & Stories
   Implementing UI for registration page 
