@@ -37,7 +37,7 @@ export default function LoginPage() {
                   alert("Login Successful");
                   break;
                 case 404:
-                  alert("User does not exisits");
+                  alert("User does not exists");
                   break;
                 default:
                   alert("Something during login");
