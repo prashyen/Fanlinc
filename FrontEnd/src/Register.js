@@ -40,7 +40,7 @@ export default function Register() {
       password,
       password_confirmation,
       username,
-      dateOfBirth,
+      //dateOfBirth, will have to deal with this in future
       bio,
       location,
       profilePhotoUrl
@@ -53,7 +53,7 @@ export default function Register() {
 
     fetch(addUserURL, {
       method: 'post',
-      mode: 'no-cors',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -63,7 +63,7 @@ export default function Register() {
         "lastName": lastName,
         "password": password,
         "username": username,
-        "dateOfBirth": dateOfBirth,
+        "dateOfBirth": "1234", // default value for now
         "bio": bio,
         "location": location,
         "profilePhotoUrl": profilePhotoUrl
@@ -72,7 +72,7 @@ export default function Register() {
       console.log("registration response:", response);
       switch(response.status) {
         case 200:
-            // go to login or view
+            alert("Profile Created!");
             break;
         case 409:
           alert("User with that username already exists.");
