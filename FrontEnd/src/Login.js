@@ -72,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 export default function LoginPage() {
   const classes = useStyles();
 
+
   return (
     <ThemeProvider theme={theme}>
     <Grid container component="main" className={classes.root}>
@@ -80,11 +81,11 @@ export default function LoginPage() {
       <Grid item md={4} style={{textAlign: "center"}}component={Paper} elevation={0} square>
 
         <div className={classes.paper}>
-          <img SRC={Fanlinclogo} height="70" width="70"/>
+          <img src={Fanlinclogo} height="70" width="70"/>
           <Typography component="h1" variant="h5">
             Fanlinc Login
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate action="/responseForm" method="get">>
             <TextField
               variant="outlined"
               margin="normal"
@@ -117,6 +118,7 @@ export default function LoginPage() {
               variant="contained"
               className={classes.submit}
               color="primary"
+
             >
               Sign In
             </Button>
