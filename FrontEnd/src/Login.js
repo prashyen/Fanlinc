@@ -14,6 +14,8 @@ import Image from './img/loginBackground.jpg';
 import Fanlinclogo from'./img/fanlinc_logo.png';
 import orange from '@material-ui/core/colors/orange';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+var request =require('request');
+
 
 function Copyright() {
   return (
@@ -27,6 +29,9 @@ function Copyright() {
     </Typography>
   );
 }
+
+
+
 
 const theme = createMuiTheme({
   palette: {
@@ -69,8 +74,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 export default function LoginPage() {
   const classes = useStyles();
+  var username;
+  var password;
+
+  function submitForm() {
+      fetch("http://localhost:8080/account/validateUser", {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+            "username" : username,
+            "password": password
+        })
+      }).then( (response) => {
+         console.log(response)
+      });
+  }
+
+  function handleEmailChange(e){
+    username = (e.target.value)
+  }
+  function handlePasswordChange(e){
+     password = (e.target.value)
+   }
 
 
   return (
@@ -85,7 +117,7 @@ export default function LoginPage() {
           <Typography component="h1" variant="h5">
             Fanlinc Login
           </Typography>
-          <form className={classes.form} noValidate action="/responseForm" method="get">>
+          <form className={classes.form} id= "myform" >
             <TextField
               variant="outlined"
               margin="normal"
@@ -95,6 +127,7 @@ export default function LoginPage() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              onChange={handleEmailChange}
               autoFocus
             />
             <TextField
@@ -107,18 +140,19 @@ export default function LoginPage() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange = {handlePasswordChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
-              type="submit"
+              type="button"
               fullWidth
               variant="contained"
               className={classes.submit}
               color="primary"
-
+              onClick={() => {submitForm()}}
             >
               Sign In
             </Button>
@@ -139,7 +173,6 @@ export default function LoginPage() {
             </Box>
           </form>
         </div>
-
       </Grid>
     </Grid>
     </ThemeProvider>

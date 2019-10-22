@@ -1,22 +1,14 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom'
 import {Redirect} from 'react-router-dom';
 
 class Logout extends React.Component{
-   handleClick = () => {
-        return <Redirect to='./Login'/>
-    }
+
    render(){
    return (
        <div>
-            <Button
-               type="button"
-               fullWidth
-               variant="contained"
-               onClick={this.handleClick}
-               >
-               Logout
-             </Button>
+             <Link to="/login"> Logout</Link>
        </div>
     )
    }
