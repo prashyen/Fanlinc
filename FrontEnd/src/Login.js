@@ -40,7 +40,7 @@ export default function LoginPage() {
                   alert("User does not exists");
                   break;
                 default:
-                  alert("Something during login");
+                  alert("Error occurred during login");
               }
             }).catch(err => {
               alert("Error sending the request. ", err);
