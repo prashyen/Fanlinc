@@ -30,11 +30,22 @@ export default function LoginPage() {
             "username" : username,
             "password": password
         })
-      }).then( (response) => {
-         console.log(response)
-      });
-  }
-
+      }).then(response => {
+              console.log("Login response:", response);
+              switch (response.status) {
+                case 200:
+                  alert("Login Successful");
+                  break;
+                case 404:
+                  alert("User does not exisits");
+                  break;
+                default:
+                  alert("Something during login");
+              }
+            }).catch(err => {
+              alert("Error sending the request. ", err);
+            });
+          }
   function handleEmailChange(e){
     username = (e.target.value)
   }
