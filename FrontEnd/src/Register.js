@@ -24,6 +24,8 @@ const initialState = {
   profilePhotoUrl: ""
 };
 
+const addUserURL = "http://localhost:8080/account/addUser";
+
 export default function Register() {
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
 
@@ -49,7 +51,7 @@ export default function Register() {
       return;
     }
 
-    fetch('http://localhost:8080/account/addUser', {
+    fetch(addUserURL, {
       method: 'post',
       mode: 'no-cors',
       headers: {
