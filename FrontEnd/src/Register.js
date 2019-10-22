@@ -70,10 +70,10 @@ export default function Register() {
       })
     }).then(response => {
       console.log("registration response:", response);
-      switch(response.status) {
+      switch (response.status) {
         case 200:
-            alert("Profile Created!");
-            break;
+          alert("Profile Created!");
+          break;
         case 409:
           alert("User with that username already exists.");
           break;
@@ -89,10 +89,10 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid 
-        container 
-        component="main" 
-        className={classes.root} 
+      <Grid
+        container
+        component="main"
+        className={classes.root}
         direction="column"
         alignItems="center"
         justify="center"
