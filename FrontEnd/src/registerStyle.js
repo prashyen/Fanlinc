@@ -30,7 +30,7 @@ export const theme = createMuiTheme({
 
 export const useStyles = makeStyles(({
   root: {
-    height: '100vh',
+    minHeight: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center'

@@ -27,114 +27,172 @@ const initialState = {
 export default function Register() {
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
 
+  /**
+   * Handles the clicking of the submit button and sends a post request to the url:
+   * http://localhost:8080/account/addUser
+   */
   function submit() {
-    console.log("sumitted form");
+    const {
+      firstName,
+      lastName,
+      password,
+      password_confirmation,
+      username,
+      dateOfBirth,
+      bio,
+      location,
+      profilePhotoUrl
+    } = values;
+
+    if (password !== password_confirmation) {
+      alert("Passwords don't match");
+      return;
+    }
+
+    fetch('http://localhost:8080/account/addUser', {
+      method: 'post',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        "firstName": firstName,
+        "lastName": lastName,
+        "password": password,
+        "username": username,
+        "dateOfBirth": dateOfBirth,
+        "bio": bio,
+        "location": location,
+        "profilePhotoUrl": profilePhotoUrl
+      })
+    }).then(response => {
+      console.log("registration response:", response);
+      switch(response.status) {
+        case 200:
+            // go to login or view
+            break;
+        case 409:
+          alert("User with that username already exists.");
+          break;
+        default:
+          alert("Something went wrong creating the user.");
+      }
+    }).catch(err => {
+      alert("Error sending the request. ", err);
+    });
   }
 
   const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" className={classes.root}>
+      <Grid 
+        container 
+        component="main" 
+        className={classes.root} 
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <CssBaseline />
-        <Grid item />
         <Grid
           item
-          md={3}
+          xs={4}
           style={{ textAlign: "center" }}
           component={Paper}
           elevation={0}
-          square
-        />
-        <div className={classes.paper}>
-          <img
-            src={Fanlinclogo}
-            height="70"
-            width="70"
-            alt="Fanlinc logo"
-          />
-          <Typography component="h1" variant="h5">
-            Sign Up!
+          square>
+          <div className={classes.paper}>
+            <img
+              src={Fanlinclogo}
+              height="70"
+              width="70"
+              alt="Fanlinc logo"
+            />
+            <Typography component="h1" variant="h5">
+              Sign Up!
           </Typography>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="First Name"
-              name="firstName"
-              value={values.firstName}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Last Name"
-              name="lastName"
-              value={values.lastName}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="username"
-              name="username"
-              value={values.username}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Confirm Password"
-              name="password_confirmation"
-              type="password"
-              value={values.password_confirmation}
-              onChange={handleChange}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              color="primary"
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={handleSubmit}
             >
-              Sign Up
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="First Name"
+                name="firstName"
+                value={values.firstName}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Last Name"
+                name="lastName"
+                value={values.lastName}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="username"
+                name="username"
+                value={values.username}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                name="password"
+                type="password"
+                value={values.password}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Confirm Password"
+                name="password_confirmation"
+                type="password"
+                value={values.password_confirmation}
+                onChange={handleChange}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                className={classes.submit}
+                color="primary"
+              >
+                Sign Up
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Have an account? Login"}
-                </Link>
+              <Grid container>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Have an account? Login"}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
       </Grid>
     </ThemeProvider>
   );
