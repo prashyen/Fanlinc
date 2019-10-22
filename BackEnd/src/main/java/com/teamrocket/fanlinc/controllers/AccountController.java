@@ -19,8 +19,8 @@ public class AccountController {
   public AccountController(AccountService accountService) {
     this.accountService = accountService;
   }
-
-  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.GET)
+  @CrossOrigin(origins = "http://localhost:3000")
+  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.POST)
   @ResponseBody
   public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
     return accountService.validateUser(request);
