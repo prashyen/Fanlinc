@@ -1,205 +1,141 @@
-import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import React from 'react';
+import useForm from './useForm';
+import { Copyright, theme, useStyles } from './registerStyle';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Fanlinclogo from './img/fanlinc_logo.png';
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
+const initialState = {
+  firstName: "",
+  lastName: "",
+  username: "",
+  password: "",
+  password_confirmation: "",
+  dateOfBirth: "",
+  bio: "",
+  location: "",
+  profilePhotoUrl: ""
+};
 
-    this.state = {
-      firstName: "",
-      lastName: "",
-      username: "",
-      password: "",
-      password_confirmation: "",
-      name: ""
-    };
+export default function Register() {
+  const { values, handleChange, handleSubmit } = useForm(submit, initialState);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+  function submit() {
+    console.log("sumitted form");
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
+  const classes = useStyles();
 
-  /**
-   * Handles the clicking of the submit button and sends a post request to the url:
-   * http://localhost:8080/account/addUser
-   */
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const {
-      firstName,
-      lastName,
-      password,
-      password_confirmation,
-      username
-    } = this.state;
-
-    if (password !== password_confirmation) {
-      alert("Passwords don't match");
-      return;
-    }
-
-    fetch('http://localhost:8080/account/addUser', {
-      method: 'post',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        "firstName": firstName,
-        "lastName": lastName,
-        "password": password,
-        "username": username,
-        "dateOfBirth": "",
-        "bio": "",
-        "location": "",
-        "profilePhotoUrl": ""
-      })
-    }).then(response => {
-      console.log("registration response:", response);
-      switch(response.status) {
-        case 200:
-            // go to login or view
-            break;
-        case 409:
-          alert("User with that username already exists.");
-          break;
-        default:
-          alert("Something went wrong creating the user.");
-      }
-    }).catch(err => {
-      alert("Error sending the request. ", err);
-    });
-  }
-
-  render() {
-    return (
-      <div className={
-        "form-wrapper " +
-        "col-sm-6 " +
-        "text-center " +
-        "shadow " +
-        "p-3 " +
-        "mb-5 " +
-        "bg-white " +
-        "rounded"}>
-        <h3>Sign Up</h3>
-        <Form onSubmit={this.handleSubmit} className="form-horizontal">
-          <Row>
-            <Col>
-              <Form.Group>
-                <TextField
-                  id="standard-name"
-                  label="First Name"
-                  name="firstName"
-                  margin="normal"
-                  value={this.state.firstName}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <TextField
-                  id="standard-name"
-                  label="Last Name"
-                  name="lastName"
-                  margin="normal"
-                  value={this.state.lastName}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <TextField
-                  id="standard-name"
-                  label="User Name"
-                  name="username"
-                  margin="normal"
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <TextField
-                  id="standard-password-input"
-                  label="Password"
-                  name="password"
-                  margin="normal"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <TextField
-                  id="standard-password-input"
-                  label="Password Confirmation"
-                  name="password_confirmation"
-                  margin="normal"
-                  type="password"
-                  value={this.state.password_confirmation}
-                  onChange={this.handleChange}
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
-                Sign Up
-              </Button>
-            </Col>
-          </Row>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+  return (
+    <ThemeProvider theme={theme}>
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item />
+        <Grid
+          item
+          md={3}
+          style={{ textAlign: "center" }}
+          component={Paper}
+          elevation={0}
+          square
+        />
+        <div className={classes.paper}>
+          <img
+            src={Fanlinclogo}
+            height="70"
+            width="70"
+            alt="Fanlinc logo"
+          />
+          <Typography component="h1" variant="h5">
+            Sign Up!
+          </Typography>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="First Name"
+              name="firstName"
+              value={values.firstName}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Last Name"
+              name="lastName"
+              value={values.lastName}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              value={values.username}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Confirm Password"
+              name="password_confirmation"
+              type="password"
+              value={values.password_confirmation}
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              color="primary"
+            >
+              Sign Up
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Have an account? Login"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </Form>
-      </div>
-    )
-  }
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </form>
+        </div>
+      </Grid>
+    </ThemeProvider>
+  );
 }
-
-export default Register;
