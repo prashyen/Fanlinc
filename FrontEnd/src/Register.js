@@ -145,7 +145,6 @@ export default function Register() {
                 margin="normal"
                 required
                 fullWidth
-                id="username"
                 label="Username"
                 name="username"
                 value={values.username}
