@@ -146,7 +146,7 @@ export default function Register() {
                 required
                 fullWidth
                 id="username"
-                label="username"
+                label="Username"
                 name="username"
                 value={values.username}
                 onChange={handleChange}
