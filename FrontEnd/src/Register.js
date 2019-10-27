@@ -1,5 +1,6 @@
 import React from 'react';
 import useForm from './useForm';
+import { useState } from 'react';
 import { Copyright, theme, useStyles } from './registerStyle';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +12,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Fanlinclogo from './img/fanlinc_logo.png';
+import 'date-fns';
+import moment from 'moment';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
 const initialState = {
   firstName: "",
@@ -18,7 +26,6 @@ const initialState = {
   username: "",
   password: "",
   password_confirmation: "",
-  dateOfBirth: "",
   bio: "",
   location: "",
   profilePhotoUrl: ""
@@ -30,6 +37,11 @@ export default function Register() {
 
   // use hook to store the states
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
+  const [dateOfBirth, setSelectedDate] = useState(new Date('2019-09-31'));
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
 
   /**
    * Handles the clicking of the submit button and sends a post request to the url:
@@ -42,7 +54,6 @@ export default function Register() {
       password,
       password_confirmation,
       username,
-      dateOfBirth,
       bio,
       location,
       profilePhotoUrl
@@ -65,7 +76,7 @@ export default function Register() {
         "lastName": lastName,
         "password": password,
         "username": username,
-        "dateOfBirth": dateOfBirth,
+        "dateOfBirth": moment(dateOfBirth).format("DD/MM/YYYY"),
         "bio": bio,
         "location": location,
         "profilePhotoUrl": profilePhotoUrl
@@ -122,6 +133,23 @@ export default function Register() {
               noValidate
               onSubmit={handleSubmit}
             >
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="outlined"
+                  fullWidth
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  name="dateOfBirth"
+                  label="Date of Birth"
+                  value={dateOfBirth}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                  required
+                />
+              </MuiPickersUtilsProvider>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -172,6 +200,28 @@ export default function Register() {
                 name="password_confirmation"
                 type="password"
                 value={values.password_confirmation}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Bio"
+                name = "bio"
+                placeholder="Short Bio here"
+                multiline
+                value={values.bio}
+                onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Location / City"
+                name="location"
+                placeholder="Location / City"
+                multiline
+                value={values.location}
                 onChange={handleChange}
               />
               <Button

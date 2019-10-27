@@ -6,22 +6,22 @@ import { useState } from 'react';
  * @param {Object} initialState initial form states and values
  */
 function useForm(submit, initialState) {
-    const [values, setValues] = useState(initialState);
+  const [values, setValues] = useState(initialState);
 
-    const handleChange = event => {
-        const { name, value } = event.target;
-        setValues({
-            ...values,
-            [name]: value
-        });
-    }
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setValues({
+      ...values,
+      [name]: value
+    });
+  }
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        submit();
-    }
+  const handleSubmit = event => {
+    event.preventDefault();
+    submit();
+  }
 
-    return { values, handleChange, handleSubmit }
+  return { values, handleChange, handleSubmit }
 }
 
 export default useForm;
