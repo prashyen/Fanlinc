@@ -27,6 +27,8 @@ const initialState = {
 const addUserURL = "http://localhost:8080/account/addUser";
 
 export default function Register() {
+
+  // use hook to store the states
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
 
   /**
@@ -40,7 +42,7 @@ export default function Register() {
       password,
       password_confirmation,
       username,
-      //dateOfBirth, will have to deal with this in future
+      dateOfBirth,
       bio,
       location,
       profilePhotoUrl
@@ -63,7 +65,7 @@ export default function Register() {
         "lastName": lastName,
         "password": password,
         "username": username,
-        "dateOfBirth": "1234", // default value for now
+        "dateOfBirth": dateOfBirth,
         "bio": bio,
         "location": location,
         "profilePhotoUrl": profilePhotoUrl

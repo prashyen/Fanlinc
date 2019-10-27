@@ -1,5 +1,10 @@
 import { useState } from 'react';
 
+/**
+ * 
+ * @function submit handles form submission
+ * @param {Object} initialState initial form states and values
+ */
 function useForm(submit, initialState) {
     const [values, setValues] = useState(initialState);
 
