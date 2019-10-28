@@ -48,7 +48,6 @@ export default function Register() {
    * http://localhost:8080/account/addUser
    */
   function submit() {
-    console.log(moment(dateOfBirth).format("YYYY/MM/DD"));
     const {
       firstName,
       lastName,
@@ -77,7 +76,7 @@ export default function Register() {
         "lastName": lastName,
         "password": password,
         "username": username,
-        "dateOfBirth": moment(dateOfBirth).format("YYYY/MM/DD"),
+        "dateOfBirth": moment(dateOfBirth).format("YYYY-MM-DD"),
         "bio": bio,
         "location": location,
         "profilePhotoUrl": profilePhotoUrl
