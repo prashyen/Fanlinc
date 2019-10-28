@@ -48,6 +48,7 @@ export default function Register() {
    * http://localhost:8080/account/addUser
    */
   function submit() {
+    console.log(moment(dateOfBirth).format("YYYY/MM/DD"));
     const {
       firstName,
       lastName,
@@ -76,7 +77,7 @@ export default function Register() {
         "lastName": lastName,
         "password": password,
         "username": username,
-        "dateOfBirth": moment(dateOfBirth).format("DD/MM/YYYY"),
+        "dateOfBirth": moment(dateOfBirth).format("YYYY/MM/DD"),
         "bio": bio,
         "location": location,
         "profilePhotoUrl": profilePhotoUrl
@@ -206,22 +207,23 @@ export default function Register() {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                label="Bio"
-                name = "bio"
-                placeholder="Short Bio here"
+                required
+                label="Location / City"
+                name="location"
+                placeholder="Location / City"
                 multiline
-                value={values.bio}
+                value={values.location}
                 onChange={handleChange}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                label="Location / City"
-                name="location"
-                placeholder="Location / City"
+                label="Bio (Optional)"
+                name="bio"
+                placeholder="Bio"
                 multiline
-                value={values.location}
+                value={values.bio}
                 onChange={handleChange}
               />
               <Button
