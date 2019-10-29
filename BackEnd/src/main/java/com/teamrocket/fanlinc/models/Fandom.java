@@ -10,7 +10,7 @@ public class Fandom {
   @Id
   @GeneratedValue
   private Long id;
-  private String name;
+  private String fandomName;
   private String genre;
   private String description;
   private String displayPhotoURL;
@@ -23,12 +23,12 @@ public class Fandom {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getFandomName() {
+    return fandomName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setFandomName(String fandomName) {
+    this.fandomName = fandomName;
   }
 
   public String getGenre() {
