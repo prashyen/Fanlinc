@@ -4,6 +4,8 @@ import LoginPage from './Login';
 import LogoutPage from './Logout';
 import Register from './Register';
 import ResponseForm from './LoginResponse';
+import PostFeed from './Post';
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -18,6 +20,9 @@ function App() {
         </Route>
         <Route path="/logout">
           <LogoutPage />
+        </Route>
+        <Route path="/PostFeed">
+            <PostFeed/>
         </Route>
         <Route exact path="/register" component={Register} />
       </Switch>
