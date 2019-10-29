@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import LoginPage from './Login';
 import LogoutPage from './Logout';
+import Post from './Post';
 import Register from './Register';
 import ResponseForm from './LoginResponse';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/logout">
           <LogoutPage />
         </Route>
+        <Route exact path="/post" component={Post} />
         <Route exact path="/register" component={Register} />
       </Switch>
     </Router>
