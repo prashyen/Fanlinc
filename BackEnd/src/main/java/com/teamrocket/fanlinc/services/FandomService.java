@@ -27,7 +27,7 @@ public class FandomService {
     if (requestedFandom != null) {
       // if the requested fandom isn't unique output exception
       throw new FandomAlreadyExistsException(
-          "A fandom with the name " + request.getFandomName() + " alerady exists");
+          "A fandom with the name " + request.getFandomName() + " already exists");
     }
 
     // if the fandom doesn't exist then create a new fandom node

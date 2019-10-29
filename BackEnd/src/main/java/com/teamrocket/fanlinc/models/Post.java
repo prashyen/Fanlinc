@@ -2,7 +2,8 @@ package com.teamrocket.fanlinc.models;
 
 
 import java.time.LocalDateTime;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -16,7 +17,7 @@ public class Post {
   private String title;
   private String content;
   private String postedBy;
-  private DateTime postedTime;
+  private Date postedTime;
   private String postPhotoURL;
 
   public Long getId() {
@@ -51,11 +52,11 @@ public class Post {
     this.postedBy = postedBy;
   }
 
-  public DateTime getPostedTime() {
+  public Date getPostedTime() {
     return postedTime;
   }
 
-  public void setPostedTime(DateTime postedTime) {
+  public void setPostedTime(Date postedTime) {
     this.postedTime = postedTime;
   }
 
