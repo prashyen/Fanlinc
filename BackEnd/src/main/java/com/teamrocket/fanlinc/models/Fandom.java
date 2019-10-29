@@ -1,6 +1,5 @@
 package com.teamrocket.fanlinc.models;
 
-import java.util.Date;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;

@@ -8,7 +8,6 @@ import javax.validation.Valid;
 public class FandomController {
 
   private static final String BASE_PATH = "/fandom";
-
   private FandomService fandomService;
 
   public FandomController(FandomService fandomService) {
