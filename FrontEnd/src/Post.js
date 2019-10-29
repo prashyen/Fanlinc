@@ -24,7 +24,7 @@ import Container from '@material-ui/core/Container';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {'Copyright © Fanlinc 2019. '}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
       </Link>{' '}
@@ -72,11 +72,12 @@ const useStyles = makeStyles(theme => ({
       paddingRight: 0,
     },
   },
-//  mainGrid: {
-//    marginTop: theme.spacing(3),
-//  },
+  mainGrid: {
+    marginTop: theme.spacing(3),
+  },
   card: {
-   // display: 'flex',
+    display: 'flex',
+    alignItems: "center"
   },
   cardDetails: {
     flex: 1,
@@ -93,7 +94,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey[200],
   },
   sidebarSection: {
-    //marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3),
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -103,16 +104,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const sections = [
-  'Technology',
-  'Design',
-  'Culture',
-  'Business',
-  'Politics',
-  'Opinion',
-  'Science',
-  'Health',
-  'Style',
-  'Travel',
+  'Home',
+  'Account',
+  'Explore'
 ];
 
 const featuredPosts = [
@@ -165,13 +159,13 @@ export default function Blog() {
             noWrap
             className={classes.toolbarTitle}
           >
-            Blog
+            HomeFeed
           </Typography>
           <IconButton>
             <SearchIcon />
           </IconButton>
           <Button variant="outlined" size="small">
-            Sign up
+            My Account
           </Button>
         </Toolbar>
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
@@ -188,14 +182,14 @@ export default function Blog() {
             </Link>
           ))}
         </Toolbar>
-        <main>
-          <Grid container spacing={3} justify="flex-start">
+
+          <Grid container direction="column" alignItems="center" spacing= {2} style={{ minHeight: '80vh' }}>
             {featuredPosts.map(post => (
-              <Grid item key={post.title} xs={12} direction="column" justify="flex-start">
+              <Grid item key={post.title} xs={12} alignItems="center" direction="column" justify="flex-start">
                 <CardActionArea component="a" href="#">
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
+                  <Card className={classes.card} alignItems="center">
+                    <div className={classes.cardDetails} alignItems="center">
+                      <CardContent alignItems="center">
                         <Typography component="h2" variant="h5">
                           {post.title}
                         </Typography>
@@ -224,39 +218,7 @@ export default function Blog() {
           </Grid>
           {/* End sub featured posts */}
           <Grid container spacing={5} xs={5} >
-            {/* Main content */}
-            {/* End main content */}
-            {/* Sidebar */}
-            <Grid item xs= {12}>
-              <Paper elevation={0} className={classes.sidebarAboutBox}>
-                <Typography variant="h6" gutterBottom>
-                  About
-                </Typography>
-                <Typography>
-                  Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit
-                  amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
-                </Typography>
-              </Paper>
-              <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Archives
-              </Typography>
-              {archives.map(archive => (
-                <Link display="block" variant="body1" href="#" key={archive}>
-                  {archive}
-                </Link>
-              ))}
-              <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Social
-              </Typography>
-              {social.map(network => (
-                <Link display="block" variant="body1" href="#" key={network}>
-                  {network}
-                </Link>
-              ))}
-            </Grid>
-            {/* End sidebar */}
           </Grid>
-        </main>
       </Container>
       {/* Footer */}
       <footer className={classes.footer}>
@@ -265,7 +227,7 @@ export default function Blog() {
             Footer
           </Typography>
           <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            Something here to give the footer a purpose!
+            Linking Fans Together
           </Typography>
           <Copyright />
         </Container>
