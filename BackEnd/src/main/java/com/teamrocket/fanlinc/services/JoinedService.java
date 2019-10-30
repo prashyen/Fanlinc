@@ -39,7 +39,7 @@ public class JoinedService {
         Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
 
         //ensure the requested fandom hasn't already been created
-        if (requestedFandom != null) {
+        if (requestedFandom == null) {
             // if the requested fandom isn't unique output exception
             throw new FandomAlreadyExistsException(
                     "A fandom with the name " + request.getFandomName() + " already exists");
