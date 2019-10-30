@@ -3,10 +3,9 @@ package com.teamrocket.fanlinc.responses;
 import java.util.Date;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
 
-public class getUserDetailsResponse {
+public class UserDetailsResponse {
 
   private String username;
-  private String password;
   private String firstName;
   private String lastName;
   @DateLong
@@ -17,10 +16,6 @@ public class getUserDetailsResponse {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public void setFirstName(String firstName) {
@@ -49,10 +44,6 @@ public class getUserDetailsResponse {
 
   public String getUsername() {
     return username;
-  }
-
-  public String getPassword() {
-    return password;
   }
 
   public String getFirstName() {

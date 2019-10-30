@@ -1,12 +1,15 @@
 package com.teamrocket.fanlinc.services;
 
+import com.teamrocket.fanlinc.builders.UserDetailsResponseBuilder;
 import com.teamrocket.fanlinc.builders.UserBuilder;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UsernameNotUniqueException;
 import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.UserRepository;
+import com.teamrocket.fanlinc.requests.UserDetailsRequest;
 import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.requests.AddUserRequest;
+import com.teamrocket.fanlinc.responses.UserDetailsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
 import com.teamrocket.fanlinc.responses.AddUserResponse;
 import org.springframework.stereotype.Service;
@@ -67,5 +70,30 @@ public class AccountService {
             .location(request.getLocation()).profilePhotoUrl(request.getProfilePhotoUrl()).build());
     return new AddUserResponse(request.getUsername());
 
+  }
+
+  /**
+   * Checks if a username with a given username exists in the database and if so it will return
+   * that users information
+   *
+   * @param request a {@link UserDetailsRequest} object containing the requested username
+   * @return a {@link AddUserResponse} object containing the requested users information
+   * @throws UserNotFoundException if user with given username was not found
+   */
+  @Transactional(readOnly = true)
+  public UserDetailsResponse getUserDetails(UserDetailsRequest request) {
+    // first check if the requested user exists
+    User requestedUser = userRepository.findByUsername(request.getUsername());
+
+    // if the username doesn't exist throw an error
+    if (requestedUser == null) {
+      throw new UserNotFoundException("User with username " + request.getUsername() + " not found");
+    }
+
+    // otherwise return the requested users info
+    return new UserDetailsResponseBuilder().bio(requestedUser.getBio())
+        .dateOfBirth(requestedUser.getDateOfBirth()).firstName(requestedUser.getFirstName())
+        .lastName(requestedUser.getLastName()).location(requestedUser.getLocation())
+        .profilePhotoUrl(requestedUser.getProfilePhotoUrl()).build();
   }
 }
