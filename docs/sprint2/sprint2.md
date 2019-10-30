@@ -1,4 +1,4 @@
-Sprint1 Planning Meeting 
+Sprint2 Planning Meeting 
 Meeting Minutes
 	
 Participants:
@@ -10,37 +10,38 @@ Participants:
 	Tahasun Tarannum, 
 	Carl Alvares                                                     |
 
-Setting Up the Project
-We explored the options of technologies for the frontend, backend, and the database. After deliberating the pros and cons of each technology, we decided to use React, Java, and Neo4j respectively.
+UI Planning for feed and profiles
+We decided on the landing page for the users: a new user will land on their profile page after registration and an old user will land on the feed page after login. Post creation will be available on the feed page. Upon a post creation, the page will refresh to set the latest post on top of the feed.
 
-Database Design
-We outlined the nodes and their relationships for our NoSQL database. With thoughtful analysis, we reached a consensus on the properties of our nodes and relationships which were further to be examined and outlined on System-Design.doc. 
+Technical Details
+We decided on using cookies to track the active user for the "session". We will be working with a test database of predefined fandoms which will be used by the users to join or post in.
+
+Updating Design Document/Unit Tests
+Every assignee is responsible for adding CRC cards/docstrings as needed for their parts of the code with respect to their assigned tasks. They are also responsible for creating unit tests. 
 
 Task Assignment
 We set priorities for the sprint and divided tasks among ourselves as outlined below. Furthermore, stories were added to Jira, divided into tasks and assigned equally to all team members.
 
 
-	User stories to be completed in Sprint 1:
+	User stories to be completed in Sprint 2:
 		a) TEAM-1:Sign up/Create profile
-		b) TEAM-2:Login to account
-		c) TEAM-3:Logout of account
+		b) TEAM-4:Join Fandoms
+		c) TEAM-11:View Posts
 
 	User Story a) TEAM-1:Sign up/Create profile is broken down into the following tasks :
-		i) Decide database design and prepare Software Architecture diagram.			[ASSIGNED TO: Prashyen Kanagarajah]
-		ii) Create CRC Cards to represent classes, responsibilities, and collaborators.		[ASSIGNED TO: Aamir Haroon]
-		iii) Initialize Spring application with appropriate dependencies.			[ASSIGNED TO: Carl Alvares]
-		iv) Implement CreateNewUser API.							[ASSIGNED TO: Rahul Ramani]
-		v) Set up Front End. 									[ASSIGNED TO: Tahasun Tarannum]
-		vi) Implement UI for Registration Page.							[ASSIGNED TO: Abel Debalkew]
+		i) Implement UI for Registration Page.					            [ASSIGNED TO: Abel Debalkew]
 
-	User Story b) TEAM-2:Login to account is broken down into the following tasks:
-		i) Implement base design(HTML/CSS). 		[ASSIGNED TO: Tahasun Tarannum]
-		ii) Implement loginAsUser API. 			[ASSIGNED TO: Carl Alvares]
-		iii) Implement UI for login page. 		[ASSIGNED TO: Ruidan Ji]
+	User Story b) TEAM-4:Join Fandoms is broken down into the following tasks:
+		i) Create joinFandom API. 		                                            [ASSIGNED TO: Prashyen Kanagarajah]
+		ii) Implement "join fandom" functionality on registration page. 	            [ASSIGNED TO: Tahasun Tarannum]
+		iii) Create addFandom API. 		                                            [ASSIGNED TO: Rahul Ramani]
 
 
-	User Story c) TEAM-3:Logout of account is broken down into the following tasks:
-		i) Implement UI for logout buttion and redirect to login page. [ASSIGNED TO: Ruidan Ji]
+	User Story c) TEAM-11:View Posts in feed is broken down into the following tasks:
+		i) Create post feed component.                                                      [ASSIGNED TO: Ruidan Ji]
+		ii) Create sidebar component                                                        [ASSIGNED TO: Tahasun Tarannum]
+		iii)Create header component                                                         [ASSIGNED TO: Abel Debalkew]
+		iv)Implement getPostsByFandom API                                                   [ASSIGNED TO: Ruidan Ji]
 
 		Sprint1 Backlog:
 
