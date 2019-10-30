@@ -7,6 +7,7 @@ import java.util.Date;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 
 @NodeEntity
 public class Post {
@@ -20,6 +21,7 @@ public class Post {
   private String type;
   private String postedBy;
   private String fandomName;
+  @DateLong
   private Date postedTime;
   private String postPhotoURL;
 
