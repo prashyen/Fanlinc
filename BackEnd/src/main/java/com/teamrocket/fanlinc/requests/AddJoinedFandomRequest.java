@@ -2,7 +2,7 @@ package com.teamrocket.fanlinc.requests;
 
 import javax.validation.constraints.NotEmpty;
 
-public class JoinedFandomRequest {
+public class AddJoinedFandomRequest {
 
   @NotEmpty private String level;
 

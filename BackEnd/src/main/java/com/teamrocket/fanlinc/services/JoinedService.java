@@ -8,7 +8,7 @@ import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.FandomRepository;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
-import com.teamrocket.fanlinc.requests.JoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class JoinedService {
 
 
     @Transactional(readOnly = false)
-    public AddJoinedFandomResponse addJoinedFandom(JoinedFandomRequest request) {
+    public AddJoinedFandomResponse addJoinedFandom(AddJoinedFandomRequest request) {
         String requestedRelationType = joinedRepository.findJoinedByUsernameAndFandomName(request.getUsername(),
                                                                                             request.getFandomName());
         User requestedUser = userRepository.findByUsername(request.getUsername());

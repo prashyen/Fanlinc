@@ -1,6 +1,6 @@
 package com.teamrocket.fanlinc.controllers;
 
-import com.teamrocket.fanlinc.requests.JoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.services.JoinedService;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class JoinedController {
     @CrossOrigin
     @RequestMapping(value = BASE_PATH + "/addJoinedFandom", method = RequestMethod.POST)
     @ResponseBody
-    public AddJoinedFandomResponse AddJoinedFandom(@Valid @RequestBody JoinedFandomRequest request) {
+    public AddJoinedFandomResponse AddJoinedFandom(@Valid @RequestBody AddJoinedFandomRequest request) {
         return joinedService.addJoinedFandom(request);
     }
 
