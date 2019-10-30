@@ -73,8 +73,8 @@ public class AccountService {
   }
 
   /**
-   * Checks if a username with a given username exists in the database and if so it will return
-   * that users information
+   * Checks if a username with a given username exists in the database and if so it will return that
+   * users information
    *
    * @param request a {@link UserDetailsRequest} object containing the requested username
    * @return a {@link AddUserResponse} object containing the requested users information
@@ -94,6 +94,7 @@ public class AccountService {
     return new UserDetailsResponseBuilder().bio(requestedUser.getBio())
         .dateOfBirth(requestedUser.getDateOfBirth()).firstName(requestedUser.getFirstName())
         .lastName(requestedUser.getLastName()).location(requestedUser.getLocation())
-        .profilePhotoUrl(requestedUser.getProfilePhotoUrl()).build();
+        .profilePhotoUrl(requestedUser.getProfilePhotoUrl()).username(requestedUser.getUsername())
+        .build();
   }
 }
