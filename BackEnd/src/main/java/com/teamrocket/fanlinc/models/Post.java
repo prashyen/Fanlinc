@@ -16,10 +16,28 @@ public class Post {
   private Long id;
   private String title;
   private String content;
+  private String level;
+  private String type;
   private String postedBy;
   private String fandomName;
   private Date postedTime;
   private String postPhotoURL;
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
 
   public String getFandomName() {
     return fandomName;
