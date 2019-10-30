@@ -1,6 +1,6 @@
 package com.teamrocket.fanlinc.services;
 
-import com.teamrocket.fanlinc.exceptions.FandomAlreadyExistsException;
+import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UserAlreadyJoinedFandomException;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.models.Fandom;
@@ -41,8 +41,8 @@ public class JoinedService {
         //ensure the requested fandom hasn't already been created
         if (requestedFandom == null) {
             // if the requested fandom isn't unique output exception
-            throw new FandomAlreadyExistsException(
-                    "A fandom with the name " + request.getFandomName() + " already exists");
+            throw new FandomNotFoundException(
+                    "A fandom with the name " + request.getFandomName() + " does not exists");
         }
         //ensure the user is not already a member of the fandom
         if (requestedRelationType != null) {
