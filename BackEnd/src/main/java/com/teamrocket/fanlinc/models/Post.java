@@ -17,8 +17,17 @@ public class Post {
   private String title;
   private String content;
   private String postedBy;
+  private String fandomName;
   private Date postedTime;
   private String postPhotoURL;
+
+  public String getFandomName() {
+    return fandomName;
+  }
+
+  public void setFandomName(String fandomName) {
+    this.fandomName = fandomName;
+  }
 
   public Long getId() {
     return id;
