@@ -2,10 +2,7 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.FandomBuilder;
 import com.teamrocket.fanlinc.builders.JoinedBuilder;
-import com.teamrocket.fanlinc.exceptions.FandomAlreadyExistsException;
-import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
-import com.teamrocket.fanlinc.exceptions.UserAlreadyJoinedFandomException;
-import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
+import com.teamrocket.fanlinc.exceptions.*;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
@@ -19,12 +16,18 @@ import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class FandomService {
 
   private JoinedRepository joinedRepository;
   private UserRepository userRepository;
   private FandomRepository fandomRepository;
+  private final List<String> levels = Arrays.asList(new String[] {"1", "2", "3", "4"});
+  private final List<String> types =
+      Arrays.asList(new String[] {"General", "Cosplayer", "Vendor/Artist"});
 
   public FandomService(
       JoinedRepository joinedRepository,
@@ -67,10 +70,12 @@ public class FandomService {
   }
 
   /**
-   * Checks if a fandom with given name and user with given user name exist and if they don't exist
-   * throw FandomNotFoundException and UserNotFoundException respectively, if they both exist then
-   * check if the user has already joined the fandom, throw UserAlreadyJoinedFandomException if the
-   * user has joined the fandom already otherwise join user with fandom
+   * Checks if level and type is one of the accepted values if not throw InvalidLevelException and
+   * InvalidTypeException respectively, then check if a fandom with given name and user with given
+   * user name exist and if they don't exist throw FandomNotFoundException and UserNotFoundException
+   * respectively, if they both exist then check if the user has already joined the fandom, throw
+   * UserAlreadyJoinedFandomException if the user has joined the fandom already otherwise join user
+   * with fandom
    *
    * @param request a {@link AddJoinedFandomRequest} object containing the information about the
    *     user and fandom relationship
@@ -79,9 +84,22 @@ public class FandomService {
    * @throws UserNotFoundException if a user with the given username does not exist
    * @throws UserAlreadyJoinedFandomException if the user with given username already joined the
    *     fandom
+   * @throws InvalidTypeException if request type is not one of {"General", "Cosplayer",
+   *     "Vendor/Artist"}
+   * @throws InvalidLevelException if request level is not one of {"1", "2", "3", "4"}
    */
   @Transactional(readOnly = false)
   public AddJoinedFandomResponse addJoinedFandom(AddJoinedFandomRequest request) {
+
+    // if requested type is not one of {"General", "Cosplayer", "Vendor/Artist"}, throw
+    // InvalidTypeException
+    if (!types.contains(request.getType())) {
+      throw new InvalidTypeException("Type must be one of " + types.toString());
+    }
+    // if requested level is not one of {"1", "2", "3", "4"}, throw InvalidLevelException
+    if (!levels.contains(request.getLevel())) {
+      throw new InvalidLevelException("Level must be one of " + levels.toString());
+    }
 
     User requestedUser = userRepository.findByUsername(request.getUsername());
     // if the repository method returns a null value, user with given username was not found

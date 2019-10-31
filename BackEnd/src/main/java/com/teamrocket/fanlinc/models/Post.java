@@ -1,11 +1,12 @@
 package com.teamrocket.fanlinc.models;
 
 
-import java.util.Date;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.typeconversion.DateLong;
+
+import java.util.Date;
 
 @NodeEntity
 public class Post {
@@ -21,7 +22,7 @@ public class Post {
   private String fandomName;
   @DateLong
   private Date postedTime;
-  private String encodedPhoto;
+  private String displayPhotoUrl;
 
   public String getLevel() {
     return level;
@@ -87,11 +88,11 @@ public class Post {
     this.postedTime = postedTime;
   }
 
-  public String getEncodedPhoto() {
-    return encodedPhoto;
+  public String getDisplayPhotoUrl() {
+    return displayPhotoUrl;
   }
 
-  public void setEncodedPhoto(String encodedPhoto) {
-    this.encodedPhoto = encodedPhoto;
+  public void setDisplayPhotoUrl(String displayPhotoUrl) {
+    this.displayPhotoUrl = displayPhotoUrl;
   }
 }
