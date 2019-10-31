@@ -1,8 +1,8 @@
 package com.teamrocket.fanlinc.builders;
 
-    import com.teamrocket.fanlinc.models.User;
-    import java.util.Date;
-    import org.neo4j.ogm.annotation.typeconversion.DateLong;
+import com.teamrocket.fanlinc.models.User;
+import java.util.Date;
+import org.neo4j.ogm.annotation.typeconversion.DateLong;
 
 public class UserBuilder {
 

@@ -73,8 +73,8 @@ public class AccountService {
   }
 
   /**
-   * Checks if a username with a given username exists in the database and if so it will return that
-   * users information
+   * Checks if a user with a given username exists in the database and if so it will return that
+   * user's information
    *
    * @param request a {@link UserDetailsRequest} object containing the requested username
    * @return a {@link UserDetailsResponse} object containing the requested users information
