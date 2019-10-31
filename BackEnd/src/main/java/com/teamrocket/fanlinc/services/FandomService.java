@@ -70,12 +70,8 @@ public class FandomService {
   }
 
   /**
-   * Checks if level and type is one of the accepted values if not throw InvalidLevelException and
-   * InvalidTypeException respectively, then check if a fandom with given name and user with given
-   * user name exist and if they don't exist throw FandomNotFoundException and UserNotFoundException
-   * respectively, if they both exist then check if the user has already joined the fandom, throw
-   * UserAlreadyJoinedFandomException if the user has joined the fandom already otherwise join user
-   * with fandom
+   * Checks if level and type is one of the accepted values, fandom with given name and user with given
+   * username exists and the user has not already joined the fandom, then join the user with the fandom
    *
    * @param request a {@link AddJoinedFandomRequest} object containing the information about the
    *     user and fandom relationship
@@ -112,7 +108,7 @@ public class FandomService {
     if (requestedFandom == null) {
       // if the requested fandom does not exist
       throw new FandomNotFoundException(
-          "A fandom with the name " + request.getFandomName() + " does not exists");
+          "A fandom with the name " + request.getFandomName() + " does not exist");
     }
 
     Joined requestedRelation =
