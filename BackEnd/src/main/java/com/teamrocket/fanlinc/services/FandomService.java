@@ -35,7 +35,6 @@ public class FandomService {
     this.fandomRepository = fandomRepository;
   }
 
-
   /**
    * Checks if a fandom with a given name exists in the database and if not it will create that
    * fandom with the given info
@@ -67,6 +66,20 @@ public class FandomService {
     return new AddFandomResponse(request.getFandomName());
   }
 
+  /**
+   * Checks if a fandom with given name and user with given user name exist and if they don't exist
+   * throw FandomNotFoundException and UserNotFoundException respectively, if they both exist then
+   * check if the user has already joined the fandom, throw UserAlreadyJoinedFandomException if the
+   * user has joined the fandom already otherwise join user with fandom
+   *
+   * @param request a {@link AddJoinedFandomRequest} object containing the information about the
+   *     user and fandom relationship
+   * @return a {@link AddJoinedFandomResponse} object containing the relationship type and level
+   * @throws FandomNotFoundException if a fandom with the requested name does not exist
+   * @throws UserNotFoundException if a user with the given username does not exist
+   * @throws UserAlreadyJoinedFandomException if the user with given username already joined the
+   *     fandom
+   */
   @Transactional(readOnly = false)
   public AddJoinedFandomResponse addJoinedFandom(AddJoinedFandomRequest request) {
 
