@@ -77,7 +77,7 @@ public class AccountService {
    * users information
    *
    * @param request a {@link UserDetailsRequest} object containing the requested username
-   * @return a {@link AddUserResponse} object containing the requested users information
+   * @return a {@link UserDetailsResponse} object containing the requested users information
    * @throws UserNotFoundException if user with given username was not found
    */
   @Transactional(readOnly = true)
