@@ -1,10 +1,14 @@
 import React from 'react';
+import { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fanlinclogo from './img/fanlinc_logo.png';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -14,14 +18,34 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: "0.25em",
   },
+  logo: {
+    padding: "5m",
+  }
 }));
 
 export default function Header() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
+        <div>
+          <img
+            src={Fanlinclogo}
+            height="70"
+            width="70"
+            alt="Fanlinc logo"
+          />
+        </div>
         <Typography variant="h6" className={classes.title}>
           Fanlinc
         </Typography>
@@ -36,9 +60,20 @@ export default function Header() {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             color="inherit"
+            onClick={handleClick}
           >
             <AccountCircle />
           </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            getContentAnchorEl={null}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
         </div>
       </Toolbar>
     </AppBar>
