@@ -19,8 +19,16 @@ public class FandomService {
   }
 
 
+  /**
+   * Checks if a fandom with a given name exists in the database and if not it will create that
+   * fandom with the given info
+   *
+   * @param request a {@link AddFandomRequest} object containing the information for the new fandom
+   * @return a {@link AddFandomResponse} object containing the new fandoms name
+   * @throws FandomAlreadyExistsException if a fandom with the requested name was already created
+   */
   @Transactional(readOnly = false)
-  public AddFandomResponse addUser(AddFandomRequest request) {
+  public AddFandomResponse addFandom(AddFandomRequest request) {
     Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
 
     //ensure the requested fandom hasn't already been created

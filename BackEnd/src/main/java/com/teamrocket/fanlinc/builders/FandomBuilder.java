@@ -25,12 +25,12 @@ public class FandomBuilder {
     return this;
   }
 
-  public FandomBuilder displayPhotoURL(String displayPhotoURL){
+  public FandomBuilder displayPhotoURL(String displayPhotoURL) {
     this.displayPhotoURL = displayPhotoURL;
     return this;
   }
 
-  public Fandom build(){
+  public Fandom build() {
     Fandom newFandom = new Fandom();
     newFandom.setFandomName(this.fandomName);
     newFandom.setDescription(this.description);
