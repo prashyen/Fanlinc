@@ -27,6 +27,11 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 		a) TEAM-1:Sign up/Create profile
 		b) TEAM-4:Join Fandoms
 		c) TEAM-11:View Posts
+		d) TEAM-48: Standardize front-end React architecture
+		e) TEAM-9: Create Posts
+		f) TEAM-7: View Profiles
+		g) TEAM-12: Filter Posts
+		h) TEAM-49: Test Application
 
 	User Story a) TEAM-1:Sign up/Create profile is broken down into the following tasks :
 		i) Implement UI for Registration Page.					            [ASSIGNED TO: Abel Debalkew]
@@ -42,8 +47,31 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 		ii) Create sidebar component                                                        [ASSIGNED TO: Tahasun Tarannum]
 		iii)Create header component                                                         [ASSIGNED TO: Abel Debalkew]
 		iv)Implement getPostsByFandom API                                                   [ASSIGNED TO: Ruidan Ji]
+		
+	User Story d) TEAM-48: Standardize front-end React architecture
+		i) Make front-end architecture consistent                                           [ASSIGNED TO: Carl Alvares]
+		ii) Record front-end architecture in System Design document                         [ASSIGNED TO: Carl Alvares]
+		
+	User Story e) TEAM-9: Create Posts
+		i) Create modal for post creation                                                   [ASSIGNED TO: Aamir Haroon]
+		ii) Implement createPost API                                                        [ASSIGNED TO: Prashyen Kanagarajah]
+		
+	User Story f) TEAM-7: View Profiles
+		i) Create sidebar component                                                         [ASSIGNED TO: Aamir Haroon]
+		ii) Create posts by user component                                                  [ASSIGNED TO: Ruidan Ji]
+		iii) Implement getPostsByUser API                                                   [ASSIGNED TO: Abel Debalkew]
+		iv) Implement getUserDetails API                                                    [ASSIGNED TO: Rahul Ramani]
+		
+	User Story g) TEAM-12: Filter Posts
+		i) Implement getPostsFilterBy API                                                   [ASSIGNED TO: Rahul Ramani]
+		ii) Add "filter" functionality to post feed component                               [ASSIGNED TO: Ruidan Ji]
+		
+	User Story h) TEAM-49: Test Application
+		i) Initialize default database for testing                                          [ASSIGNED TO: Aamir Haroon]
+		ii) Add unit tests to back-end                                                      [ASSIGNED TO: Carl Alvares]
+		iii) Add unit tests to front-end
 
-		Sprint1 Backlog:
+		Sprint2 Backlog:
 
 | StoryID | Priority | Story                                                                                                                         | Story Points | Criteria of Satisfaction                                                                      |
 |---------|----------|-------------------------------------------------------------------------------------------------------------------------------|--------------|-----------------------------------------------------------------------------------------------|
