@@ -31,7 +31,7 @@ public class Joined {
         return fandom;
     }
 
-    public void setFandom(Fandom fandomName) {
+    public void setFandom(Fandom fandom) {
         this.fandom = fandom;
     }
 
