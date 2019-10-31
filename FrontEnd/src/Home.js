@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 //import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-export default function UserView(props) {
+export default function Home(props) {
 
   return (
     <div>
