@@ -59,7 +59,7 @@ public class FandomService {
     // if the fandom doesn't exist then create a new fandom node
     fandomRepository.save(
         new FandomBuilder()
-            .fandomName(request.getFandomName()) // adds it to the boddy and database
+            .fandomName(request.getFandomName()) // adds it to the database
             .fandomName(request.getFandomName())
             .description(request.getDescription())
             .genre(request.getGenre())

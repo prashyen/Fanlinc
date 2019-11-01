@@ -17,7 +17,6 @@ public class PostController {
         this.postService = postService;
     }
 
-    // Nothing important
     @CrossOrigin
     // Mapping the URL to the given method
     @RequestMapping(value = BASE_PATH + "/addPost", method = RequestMethod.POST)
