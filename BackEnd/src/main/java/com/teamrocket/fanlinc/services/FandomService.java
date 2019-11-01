@@ -18,12 +18,11 @@ public class FandomService {
     this.fandomRepository = fandomRepository;
   }
 
-
   @Transactional(readOnly = false)
   public AddFandomResponse addUser(AddFandomRequest request) {
     Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
 
-    //ensure the requested fandom hasn't already been created
+    // ensure the requested fandom hasn't already been created
     if (requestedFandom != null) {
       // if the requested fandom isn't unique output exception
       throw new FandomAlreadyExistsException(
@@ -31,12 +30,16 @@ public class FandomService {
     }
 
     // if the fandom doesn't exist then create a new fandom node
-    fandomRepository.save(new FandomBuilder().fandomName(request.getFandomName()) // adds it to the boddy and database
-        .description(request.getDescription()).genre(request.getGenre())
-        .displayPhotoURL(request.getDisplayPhotoURL()).build());
+    fandomRepository.save(
+        new FandomBuilder()
+            .fandomName(request.getFandomName()) // adds it to the boddy and database
+            .description(request.getDescription())
+            .genre(request.getGenre())
+            .displayPhotoURL(request.getDisplayPhotoURL())
+            .build());
     // returns an instantation of the response object you define
     return new AddFandomResponse(request.getFandomName());
 
-//postrepositiroy .save object
+    // postrepositiroy .save object
   }
 }

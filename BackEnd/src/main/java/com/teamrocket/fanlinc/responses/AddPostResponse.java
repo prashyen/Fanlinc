@@ -1,15 +1,26 @@
 package com.teamrocket.fanlinc.responses;
 
 public class AddPostResponse {
-    // Have a constructor
-    private String title;
-    private String postedBy;
-    private String fandomName;
+  // Have a constructor
+  private String title;
+  private String postedBy;
+  private String fandomName;
 
-    public AddPostResponse(String title, String postedBy, String fandomName) {
-        this.title = title;
-        this.postedBy = postedBy;
-        this.fandomName = fandomName;
-    }
+  public AddPostResponse(String title, String postedBy, String fandomName) {
+    this.title = title;
+    this.postedBy = postedBy;
+    this.fandomName = fandomName;
+  }
 
+  public String getTitle() {
+    return title;
+  }
+
+  public String getPostedBy() {
+    return postedBy;
+  }
+
+  public String getFandomName() {
+    return fandomName;
+  }
 }

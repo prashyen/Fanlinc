@@ -28,13 +28,21 @@ public class PostService {
   public AddPostResponse addPost(AddPostRequest request) {
 
     // if the fandom doesn't exist then create a new fandom node
-    postRepository.save(new PostBuilder().content(request.getContent()).fandomName(request.getFandomName()
-    ).level(request.getLevel()).title(request.getTitle()).postedBy(request.getPostedBy()).postedTime(new Date())
-    .postPhotoURL(request.getPostPhotoURL()).type(request.getType()).build());
+    postRepository.save(
+        new PostBuilder()
+            .content(request.getContent())
+            .fandomName(request.getFandomName())
+            .level(request.getLevel())
+            .title(request.getTitle())
+            .postedBy(request.getPostedBy())
+            .postedTime(new Date())
+            .postPhotoURL(request.getPostPhotoURL())
+            .type(request.getType())
+            .build());
 
     // returns an instantation of the response object you define
     return new AddPostResponse(request.getTitle(), request.getPostedBy(), request.getFandomName());
 
-//postrepositiroy .save object
+    // postrepositiroy .save object
   }
 }

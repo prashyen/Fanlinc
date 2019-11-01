@@ -27,5 +27,4 @@ public class FandomController {
   public AddFandomResponse addUser(@Valid @RequestBody AddFandomRequest request) {
     return fandomService.addUser(request);
   }
-
 }

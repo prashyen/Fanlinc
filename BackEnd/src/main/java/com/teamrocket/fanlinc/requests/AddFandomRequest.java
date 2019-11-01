@@ -6,17 +6,13 @@ import javax.validation.constraints.NotNull;
 public class AddFandomRequest {
   // Acting as a template for a fandomrequest
   // annotations make sure its giving you what you expect
-  @NotEmpty
-  private String fandomName;
+  @NotEmpty private String fandomName;
 
-  @NotEmpty
-  private String genre;
+  @NotEmpty private String genre;
 
-  @NotEmpty
-  private String description;
+  @NotEmpty private String description;
 
-  @NotNull
-  private String displayPhotoURL;
+  @NotNull private String displayPhotoURL;
 
   public String getFandomName() {
     return fandomName;

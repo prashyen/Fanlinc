@@ -8,7 +8,6 @@ public class AddFandomResponse {
     this.fandomName = fandomName;
   }
 
-
   public String getFandomName() {
     return fandomName;
   }

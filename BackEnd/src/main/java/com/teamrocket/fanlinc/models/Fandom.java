@@ -6,10 +6,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 public class Fandom {
-// neo4j makes the id for you
-  @Id
-  @GeneratedValue
-  private Long id;
+  // neo4j makes the id for you
+  @Id @GeneratedValue private Long id;
   private String fandomName;
   private String genre;
   private String description;
