@@ -24,7 +24,7 @@ public class AccountController {
     this.accountService = accountService;
   }
 
-  @CrossOrigin(origins = "http://localhost:3000")
+  @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.POST)
   @ResponseBody
   public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
