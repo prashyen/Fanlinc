@@ -46,9 +46,9 @@ public class AccountController {
   }
 
   @CrossOrigin
-  @RequestMapping(value = BASE_PATH + "/getUserFandoms", method = RequestMethod.GET)
+  @RequestMapping(value = BASE_PATH + "/userFandoms", method = RequestMethod.GET)
   @ResponseBody
-  public UserFandomsResponse GetUserFandoms(@Valid @RequestBody UserFandomsRequest request) {
+  public UserFandomsResponse getUserFandoms(@Valid @RequestBody UserFandomsRequest request) {
     return accountService.getUserFandoms(request);
   }
 }
