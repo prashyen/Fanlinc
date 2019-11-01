@@ -118,7 +118,7 @@ public class AccountService {
   /**
    * Checks if given user exist, if so returns all the fandom names the user has joined
    *
-   * @param request a {@link UserFandomsRequest} object containing the information about the user
+   * @param request a {@link UserFandomsRequest} object containing username of user
    * @return a {@link UserFandomsResponse} object containing the fandom names
    * @throws UserNotFoundException if a user with the given username does not exist
    */
