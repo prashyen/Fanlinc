@@ -17,8 +17,12 @@ public class FandomController {
     this.fandomService = fandomService;
   }
 
+  // Nothing important
   @CrossOrigin
+  // Mapping the url into the given method.
   @RequestMapping(value = BASE_PATH + "/addFandom", method = RequestMethod.POST)
+  // Whatever this returns has to be turned into a response body
+
   @ResponseBody
   public AddFandomResponse addUser(@Valid @RequestBody AddFandomRequest request) {
     return fandomService.addUser(request);

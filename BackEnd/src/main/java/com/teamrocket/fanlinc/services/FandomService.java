@@ -11,7 +11,7 @@ import com.teamrocket.fanlinc.builders.FandomBuilder;
 
 @Service
 public class FandomService {
-
+  // All the actual functionality goes
   private FandomRepository fandomRepository;
 
   public FandomService(FandomRepository fandomRepository) {
@@ -31,12 +31,12 @@ public class FandomService {
     }
 
     // if the fandom doesn't exist then create a new fandom node
-    fandomRepository.save(new FandomBuilder().fandomName(request.getFandomName())
+    fandomRepository.save(new FandomBuilder().fandomName(request.getFandomName()) // adds it to the boddy and database
         .description(request.getDescription()).genre(request.getGenre())
         .displayPhotoURL(request.getDisplayPhotoURL()).build());
-
+    // returns an instantation of the response object you define
     return new AddFandomResponse(request.getFandomName());
 
-
+//postrepositiroy .save object
   }
 }

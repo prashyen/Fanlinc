@@ -37,6 +37,5 @@ public class FandomBuilder {
     newFandom.setGenre(this.genre);
     newFandom.setDisplayPhotoURL(this.displayPhotoURL);
     return newFandom;
-
   }
 }

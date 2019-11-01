@@ -4,7 +4,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AddFandomRequest {
-
+  // Acting as a template for a fandomrequest
+  // annotations make sure its giving you what you expect
   @NotEmpty
   private String fandomName;
 
@@ -32,4 +33,5 @@ public class AddFandomRequest {
   public String getDisplayPhotoURL() {
     return displayPhotoURL;
   }
+  // alt insert to make the getters for you
 }
