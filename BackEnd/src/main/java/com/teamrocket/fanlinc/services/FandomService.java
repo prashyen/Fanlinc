@@ -65,7 +65,6 @@ public class FandomService {
             .genre(request.getGenre())
             .displayPhotoURL(request.getDisplayPhotoURL())
             .build());
-    // returns an instantation of the response object you define
     return new AddFandomResponse(request.getFandomName());
   }
 

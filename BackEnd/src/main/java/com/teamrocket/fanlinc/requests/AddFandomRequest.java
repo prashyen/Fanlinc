@@ -29,5 +29,4 @@ public class AddFandomRequest {
   public String getDisplayPhotoURL() {
     return displayPhotoURL;
   }
-  // alt insert to make the getters for you
 }

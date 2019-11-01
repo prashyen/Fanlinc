@@ -1,7 +1,6 @@
 package com.teamrocket.fanlinc.responses;
 
 public class AddPostResponse {
-  // Have a constructor
   private String title;
   private String postedBy;
   private String fandomName;
