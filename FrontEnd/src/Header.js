@@ -23,9 +23,9 @@ export default function Header(props) {
   };
 
   const handleLogout = () => {
-    props.setLoggedInUser(null);
-    props.setLoggedIn(false);
-  }
+    // set loggedInUser cookie to null to end session and log out user
+    props.setCookie("loggedInUser", null);
+  };
 
   return (
       <AppBar position="static" className={classes.appBar}>

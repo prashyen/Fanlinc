@@ -6,9 +6,10 @@ export default function Home(props) {
 
   return (
       <div>
-        <Header loggedInUser={props.loggedInUser}
-                setLoggedIn={props.setLoggedIn}
-                setLoggedInUser={props.setLoggedInUser}/>
+        <Header
+            loggedInUser={props.loggedInUser}
+            setCookie={props.setCookie}
+        />
 
         {/*
       Add future routes to feed and profile here like this:

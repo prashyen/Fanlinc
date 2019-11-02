@@ -21,7 +21,7 @@ const initialState = {
 
 const validateUserURL = "http://localhost:8080/account/validateUser";
 
-export default function LoginPage(props) {
+export default function Login(props) {
 
   const {values, handleChange, handleSubmit} = useForm(submit, initialState);
 
@@ -60,8 +60,7 @@ export default function LoginPage(props) {
       console.log("Response body: ", data);
       if (data.accepted) {
         console.log("User authenticated");
-        props.setLoggedInUser(data.username);
-        props.setLoggedIn(true);
+        props.setCookie("loggedInUser", data.username, {path: "/"});
         return Promise.resolve();
       }
       return Promise.reject("Incorrect password");

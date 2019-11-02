@@ -85,8 +85,7 @@ export default function Register(props) {
       switch (response.status) {
         case 200:
           console.log("Profile created");
-          props.setLoggedInUser(username);
-          props.setLoggedIn(true);
+          props.setCookie('loggedInUser', username);
           return Promise.resolve();
         case 409:
           return Promise.reject("User with that username already exists");
