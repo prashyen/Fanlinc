@@ -2,6 +2,7 @@ package com.teamrocket.fanlinc.repositories;
 
 import com.teamrocket.fanlinc.models.Post;
 import java.util.List;
+import javafx.geometry.Pos;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -10,6 +11,14 @@ public interface PostRepository extends Neo4jRepository<Post, Long> {
   List<Post> findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(
       @Param("fandomName") String fandomName, @Param("level") String level,
       @Param("type") String type);
+
+  List<Post> findByFandomNameAndLevelOrderByPostedTimeDesc(
+      @Param("fandomName") String fandomName, @Param("level") String level);
+
+  List<Post> findByFandomNameAndTypeOrderByPostedTimeDesc(
+      @Param("fandomName") String fandomName, @Param("type") String type);
+
+  List<Post> findByFandomName(@Param("fandomName") String fandomName);
 
 
 }
