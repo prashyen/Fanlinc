@@ -1,28 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import LoginPage from './Login';
-import LogoutPage from './Logout';
 import Register from './Register';
-import ResponseForm from './LoginResponse';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import ExampleLoggedIn from "./ExampleLoggedIn";
 
-function App() {
+export default function App() {
+  // declare logged in and logged in user states
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/responseForm">
-          <ResponseForm />
-        </Route>
-        <Route path="/logout">
-          <LogoutPage />
-        </Route>
-        <Route exact path="/register" component={Register} />
-      </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {
+              loggedIn ? <ExampleLoggedIn loggedInUser={loggedInUser}
+                                          setLoggedIn={setLoggedIn}
+                                          setLoggedInUser={setLoggedInUser}/> :
+                  <Redirect to="/login"/>
+            }
+          </Route>
+          <Route exact path="/login">
+            {
+              loggedIn ? <Redirect to="/"/> :
+                  <LoginPage setLoggedIn={setLoggedIn}
+                             setLoggedInUser={setLoggedInUser}/>
+            }
+          </Route>
+          <Route exact path="/register">
+            {
+              loggedIn ? <Redirect to="/"/> :
+                  <Register setLoggedIn={setLoggedIn}
+                            setLoggedInUser={setLoggedInUser}/>
+            }
+          </Route>
+        </Switch>
+      </Router>
   );
 }
-
-export default App;

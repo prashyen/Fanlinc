@@ -2,126 +2,138 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Copyright, theme, useStyles } from './loginStyle';
+import {Copyright, theme, useStyles} from './loginStyle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Fanlinclogo from'./img/fanlinc_logo.png';
-import { ThemeProvider } from '@material-ui/core/styles';
+import Fanlinclogo from './img/fanlinc_logo.png';
+import {ThemeProvider} from '@material-ui/core/styles';
+import useForm from "./useForm";
+import Link from "@material-ui/core/Link";
 
-export default function LoginPage() {
-  const classes = useStyles();
-  var username;
-  var password;
+const initialState = {
+  username: "",
+  password: ""
+};
 
-  function submitForm() {
-      fetch("http://localhost:8080/account/validateUser", {
-        method: "post",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        //make sure to serialize your JSON body
-        body: JSON.stringify({
-            "username" : username,
-            "password": password
-        })
-      }).then(response => {
-              console.log("Login response:", response);
-              switch (response.status) {
-                case 200:
-                  alert("Login Successful");
-                  break;
-                case 404:
-                  alert("User does not exists");
-                  break;
-                default:
-                  alert("Error occurred during login");
-              }
-            }).catch(err => {
-              alert("Error sending the request. ", err);
-            });
-          }
-  function handleEmailChange(e){
-    username = (e.target.value)
+const validateUserURL = "http://localhost:8080/account/validateUser";
+
+export default function LoginPage(props) {
+
+  const {values, handleChange, handleSubmit} = useForm(submit, initialState);
+
+  /**
+   * Handles the clicking of the submit button and sends a post request to the url:
+   * http://localhost:8080/account/validateUser
+   */
+  function submit() {
+    const {
+      username,
+      password
+    } = values;
+
+    fetch(validateUserURL, {
+      method: "post",
+      mode: "cors",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "username": username,
+        "password": password
+      })
+    }).then(response => {
+      console.log("Login response: ", response);
+      switch (response.status) {
+        case 200:
+          return response.json();
+        case 404:
+          return Promise.reject("User does not exist");
+        default:
+          return Promise.reject("Error occurred during login")
+      }
+    }).then(data => {
+      console.log("Response body: ", data);
+      if (data.accepted) {
+        console.log("User authenticated");
+        props.setLoggedInUser(data.username);
+        props.setLoggedIn(true);
+        return Promise.resolve();
+      }
+      return Promise.reject("Incorrect password");
+    })
+    .catch(err => {
+      alert(err);
+    });
   }
-  function handlePasswordChange(e){
-     password = (e.target.value)
-   }
-  return (
-    <ThemeProvider theme={theme}>
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item />
-      <Grid item md={4} style={{textAlign: "center"}}component={Paper} elevation={0} square>
 
-        <div className={classes.paper}>
-          <img src={Fanlinclogo} height="70" width="70"/>
-          <Typography component="h1" variant="h5">
-            Fanlinc Login
-          </Typography>
-          <form className={classes.form} id= "myform" >
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={handleEmailChange}
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange = {handlePasswordChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              color="primary"
-              onClick={() => {submitForm()}}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
-    </ThemeProvider>
+  const classes = useStyles();
+
+  return (
+      <ThemeProvider theme={theme}>
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline/>
+          <Grid item/>
+          <Grid item md={4} style={{textAlign: "center"}} component={Paper}
+                elevation={0} square>
+
+            <div className={classes.paper}>
+              <img src={Fanlinclogo} height="70" width="70" alt="Fanlinc Logo"/>
+              <Typography component="h1" variant="h5">
+                Fanlinc Login
+              </Typography>
+              <form className={classes.form} onSubmit={handleSubmit}>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Username"
+                    name="username"
+                    onChange={handleChange}
+                    autoFocus
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    onChange={handleChange}
+                />
+                <FormControlLabel
+                    control={<Checkbox value="remember" color="primary"/>}
+                    label="Remember me"
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.submit}
+                    color="primary"
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item>
+                    <Link href="/register" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+                <Box mt={5}>
+                  <Copyright/>
+                </Box>
+              </form>
+            </div>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
   );
 }
