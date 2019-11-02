@@ -28,7 +28,7 @@ export const theme = createMuiTheme({
   },
 });
 
-export const useStyles = makeStyles(theme => ({
+export const useStylesLogin = makeStyles(theme => ({
   root: {
     height: '100vh',
     background: `url(${Image})`,
