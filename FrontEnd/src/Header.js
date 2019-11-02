@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import { headerStyle } from './headerStyle';
 import AppBar from '@material-ui/core/AppBar';
-import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,21 +10,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fanlinclogo from './img/fanlinc_logo.png';
 
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    backgroundColor: "#1D1E3D",
-  },
-  title: {
-    flexGrow: 1,
-    padding: "0.25em",
-  },
-  logo: {
-    padding: "5m",
-  }
-}));
-
 export default function Header() {
-  const classes = useStyles();
+  const classes = headerStyle();
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = event => {
