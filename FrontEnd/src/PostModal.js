@@ -8,27 +8,20 @@ import Select from '@material-ui/core/Select';
 import {useStyles}  from './postModalStyle';
 import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
+import { useState, useEffect } from "react";
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import {DropzoneDialog, DropzoneArea} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
-var level ='';
-var title ='';
-var content ='';
-var fandomName ='';
-var type='';
-var postedTime
-//photo
-var postedBy='';
+
+var postedBy='A';
+
 const initialState = {
   title: "",
-  text: "",
-  imgURL: "",
+  content: "",
+  imageURL: "",
   type: "",
-  level: "",
-  fandom: ""
+  level: ""
 };
 
 const addPostURL = "http://localhost:8080/post/addPost";
@@ -42,18 +35,13 @@ export default function PostModal({open, handleClose}){
   /*function submit() {
     const {
       title,
-      text,
+      content,
       level,
-      fandom,
-      files,
+      imageURL,
+      type
     } = values;
-    function encoder(){
-      var BasicBase64format 
-      = Base64.getEncoder() 
-            .encodeToString(sample.getBytes()); 
-    }
 
-    fetch(addUserURL, {
+    fetch(addPostURL, {
       method: 'post',
       mode: 'cors',
       headers: {
@@ -61,12 +49,13 @@ export default function PostModal({open, handleClose}){
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        "firstName": title,
-        "lastName": text,
-        "password": level,
-        "username": fandom,
-        "postedDate" new Date(),
-        "dateOfBirth": base64.encodeToString(files[0]) 
+        "title": title,
+        "content": content,
+        "level": level,
+        "username": postedBy,
+        "type": type,
+        "fandomName": fandom
+        "postPhotoURL": imageURL
       })
     }).then(response => {
       console.log("registration response:", response);
@@ -80,38 +69,40 @@ export default function PostModal({open, handleClose}){
     }).catch(err => {
       alert("Error sending the request. ", err);
     });
-  }
-  function dynamicFandomNames() {
-      fetch("http://localhost:8080/account/userFandoms", {
-        method: 'get',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          "username": "A"
-        })
-      })
-        .then((response) => {
-          switch (response.status) {
+  }*/
+  const [fandoms, setFandoms] = useState();
+
+  useEffect (() => {
+    fetch('http://localhost:8080/account/userFandoms?username='+postedBy, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+      }).then(response => {
+        switch (response.status) {
           case 200:
             return response.json();
           default:
-            alert("Something went wrong");
-          }
-        })
-        .then(data => {
-          let fandomsFromApi = data.map(fandom => { return {value: fandom} })
-          this.setState({ teams: [{value: '', display: '(Select your favourite team)'}].concat(teamsFromApi) });
-        }).catch(error => {
-          console.log(error);
-        });
-*/
+            alert("Uh oh! Something went wrong.");
+        }
+      }).then(data => {
+        setFandoms({data});
+      }).catch(err => {
+        alert("Error sending the request. ", err);
+      });
+    }, []);
+      
+      
   const classes = useStyles();
 
   const { values, handleChange, handleSubmit } = useForm(null, initialState);
+  const [fandomName, setFandomName] = useState('');
 
+  const handleFandomNameChange = event =>{
+    setFandomName(event.target.value);
+  }
  
   const handleResetClose = event => {
     values.imgURL = '';
@@ -120,9 +111,11 @@ export default function PostModal({open, handleClose}){
     values.level = '';
     values.fandom = '';
     values.type = '';
+    setFandomName('');
     handleChange(event);
     handleClose();
   };
+
 
     return (
       <Modal
@@ -157,14 +150,12 @@ export default function PostModal({open, handleClose}){
                       onChange={handleChange}
                       value={values.level}
                       required
-                      inputProps={{
-                        name: 'level'
-                      }}
+                      name= 'level'
                       >
-                        <MenuItem value={"1"}>1</MenuItem>
-                        <MenuItem value={"2"}>2</MenuItem>
-                        <MenuItem value={"3"}>3</MenuItem>
-                        <MenuItem value={"4"}>4</MenuItem>
+                        <MenuItem value={"1"}>1 - Limited</MenuItem>
+                        <MenuItem value={"2"}>2 - Casual</MenuItem>
+                        <MenuItem value={"3"}>3 - Very Involved</MenuItem>
+                        <MenuItem value={"4"}>4 - Expert</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -175,20 +166,16 @@ export default function PostModal({open, handleClose}){
                       <InputLabel>
                         Fandom
                       </InputLabel>
+                      {fandoms?(
                       <Select
-                      onChange={handleChange}
-                      value={values.fandom}
+                      onChange={handleFandomNameChange}
+                      value={fandomName}
+                      type="text"
                       required
                       labelWidth={60}
-                      inputProps={{
-                        name: 'fandom'
-                      }}
                       >
-                        <MenuItem value={"Fandom A"}>Fandom A</MenuItem>
-                        <MenuItem value={"Fandom B"}>Fandom B</MenuItem>
-                        <MenuItem value={"Fandom C"}>Fandom C</MenuItem>
-                        <MenuItem value={"Fandom D"}>Fandom D</MenuItem>
-                      </Select>
+                        {fandoms.data.fandomNames.map((fandomName) =><MenuItem key={fandomName} value={fandomName}> {fandomName} </MenuItem>)}    
+                      </Select>):(<div value="" >Loading . . . </div>)}
                     </FormControl>
                   </Grid>
                   <Grid item xs={4}>
@@ -203,9 +190,7 @@ export default function PostModal({open, handleClose}){
                       value={values.type}
                       required
                       labelWidth={35}
-                      inputProps={{
-                        name: 'type'
-                      }}
+                      name='type'
                       >
                         <MenuItem value={"General"}>General</MenuItem>
                         <MenuItem value={"Vendor/Artist"}>Vendor/Artist</MenuItem>
@@ -278,5 +263,5 @@ export default function PostModal({open, handleClose}){
           </Grid>
         </Fade>
       </Modal>
-    );
+    )
 }
