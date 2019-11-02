@@ -25,30 +25,31 @@ public class AccountController {
   }
 
   @CrossOrigin
-  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.POST)
+  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.GET)
   @ResponseBody
-  public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
-    return accountService.validateUser(request);
+  public ValidateUserResponse validateUser(@RequestParam(name = "username") String username,
+      @RequestParam(name = "password") String password) {
+    return accountService.validateUser(username, password);
   }
 
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/addUser", method = RequestMethod.POST)
   @ResponseBody
-  public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
+  public AddUserResponse addUser(@RequestBody AddUserRequest request) {
     return accountService.addUser(request);
   }
 
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/userDetails", method = RequestMethod.GET)
   @ResponseBody
-  public UserDetailsResponse getUserDetails(@Valid @RequestBody UserDetailsRequest request) {
-    return accountService.getUserDetails(request);
+  public UserDetailsResponse getUserDetails(@RequestParam(name="username") String username) {
+    return accountService.getUserDetails(username);
   }
 
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/userFandoms", method = RequestMethod.GET)
   @ResponseBody
-  public UserFandomsResponse getUserFandoms(@Valid @RequestBody UserFandomsRequest request) {
-    return accountService.getUserFandoms(request);
+  public UserFandomsResponse getUserFandoms(@RequestParam(name="username") String username) {
+    return accountService.getUserFandoms(username);
   }
 }
