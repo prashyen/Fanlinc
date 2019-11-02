@@ -4,11 +4,11 @@ import LoginPage from './Login';
 import Register from './Register';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
-  Switch,
-  Redirect
+  Switch
 } from "react-router-dom";
-import ExampleLoggedIn from "./ExampleLoggedIn";
+import Home from './Home';
 
 export default function App() {
   // declare logged in and logged in user states
@@ -20,9 +20,9 @@ export default function App() {
         <Switch>
           <Route exact path="/">
             {
-              loggedIn ? <ExampleLoggedIn loggedInUser={loggedInUser}
-                                          setLoggedIn={setLoggedIn}
-                                          setLoggedInUser={setLoggedInUser}/> :
+              loggedIn ? <Home loggedInUser={loggedInUser}
+                               setLoggedIn={setLoggedIn}
+                               setLoggedInUser={setLoggedInUser}/> :
                   <Redirect to="/login"/>
             }
           </Route>

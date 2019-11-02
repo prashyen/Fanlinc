@@ -1,21 +1,20 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import Image from './img/loginBackground.jpg';
 import orange from '@material-ui/core/colors/orange';
-import { createMuiTheme } from '@material-ui/core/styles';
 
 export function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Fanlinc
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          Fanlinc
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
   );
 }
 
@@ -52,7 +51,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   palette: {
-      primary: 'orange',
+    primary: 'orange',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
