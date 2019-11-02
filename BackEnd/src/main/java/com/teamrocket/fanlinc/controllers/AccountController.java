@@ -2,9 +2,11 @@ package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddUserRequest;
 import com.teamrocket.fanlinc.requests.UserDetailsRequest;
+import com.teamrocket.fanlinc.requests.UserFandomsRequest;
 import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.responses.AddUserResponse;
 import com.teamrocket.fanlinc.responses.UserDetailsResponse;
+import com.teamrocket.fanlinc.responses.UserFandomsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
 import com.teamrocket.fanlinc.services.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,8 @@ public class AccountController {
   public AccountController(AccountService accountService) {
     this.accountService = accountService;
   }
-  @CrossOrigin(origins = "http://localhost:3000")
+
+  @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.POST)
   @ResponseBody
   public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
@@ -42,4 +45,10 @@ public class AccountController {
     return accountService.getUserDetails(request);
   }
 
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/userFandoms", method = RequestMethod.GET)
+  @ResponseBody
+  public UserFandomsResponse getUserFandoms(@Valid @RequestBody UserFandomsRequest request) {
+    return accountService.getUserFandoms(request);
+  }
 }
