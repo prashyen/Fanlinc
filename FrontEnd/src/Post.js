@@ -18,10 +18,10 @@ import { Copyright, theme, useStylesPosts } from './materialUIStyle';
 
 const featuredPosts = [
   {
-    title: 'Featured post 6',
+    title: 'Post title 6',
     date: 'Nov 12',
     description:
-      'This will be Fanlinc post 6 example of longer post with supporting text, images, links or other sources below:'
+      'This will be Fanlinc post 6 example (longer post) with supporting text, images, links or other sources below:'
       + 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from'
       +'45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up'
       +'one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature,'
@@ -34,7 +34,7 @@ const featuredPosts = [
       'This will be Fanlinc post 5 with supporting texts (shorter post)'
   },
 {
-  title: 'Featured post 4',
+  title: 'Post title 4',
   date: 'Nov 3',
   description:
     'This will be Fanlinc post 4 with supporting texts, images, links or other sources below',
@@ -46,7 +46,7 @@ const featuredPosts = [
     'This will be Fanlinc post 3 with supporting texts, images, links or other sources below',
   },
  {
-   title: 'Featured post 2',
+   title: 'Post title 2',
    date: 'Oct 19',
    description:
      'This will be Fanlinc post 2 with supporting texts, images, links or other sources below',
