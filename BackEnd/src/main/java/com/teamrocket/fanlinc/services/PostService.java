@@ -70,7 +70,7 @@ public class PostService {
             request.getPostedBy(), request.getFandomName());
     // ensure the user is already a member of the fandom
     if (requestedRelation == null) {
-      // User already a member of the fandom, output exception
+      // User not a member of the fandom, output exception
       throw new UserNotInFandomException("User not in " + request.getFandomName());
     }
     postRepository.save(
