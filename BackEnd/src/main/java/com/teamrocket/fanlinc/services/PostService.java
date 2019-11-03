@@ -47,7 +47,8 @@ public class PostService {
     this.joinedRepository = joinedRepository;
   }
   /**
-   * Creates a post with the given info
+   * Creates a post with the given info in the request, which contains the content, title, user, date, Url for the
+   * photo, type, and Fandom of the post
    *
    * @param request a {@link AddPostRequest} object containing the information for the new post
    * @return a {@link AddPostResponse} object containing the new fandoms name
