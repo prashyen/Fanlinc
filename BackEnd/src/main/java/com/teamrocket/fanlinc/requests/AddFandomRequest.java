@@ -4,8 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AddFandomRequest {
-  // Acting as a template for a fandomrequest
-  // annotations make sure its giving you what you expect
   @NotEmpty private String fandomName;
 
   @NotEmpty private String genre;

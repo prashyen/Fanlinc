@@ -19,10 +19,7 @@ public class PostController {
   }
 
   @CrossOrigin
-
-  // Mapping the URL to the given method
   @RequestMapping(value = BASE_PATH + "/addPost", method = RequestMethod.POST)
-  // Whatever this returns has to be turned into a response body
   @ResponseBody
   public AddPostResponse addPost(@Valid @RequestBody AddPostRequest request) {
     return postService.addPost(request);

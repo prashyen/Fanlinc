@@ -127,7 +127,6 @@ public class FandomService {
             .type(request.getType())
             .build();
 
-    // postrepositiroy .save object
     joinedRepository.save(joined);
     return new AddJoinedFandomResponse(request.getType(), request.getLevel());
   }
