@@ -41,16 +41,16 @@ public class AccountService {
    * @throws UserNotFoundException if user with given username was not found
    */
   @Transactional(readOnly = true)
-  public ValidateUserResponse validateUser(ValidateUserRequest request) {
-    User requestedUser = userRepository.findByUsername(request.getUsername());
+  public ValidateUserResponse validateUser(String username, String password) {
+    User requestedUser = userRepository.findByUsername(username);
     // if the repository method returns a null value, user with given username was not found
     if (requestedUser == null) {
-      throw new UserNotFoundException("User with username " + request.getUsername() + " not found");
+      throw new UserNotFoundException("User with username " + username + " not found");
     }
     // compare given password with password stored in the database and save this result in the
     // response object
     return new ValidateUserResponse(
-        request.getUsername(), requestedUser.getPassword().equals(request.getPassword()));
+        username, requestedUser.getPassword().equals(password));
   }
 
   /**
@@ -94,13 +94,13 @@ public class AccountService {
    * @throws UserNotFoundException if user with given username was not found
    */
   @Transactional(readOnly = true)
-  public UserDetailsResponse getUserDetails(UserDetailsRequest request) {
+  public UserDetailsResponse getUserDetails(String username) {
     // first check if the requested user exists
-    User requestedUser = userRepository.findByUsername(request.getUsername());
+    User requestedUser = userRepository.findByUsername(username);
 
     // if the username doesn't exist throw an error
     if (requestedUser == null) {
-      throw new UserNotFoundException("User with username " + request.getUsername() + " not found");
+      throw new UserNotFoundException("User with username " + username + " not found");
     }
 
     // otherwise return the requested users info
@@ -123,14 +123,14 @@ public class AccountService {
    * @throws UserNotFoundException if a user with the given username does not exist
    */
   @Transactional(readOnly = true)
-  public UserFandomsResponse getUserFandoms(UserFandomsRequest request) {
+  public UserFandomsResponse getUserFandoms(String username) {
 
-    User requestedUser = userRepository.findByUsername(request.getUsername());
+    User requestedUser = userRepository.findByUsername(username);
     // if the repository method returns a null value, user with given username was not found
     if (requestedUser == null) {
-      throw new UserNotFoundException("User with username " + request.getUsername() + " not found");
+      throw new UserNotFoundException("User with username " + username + " not found");
     }
-    List<String> fandomNames = joinedRepository.findJoinedByUsername(request.getUsername());
+    List<String> fandomNames = joinedRepository.findJoinedByUsername(username);
     return new UserFandomsResponse(fandomNames);
   }
 }
