@@ -58,36 +58,40 @@ const featuredPosts = [
      'This will be Fanlinc post 1 with supporting texts, images, links or other sources below',
  }
 ];
-
 //connecting api to backend
-//const filterPostsURL = "localhost:8080/post//filteredPosts?fandomName={fandomName}&level=noFilter&type=General";
-//        fetch(filterPostsURL, {
-//            method: 'get',
-//            mode: 'cors',
-//            headers: {
-//              'Content-Type': 'application/json',
-//              'Accept': 'application/json'
-//            }
-//          }).then(response => {
-//            console.log(response);
-//            switch (response.status) {
-//              case 200:
-//                alert("Post received");
-//                break;
-//              default:
-//                alert("Something went wrong retrieving post");
-//            }
-//          }).catch(err => {
-//            alert("Error sending the request. ", err);
-//          });
 
-export default function Blog() {
+//this is just a test
+export default function Feed(fandomName) {
+  const filterPostsURL = `localhost:8080/post/filteredPosts?fandomName=${props.fandomName}&level=noFilter&type=General`;
   const classes = useStylesPosts();
   const [open, setOpen] = React.useState(false)
   const [title, setTitle] = React.useState('')
   const [content, setContent] = React.useState('')
   const [date, setDate] = React.useState('')
+  const [posts, setPosts] = useState('');
 
+  useEffect(() => {
+    fetch(filterPostsURL, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      //update state post content
+      setPosts(response.body)
+      switch (response.status) {
+        case 200:
+          alert("Post received");
+          break;
+        default:
+          alert("Something went wrong when retrieving post");
+      }
+    }).catch(err => {
+      alert("Error sending the request. ", err);
+    });
+   });
   const clickHandleOpen = (title, content, date) => {
     setOpen(true)
     setTitle(title)
@@ -103,10 +107,10 @@ export default function Blog() {
       <CssBaseline />
         <Container maxWidth="lg">
           <Grid container direction="column" alignItems="center" spacing= {2} style={{ minHeight: '80vh' }}>
-            {featuredPosts.map(post => (
-              <Grid item key={post.title} xs={12} >
+            {Posts.map(post => (
+              <Grid item key={post.id} xs={12} >
                 {/* creating card for each of the post */}
-                <CardActionArea onClick = {() => clickHandleOpen(post.title, post.description, post.date)}>
+                <CardActionArea onClick = {() => clickHandleOpen(post.title, post.content, post.postedTime)}>
                   <Card className={classes.card} >
                     <div className={classes.cardDetails} >
                       <CardContent >
@@ -114,10 +118,10 @@ export default function Blog() {
                           {post.title}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
-                          {post.date}
+                          {post.postedTime}
                         </Typography>
                         <Typography variant="subtitle1" noWrap={true} paragraph>
-                          {post.description}
+                          {post.content}
                         </Typography>
                         <Typography variant="subtitle1" color="primary">
                           Continue reading...
@@ -131,7 +135,6 @@ export default function Blog() {
             ))}
           </Grid>
       </Container>
-
       {/* dialog section*/}
       <Dialog open={open} onClose={clickHandleClose}>
         <DialogTitle > {title} </DialogTitle>
@@ -145,7 +148,6 @@ export default function Blog() {
          </DialogActions>
       </Dialog>
        {/* end dialog*/}
-
     </React.Fragment>
   );
 }
