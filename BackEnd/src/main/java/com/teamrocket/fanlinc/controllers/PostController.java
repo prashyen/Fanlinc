@@ -10,19 +10,19 @@ import javax.validation.Valid;
 @RestController
 public class PostController {
 
-    private static final String BASE_PATH = "/post";
-    private PostService postService;
+  private static final String BASE_PATH = "/post";
+  private PostService postService;
 
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+  public PostController(PostService postService) {
+    this.postService = postService;
+  }
 
-    @CrossOrigin
-    // Mapping the URL to the given method
-    @RequestMapping(value = BASE_PATH + "/addPost", method = RequestMethod.POST)
-    // Whatever this returns has to be turned into a response body
-    @ResponseBody
-    public AddPostResponse addPost(@Valid @RequestBody AddPostRequest request) {
-        return postService.addPost(request);
-    }
+  @CrossOrigin
+  // Mapping the URL to the given method
+  @RequestMapping(value = BASE_PATH + "/addPost", method = RequestMethod.POST)
+  // Whatever this returns has to be turned into a response body
+  @ResponseBody
+  public AddPostResponse addPost(@Valid @RequestBody AddPostRequest request) {
+    return postService.addPost(request);
+  }
 }
