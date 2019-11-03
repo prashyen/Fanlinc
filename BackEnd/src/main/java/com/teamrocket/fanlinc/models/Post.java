@@ -89,15 +89,6 @@ public class Post {
         this.postedTime = postedTime;
     }
 
-    /*
-    public String getDisplayPhotoUrl() {
-      return displayPhotoUrl;
-    }
-
-    public void setDisplayPhotoUrl(String displayPhotoUrl) {
-      this.displayPhotoUrl = displayPhotoUrl;
-    }
-  */
     public String getPostPhotoURL(String postPhotoURL) {
         return this.postPhotoUrl;
     }
