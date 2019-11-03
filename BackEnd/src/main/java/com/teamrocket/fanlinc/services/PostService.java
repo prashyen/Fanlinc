@@ -55,16 +55,15 @@ public class PostService {
 
     // if requested parameters are valid check if any filter were provided
     List<Post> posts;
-    if (level.equals("noFilter") && type.equals("noFilter")) {
-      // if no filters were provided just return all posts for the given fandom
-      posts = postRepository.findByFandomName(fandomName);
-    } else if (level.equals("noFilter") && !type.equals("noFilter")) {
-      posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
-    } else if (!level.equals("noFilter") && type.equals("noFilter")) {
-      posts = postRepository.findByFandomNameAndLevelOrderByPostedTimeDesc(fandomName, level);
-    } else {
+    if (!level.equals("noFilter") && !type.equals("noFilter")) { // if both filters were provided
       posts = postRepository
           .findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(fandomName, level, type);
+    } else if (level.equals("noFilter")) { // if only type filter was provided
+      posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
+    } else if (type.equals("noFilter")) { // if only level filter was provided
+      posts = postRepository.findByFandomNameAndLevelOrderByPostedTimeDesc(fandomName, level);
+    } else { // if both filters were provided
+      posts = postRepository.findByFandomName(fandomName);
     }
 
     return new FilterPostsResponse(posts);
