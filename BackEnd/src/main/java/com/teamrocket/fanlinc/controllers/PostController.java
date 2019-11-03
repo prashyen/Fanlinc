@@ -15,7 +15,7 @@ public class PostController {
   }
 
   @CrossOrigin
-  @RequestMapping(value = BASE_PATH + "/filterPosts", method = RequestMethod.GET)
+  @RequestMapping(value = BASE_PATH + "/filteredPosts", method = RequestMethod.GET)
   @ResponseBody
   public FilterPostsResponse getFilteredPosts(@RequestParam(name = "fandomName") String fandomName,
       @RequestParam(name = "level") String level, @RequestParam(name = "type") String type) {
