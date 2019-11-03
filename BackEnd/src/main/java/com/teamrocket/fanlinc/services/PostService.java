@@ -64,7 +64,7 @@ public class PostService {
     if (requestedFandom == null) {
       // Fandom has not been created yet
       throw new FandomNotFoundException(
-          "Fandom with name " + request.getFandomName() + " does not exists");
+          "Fandom with name " + request.getFandomName() + " does not exist");
     }
     // Check if the requested level and type are valid
     if (!levels.contains(request.getLevel())) {
