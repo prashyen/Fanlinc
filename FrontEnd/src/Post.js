@@ -59,6 +59,26 @@ const featuredPosts = [
  }
 ];
 
+
+const filterPostsURL = "localhost:8080/post/filterPosts";
+        fetch(joinFandomURL, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          }).then(response => {
+            console.log("registration response:", response);
+            switch (response.status) {
+              case 200:
+                alert("");
+                break;
+              default:
+                alert("Something went wrong joining a fandom.");
+            }
+          }).catch(err => {
+            alert("Error sending the request. ", err);
+          });
+
 export default function Blog() {
   const classes = useStylesPosts();
   const [open, setOpen] = React.useState(false)
@@ -124,19 +144,6 @@ export default function Blog() {
       </Dialog>
        {/* end dialog*/}
 
-      {/* footer */}
-      <footer className={classes.footer}>
-        <Container maxWidth="lg">
-          <Typography variant="h6" align="center" gutterBottom>
-            Fanlinc
-          </Typography>
-          <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            Linking Fans Together
-          </Typography>
-          <Copyright />
-        </Container>
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   );
 }
