@@ -22,7 +22,6 @@ public class FandomController {
 
     @CrossOrigin
     @RequestMapping(value = BASE_PATH + "/addFandom", method = RequestMethod.POST)
-
     @ResponseBody
     public AddFandomResponse addFandom(@Valid @RequestBody AddFandomRequest request) {
         return fandomService.addFandom(request);

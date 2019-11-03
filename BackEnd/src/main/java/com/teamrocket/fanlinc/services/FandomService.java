@@ -60,7 +60,6 @@ public class FandomService {
     fandomRepository.save(
         new FandomBuilder()
             .fandomName(request.getFandomName()) // adds it to the database
-            .fandomName(request.getFandomName())
             .description(request.getDescription())
             .genre(request.getGenre())
             .displayPhotoURL(request.getDisplayPhotoURL())
