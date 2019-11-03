@@ -35,7 +35,7 @@ public class AccountController {
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/addUser", method = RequestMethod.POST)
   @ResponseBody
-  public AddUserResponse addUser(@RequestBody AddUserRequest request) {
+  public AddUserResponse addUser(@Valid @RequestBody AddUserRequest request) {
     return accountService.addUser(request);
   }
 

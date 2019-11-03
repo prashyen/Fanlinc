@@ -34,20 +34,22 @@ public class PostService {
    *
    * @return a {@link FilterPostsResponse} object containing the list of all posts matching the
    * filters
-   * @throws FandomNotFoundException if the specified fandom does not exists
+   * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException   if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException    if the type specified is not "General", "Cosplayer",
    *                                 "Vendor/Artist" or "noFilter"
    */
-  public FilterPostsResponse filterPosts(String fandomName, String level, String type) {
+  public FilterPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
     // check if the requested fandom exists
     Fandom requestedFandom = fandomRepository.findByFandomName(fandomName);
     if (requestedFandom == null) {
       throw new FandomNotFoundException("Fandom with the name " + fandomName + " does not exist");
-    } else if (!levels.contains(level)) { // check if the requested level and type are valid
+    }
+    if (!levels.contains(level)) { // check if the requested level and type are valid
       throw new InvalidLevelException(level + " is not a valid level");
-    } else if (!types.contains(type)) { // check if the given type is valid
+    }
+    if (!types.contains(type)) { // check if the given type is valid
       throw new InvalidTypeException(type + " is not a valid type");
     }
 
