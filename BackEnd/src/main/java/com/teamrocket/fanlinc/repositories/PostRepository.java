@@ -22,5 +22,5 @@ public interface PostRepository extends Neo4jRepository<Post, Long> {
   List<Post> findByFandomName(@Param("fandomName") String fandomName);
 
   @Query("MATCH (p: Post {postedBy: {0}}) RETURN p")
-  List<Post> findPostsByUser(String username);
+  List<Post> findByUser(String username);
 }
