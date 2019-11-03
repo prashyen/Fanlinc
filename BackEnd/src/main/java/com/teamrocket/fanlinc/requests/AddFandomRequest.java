@@ -4,18 +4,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AddFandomRequest {
+  @NotEmpty private String fandomName;
 
-  @NotEmpty
-  private String fandomName;
+  @NotEmpty private String genre;
 
-  @NotEmpty
-  private String genre;
+  @NotEmpty private String description;
 
-  @NotEmpty
-  private String description;
-
-  @NotNull
-  private String displayPhotoURL;
+  @NotNull private String displayPhotoURL;
 
   public String getFandomName() {
     return fandomName;

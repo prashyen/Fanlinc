@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
+
 public interface PostRepository extends Neo4jRepository<Post, Long> {
 
   List<Post> findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(
