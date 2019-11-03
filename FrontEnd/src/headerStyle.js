@@ -1,14 +1,14 @@
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const headerStyle = makeStyles(theme => ({
+export const headerStyle = makeStyles(() => ({
   appBar: {
-    backgroundColor: "#1D1E3D",
+    backgroundColor: '#1D1E3D',
   },
   title: {
     flexGrow: 1,
-    padding: "0.25em",
+    padding: '0.25em',
   },
   logo: {
-    padding: "5m",
-  }
+    padding: '5m',
+  },
 }));

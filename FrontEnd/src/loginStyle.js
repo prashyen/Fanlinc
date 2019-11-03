@@ -1,20 +1,22 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
-import Image from './img/loginBackground.jpg';
+import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import orange from '@material-ui/core/colors/orange';
+import Image from './img/loginBackground.jpg';
 
 export function Copyright() {
   return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
           Fanlinc
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
+      </Link>
+      {' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
 
@@ -27,12 +29,12 @@ export const theme = createMuiTheme({
   },
 });
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
 
   },
   image: {

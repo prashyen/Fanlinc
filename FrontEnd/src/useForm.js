@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 /**
  *
@@ -8,20 +8,20 @@ import {useState} from 'react';
 function useForm(submit, initialState) {
   const [values, setValues] = useState(initialState);
 
-  const handleChange = event => {
-    const {name, value} = event.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setValues({
       ...values,
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     submit();
-  }
+  };
 
-  return {values, handleChange, handleSubmit}
+  return { values, handleChange, handleSubmit };
 }
 
 export default useForm;
