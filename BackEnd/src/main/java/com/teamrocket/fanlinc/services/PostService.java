@@ -1,6 +1,5 @@
 package com.teamrocket.fanlinc.services;
 
-
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
@@ -20,6 +19,7 @@ import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.FilterPostsResponse;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -91,7 +91,7 @@ public class PostService {
 
     // returns an instantiation of the response object you defined
     return new AddPostResponse(request.getTitle(), request.getPostedBy(), request.getFandomName());
-
+  }
   /**
    * Finds all posts in a given fandom based on a given filter, if no filter is specified and the
    * keyword noFilter is passed in for both level and type this method will find all posts for a
@@ -99,11 +99,11 @@ public class PostService {
    * fandom.
    *
    * @return a {@link FilterPostsResponse} object containing the list of all posts matching the
-   * filters
+   *     filters
    * @throws FandomNotFoundException if the specified fandom does not exist
-   * @throws InvalidLevelException   if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException    if the type specified is not "General", "Cosplayer",
-   *                                 "Vendor/Artist" or "noFilter"
+   * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
+   *     "Vendor/Artist" or "noFilter"
    */
   public FilterPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
@@ -129,8 +129,9 @@ public class PostService {
     } else if (!level.equals("noFilter") && type.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndLevelOrderByPostedTimeDesc(fandomName, level);
     } else {
-      posts = postRepository
-          .findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(fandomName, level, type);
+      posts =
+          postRepository.findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(
+              fandomName, level, type);
     }
 
     return new FilterPostsResponse(posts);

@@ -1,6 +1,5 @@
 package com.teamrocket.fanlinc.controllers;
 
-
 import com.teamrocket.fanlinc.requests.AddPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.FilterPostsResponse;
@@ -27,12 +26,14 @@ public class PostController {
   @ResponseBody
   public AddPostResponse addPost(@Valid @RequestBody AddPostRequest request) {
     return postService.addPost(request);
+  }
 
   @RequestMapping(value = BASE_PATH + "/filteredPosts", method = RequestMethod.GET)
   @ResponseBody
-  public FilterPostsResponse getFilteredPosts(@RequestParam(name = "fandomName") String fandomName,
-      @RequestParam(name = "level") String level, @RequestParam(name = "type") String type) {
+  public FilterPostsResponse getFilteredPosts(
+      @RequestParam(name = "fandomName") String fandomName,
+      @RequestParam(name = "level") String level,
+      @RequestParam(name = "type") String type) {
     return postService.getFilteredPosts(fandomName, level, type);
-
   }
 }
