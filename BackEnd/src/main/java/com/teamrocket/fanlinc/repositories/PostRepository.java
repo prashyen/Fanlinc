@@ -2,7 +2,6 @@ package com.teamrocket.fanlinc.repositories;
 
 import com.teamrocket.fanlinc.models.Post;
 import java.util.List;
-import javafx.geometry.Pos;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
 
