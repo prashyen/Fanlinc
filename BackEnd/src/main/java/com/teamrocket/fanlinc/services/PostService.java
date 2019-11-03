@@ -45,7 +45,7 @@ public class PostService {
       throw new UserNotFoundException("User with username " + username + " not found");
     }
 
-    List<Post> posts = postRepository.findByUser(username);
+    List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
     return new FilterPostsResponse(posts);
   }
 
