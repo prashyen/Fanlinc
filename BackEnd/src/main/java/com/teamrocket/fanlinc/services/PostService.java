@@ -51,7 +51,8 @@ public class PostService {
    * date, Url for the photo, type, and Fandom of the post
    *
    * @param request a {@link AddPostRequest} object containing the information for the new post
-   * @return a {@link AddPostResponse} object containing the new fandoms name
+   * @return a {@link AddPostResponse} object containing the title of the post, the user who posted
+   *     the post, and the Fandom the post was posted to
    * @throws FandomNotFoundException if requested Fandom was not found
    * @throws InvalidLevelException if requested level is invalid
    * @throws InvalidTypeException if requested type is invalid
