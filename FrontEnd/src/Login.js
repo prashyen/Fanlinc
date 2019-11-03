@@ -21,8 +21,6 @@ const initialState = {
   password: '',
 };
 
-const validateUserURL = 'http://localhost:8080/account/validateUser';
-
 export default function Login(props) {
   // eslint-disable-next-line no-use-before-define
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
@@ -37,17 +35,15 @@ export default function Login(props) {
       password,
     } = values;
 
+    const validateUserURL = `http://localhost:8080/account/validateUser?username=${username}&password=${password}`;
+
     fetch(validateUserURL, {
-      method: 'post',
+      method: 'get',
       mode: 'cors',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
     }).then((response) => {
       switch (response.status) {
         case 200:
@@ -127,7 +123,7 @@ export default function Login(props) {
               <Grid container>
                 <Grid item>
                   <Link href="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    Don&apos;t have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>
