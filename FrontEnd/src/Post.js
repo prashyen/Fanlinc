@@ -59,25 +59,27 @@ const featuredPosts = [
  }
 ];
 
-
-const filterPostsURL = "localhost:8080/post/filterPosts";
-        fetch(joinFandomURL, {
-            method: 'get',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          }).then(response => {
-            console.log("registration response:", response);
-            switch (response.status) {
-              case 200:
-                alert("");
-                break;
-              default:
-                alert("Something went wrong joining a fandom.");
-            }
-          }).catch(err => {
-            alert("Error sending the request. ", err);
-          });
+//connecting api to backend
+//const filterPostsURL = "localhost:8080/post//filteredPosts?fandomName={fandomName}&level=noFilter&type=General";
+//        fetch(filterPostsURL, {
+//            method: 'get',
+//            mode: 'cors',
+//            headers: {
+//              'Content-Type': 'application/json',
+//              'Accept': 'application/json'
+//            }
+//          }).then(response => {
+//            console.log(response);
+//            switch (response.status) {
+//              case 200:
+//                alert("Post received");
+//                break;
+//              default:
+//                alert("Something went wrong retrieving post");
+//            }
+//          }).catch(err => {
+//            alert("Error sending the request. ", err);
+//          });
 
 export default function Blog() {
   const classes = useStylesPosts();
