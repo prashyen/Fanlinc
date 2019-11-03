@@ -46,7 +46,17 @@ public class PostService {
     this.userRepository = userRepository;
     this.joinedRepository = joinedRepository;
   }
-
+  /**
+   * Creates a post with the given info
+   *
+   * @param request a {@link AddPostRequest} object containing the information for the new post
+   * @return a {@link AddPostResponse} object containing the new fandoms name
+   * @throws FandomNotFoundException if requested Fandom was not found
+   * @throws InvalidLevelException if requested level is invalid
+   * @throws InvalidTypeException if requested type is invalid
+   * @throws UserNotFoundException if requested User was not found
+   * @throws UserNotInFandomException if the user is not in the fandom the post was being posted to
+   */
   @Transactional(readOnly = false)
   public AddPostResponse addPost(AddPostRequest request) {
     Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
@@ -61,7 +71,7 @@ public class PostService {
       throw new InvalidLevelException(request.getLevel() + " is not a valid level");
     }
     if (!types.contains(request.getType())) {
-      throw new InvalidLevelException(request.getType() + " is not a valid type");
+      throw new InvalidTypeException(request.getType() + " is not a valid type");
     }
     User requestedUser = userRepository.findByUsername(request.getPostedBy());
     // ensure the requested username exists
