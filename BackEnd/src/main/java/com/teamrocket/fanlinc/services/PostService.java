@@ -3,10 +3,13 @@ package com.teamrocket.fanlinc.services;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
+import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Post;
+import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.FandomRepository;
 import com.teamrocket.fanlinc.repositories.PostRepository;
+import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.responses.FilterPostsResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +20,33 @@ public class PostService {
 
   private PostRepository postRepository;
   private FandomRepository fandomRepository;
+  private UserRepository userRepository;
   private final List<String> levels = Arrays.asList(new String[]{"1", "2", "3", "4", "noFilter"});
   private final List<String> types =
       Arrays.asList(new String[]{"General", "Cosplayer", "Vendor/Artist", "noFilter"});
 
-  public PostService(PostRepository postRepository, FandomRepository fandomRepository) {
+  public PostService(PostRepository postRepository, FandomRepository fandomRepository,
+                     UserRepository userRepository) {
     this.postRepository = postRepository;
     this.fandomRepository = fandomRepository;
+    this.userRepository = userRepository;
+  }
+
+  /**
+   * Finds all posts made by a user with the specified username and returns an object of all the posts.
+   *
+   * @return a {@link FilterPostsResponse} object of all posts made by that user
+   * @throws UserNotFoundException if the username is not valid
+   */
+  public FilterPostsResponse getPostsByUser(String username) {
+
+    User requestedUser = userRepository.findByUsername(username);
+    if (requestedUser == null) {
+      throw new UserNotFoundException("User with username " + username + " not found");
+    }
+
+    List<Post> posts = postRepository.findPostsByUser(username);
+    return new FilterPostsResponse(posts);
   }
 
   /**
