@@ -13,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 var postedBy='A';
 
@@ -54,7 +55,7 @@ export default function PostModal({open, handleClose}){
         "level": level,
         "username": postedBy,
         "type": type,
-        "fandomName": fandom
+        "fandomName": fandomName
         "postPhotoURL": imageURL
       })
     }).then(response => {
@@ -62,6 +63,7 @@ export default function PostModal({open, handleClose}){
       switch (response.status) {
         case 200:
           alert("Post Created!");
+          handleReset(event);
           break;
         default:
           alert("Something went wrong creating the post.");
@@ -70,8 +72,12 @@ export default function PostModal({open, handleClose}){
       alert("Error sending the request. ", err);
     });
   }*/
-  const [fandoms, setFandoms] = useState();
 
+  const [fandoms, setFandoms] = useState();
+ /**
+   * Handles updating the Fandom Dropdown using a get request from the url:
+   * http://localhost:8080/account/userFandoms
+   */
   useEffect (() => {
     fetch('http://localhost:8080/account/userFandoms?username='+postedBy, {
       method: 'GET',
@@ -92,30 +98,37 @@ export default function PostModal({open, handleClose}){
       }).catch(err => {
         alert("Error sending the request. ", err);
       });
-    }, []);
-      
+    }, []);      
       
   const classes = useStyles();
 
   const { values, handleChange, handleSubmit } = useForm(null, initialState);
+
   const [fandomName, setFandomName] = useState('');
 
   const handleFandomNameChange = event =>{
     setFandomName(event.target.value);
   }
+
+  const handlePost = event =>{
+    handleSubmit();
+    handleResetClose(event);
+  }
  
-  const handleResetClose = event => {
-    values.imgURL = '';
+  const handleReset = event =>{
+    values.imageURL = '';
     values.text = '';
     values.title = '';
     values.level = '';
-    values.fandom = '';
     values.type = '';
     setFandomName('');
     handleChange(event);
+  }
+
+  const handleResetClose = event => {
+    handleReset(event);
     handleClose();
   };
-
 
     return (
       <Modal
@@ -164,25 +177,6 @@ export default function PostModal({open, handleClose}){
                     variant="outlined"  
                     fullWidth >
                       <InputLabel>
-                        Fandom
-                      </InputLabel>
-                      {fandoms?(
-                      <Select
-                      onChange={handleFandomNameChange}
-                      value={fandomName}
-                      type="text"
-                      required
-                      labelWidth={60}
-                      >
-                        {fandoms.data.fandomNames.map((fandomName) =><MenuItem key={fandomName} value={fandomName}> {fandomName} </MenuItem>)}    
-                      </Select>):(<div value="" >Loading . . . </div>)}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl 
-                    variant="outlined"  
-                    fullWidth >
-                      <InputLabel>
                         Type
                       </InputLabel>
                       <Select
@@ -197,6 +191,27 @@ export default function PostModal({open, handleClose}){
                         <MenuItem value={"Cosplayer"}>Cosplayer</MenuItem>
                       </Select>
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    {fandoms?(
+                    <FormControl 
+                    variant="outlined"  
+                    fullWidth >
+                      <InputLabel>
+                        Fandom
+                      </InputLabel>
+                      
+                      <Select
+                      onChange={handleFandomNameChange}
+                      value={fandomName}
+                      type="text"
+                      required
+                      labelWidth={60}
+                      >
+                      {fandoms.data.fandomNames.map((fandomName) =><MenuItem key={fandomName} value={fandomName}> {fandomName} </MenuItem>)}    
+                      </Select>
+                    </FormControl>
+                    ):(<CircularProgress />)}
                   </Grid>    
                 </Grid>
                 <Grid container>
@@ -218,10 +233,10 @@ export default function PostModal({open, handleClose}){
                     variant="outlined"
                     margin="normal"
                     fullWidth
-                    label="Image URL"
+                    label="Paste Image URL Here"
                     name="imgURL"
                     type="text"
-                    value={values.imgURL}
+                    value={values.imageURL}
                     onChange={handleChange}
                     />
                   </Grid>
@@ -231,11 +246,11 @@ export default function PostModal({open, handleClose}){
                     margin="normal"
                     fullWidth
                     label="Text"
-                    name="text"
+                    name="content"
                     type="text"
                     multiline
                     rows="4"
-                    value={values.text}
+                    value={values.content}
                     onChange={handleChange}
                     />
                   </Grid>
@@ -245,18 +260,17 @@ export default function PostModal({open, handleClose}){
                 <Button
                 variant="contained"
                 onClick={handleResetClose}
-                className={classes.margin}
+                className={classes.button}
                 color="default"
                 >
                   Close
                 </Button>
                 <Button
                 variant="contained"
-                color="default"
-                className={classes.margin}
-                onClick={handleSubmit}
+                className={classes.button}
+                onClick={handlePost}
                 >
-                  POST
+                  Post
                </Button>
               </div>
             </div>

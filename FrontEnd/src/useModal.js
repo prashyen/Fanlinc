@@ -1,21 +1,20 @@
 import { useState } from 'react';
 
 const useModal = () => {
-    
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-      setOpen(true);
-    };
+  const [open, setOpen] = useState(false);
+ 
+  const handleOpen = () => {
+    setOpen(true);
+  };
   
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    return {
-        open,
-        handleOpen,
-        handleClose,
+  return {
+    open,
+    handleOpen,
+    handleClose,
     }
 };
 
