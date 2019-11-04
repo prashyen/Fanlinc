@@ -9,7 +9,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
-//import Hidden from '@material-ui/core/Hidden';
 import { useState, useEffect } from 'react';
 import moment from 'moment'
 import { Copyright, theme, useStylesPosts } from './materialUIStyle';
@@ -18,20 +17,20 @@ export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${props.filterParam}&level=noFilter&type=noFilter`;
-  //set up api url for different type of feed
+
+  //alter api url for retrieving user posts
   if (props.postsType === "user"){
     filterPostsURL = `http://localhost:8080/post/postByUser?userName=${props.filterParam}`;
    }
+
   useEffect(() => {
     fetch(filterPostsURL, {
       method: 'get',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     }).then(response => {
-      //update state post content
       switch (response.status) {
         case 200:
           return response.json()
@@ -43,13 +42,14 @@ export default function Feed(props) {
           throw new Error('Error occurred while retrieving posts');
       }
     }).then((data) => {
+        //update state posts content
         setPosts(data.posts)
       })
     .catch((err) => {
       alert(err);
     });
    })
-
+  // Card component for the posts
   return (
     <React.Fragment>
       <CssBaseline />
@@ -66,7 +66,7 @@ export default function Feed(props) {
                           {post.title}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
-                          Posted by: {post.postedBy}  Fandom: {post.fandomName} Level: {post.level} Type: {post.type} {moment(post.postedTime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                          Posted By: {post.postedBy} Fandom: {post.fandomName} Level: {post.level} Type: {post.type} Date: {moment(post.postedTime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
                           {post.content}
