@@ -10,9 +10,9 @@ export function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="">
         Fanlinc
-      </Link>{' '}
+        </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -28,9 +28,9 @@ export const theme = createMuiTheme({
   },
 });
 
-export const useStylesLogin = makeStyles(theme => ({
+export const useStyles = makeStyles(({
   root: {
-    height: '100vh',
+    minHeight: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center'
@@ -52,39 +52,9 @@ export const useStylesLogin = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   palette: {
-      primary: 'orange',
+    primary: 'orange',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-
-  },
-}));
-
-export const useStylesPosts = makeStyles(theme => ({
-  mainFeaturedPost: {
-    position: 'relative',
-    backgroundColor: theme.palette.grey[800],
-    color: theme.palette.common.white,
-    backgroundImage: 'Grey',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-  },
-  card: {
-     display: 'block',
-     width: '55vw',
-     transitionDuration: '0.3s',
-     height: '15vw'
-  },
-  cardDetails: {
-    flex: 1,
-  },
-  cardMedia: {
-    width: 160,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    marginTop: theme.spacing(8),
-    padding: theme.spacing(6, 0),
   },
 }));

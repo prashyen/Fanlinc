@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import { Copyright, theme, useStyles } from './loginStyle';
+import { Copyright, theme, useStylesLogin } from './materialUIStyle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
@@ -14,7 +14,7 @@ import Fanlinclogo from'./img/fanlinc_logo.png';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 export default function LoginPage() {
-  const classes = useStyles();
+  const classes = useStylesLogin();
   var username;
   var password;
 

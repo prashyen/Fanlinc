@@ -9,4 +9,5 @@ public class FanlincApplication {
   public static void main(String[] args) {
     SpringApplication.run(FanlincApplication.class, args);
   }
+
 }
