@@ -1,6 +1,5 @@
 package com.teamrocket.fanlinc.builders;
 
-
 import com.teamrocket.fanlinc.models.Fandom;
 
 public class FandomBuilder {
@@ -37,6 +36,5 @@ public class FandomBuilder {
     newFandom.setGenre(this.genre);
     newFandom.setDisplayPhotoURL(this.displayPhotoURL);
     return newFandom;
-
   }
 }

@@ -1,30 +1,56 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import './App.css';
-import LoginPage from './Login';
-import LogoutPage from './Logout';
-import Post from './Post';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import Login from './Login';
 import Register from './Register';
-import ResponseForm from './LoginResponse';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from './Home';
 
-function App() {
+export default function App() {
+  // declare loggedInUser cookie
+  const [cookies, setCookie] = useCookies(['loggedInUser']);
+
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          <LoginPage />
+        <Route exact path="/">
+          {
+              cookies.loggedInUser !== 'null'
+              // if loggedInUser is not null, render homepage and pass
+              // loggedInUser as well as method to update cookies
+                ? (
+                  <Home
+                    loggedInUser={cookies.loggedInUser}
+                    setCookie={setCookie}
+                  />
+                )
+              // otherwise, redirect to login page
+                : <Redirect to="/login" />
+            }
         </Route>
-        <Route path="/responseForm">
-          <ResponseForm />
+        <Route exact path="/login">
+          {
+              // if loggedInUser is not null, redirect to homepage
+              cookies.loggedInUser !== 'null' ? <Redirect to="/" />
+              // otherwise, route user to login page
+                : <Login setCookie={setCookie} />
+            }
         </Route>
-        <Route path="/logout">
-          <LogoutPage />
+        <Route exact path="/register">
+          {
+              // if loggedInUser is not null, redirect to homepage
+              cookies.loggedInUser !== 'null' ? <Redirect to="/" />
+              // otherwise, route user to registration page
+                : <Register setCookie={setCookie} />
+            }
         </Route>
-        <Route exact path="/post" component={Post} />
-        <Route exact path="/register" component={Register} />
       </Switch>
     </Router>
   );
 }
-
-export default App;
