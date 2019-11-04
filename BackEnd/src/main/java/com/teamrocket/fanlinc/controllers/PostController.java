@@ -25,6 +25,7 @@ public class PostController {
     return postService.addPost(request);
   }
 
+  @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/filteredPosts", method = RequestMethod.GET)
   @ResponseBody
   public FilterPostsResponse getFilteredPosts(

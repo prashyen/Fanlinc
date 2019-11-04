@@ -63,7 +63,7 @@ public class PostBuilder {
     newPost.setLevel(this.level);
     newPost.setPostedBy(this.postedBy);
     newPost.setPostedTime(this.postedTime);
-    newPost.setPostPhotoURL(this.postPhotoURL);
+    newPost.setPostPhotoUrl(this.postPhotoURL);
     newPost.setType(this.type);
     return newPost;
   }
