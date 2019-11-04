@@ -16,7 +16,7 @@ import com.teamrocket.fanlinc.repositories.PostRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
-import com.teamrocket.fanlinc.responses.FilterPostsResponse;
+import com.teamrocket.fanlinc.responses.GetPostsResponse;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,10 +47,10 @@ public class PostService {
   /**
    * Finds all posts made by a user with the specified username and returns an object of all the posts.
    *
-   * @return a {@link FilterPostsResponse} object of all posts made by that user
+   * @return a {@link GetPostsResponse} object of all posts made by that user
    * @throws UserNotFoundException if the username is not valid
    */
-  public FilterPostsResponse getPostsByUser(String username) {
+  public GetPostsResponse getPostsByUser(String username) {
 
     User requestedUser = userRepository.findByUsername(username);
     if (requestedUser == null) {
@@ -58,7 +58,7 @@ public class PostService {
     }
 
     List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
-    return new FilterPostsResponse(posts);
+    return new GetPostsResponse(posts);
   }
 
   /**
@@ -125,14 +125,14 @@ public class PostService {
    * given fandom. If only one filter is specified it will find posts based on the given filter and
    * fandom.
    *
-   * @return a {@link FilterPostsResponse} object containing the list of all posts matching the
+   * @return a {@link GetPostsResponse} object containing the list of all posts matching the
    *     filters
    * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
    *     "Vendor/Artist" or "noFilter"
    */
-  public FilterPostsResponse getFilteredPosts(String fandomName, String level, String type) {
+  public GetPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
     // check if the requested fandom exists
     Fandom requestedFandom = fandomRepository.findByFandomName(fandomName);
@@ -161,6 +161,6 @@ public class PostService {
               fandomName, level, type);
     }
 
-    return new FilterPostsResponse(posts);
+    return new GetPostsResponse(posts);
   }
 }
