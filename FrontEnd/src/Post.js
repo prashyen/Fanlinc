@@ -12,9 +12,14 @@ import Container from '@material-ui/core/Container';
 import { Copyright, theme, useStylesPosts } from './materialUIStyle';
 
 export default function Feed(props) {
-  const filterPostsURL = `localhost:8080/post/filteredPosts?fandomName=${props.fandomName}&level=noFilter&type=noFilter`;
+  const [posts, setPosts] = react.useState('');
   const classes = useStylesPosts();
-
+  //set up api url for different type of feed
+  if (props.postsType == "user"){
+    const filterPostsURL = `localhost:8080/post/postByUser?userName=${props.filterParam}&level=noFilter&type=noFilter`;
+  }else{
+    const filterPostsURL = `localhost:8080/post/filteredPosts?fandomName=${props.post.filterParam}&level=noFilter&type=noFilter`;
+  }
   useEffect(() => {
     fetch(filterPostsURL, {
       method: 'get',
