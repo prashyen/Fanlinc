@@ -1,35 +1,35 @@
+import { useState } from 'react';
 import React from 'react';
-import useForm from './useForm';
-import './css/PostModal.css'
+import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {useStyles}  from './postModalStyle';
 import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
-import { useState, useEffect } from "react";
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-var postedBy='A';
+import { useStyles } from './postModalStyle';
+import useForm from './useForm';
 
 const initialState = {
-  title: "",
-  content: "",
-  imageURL: "",
-  type: "",
-  level: ""
+  title: '',
+  content: '',
+  imageURL: '',
+  type: '',
+  level: '',
 };
 
-const addPostURL = "http://localhost:8080/post/addPost";
+const addPostURL = 'http://localhost:8080/post/addPost';
 
-export default function PostModal({open, handleClose}){
-    
- /**
+export default function PostModal(props) {
+  const { open, handleClose, loggedInUser } = props;
+  const { values, handleChange } = useForm(null, initialState);
+  const postedBy = loggedInUser;
+  /**
    * Handles the clicking of the post button and sends a post request to the url:
    * http://localhost:8080/post/addPost
    */
@@ -39,7 +39,7 @@ export default function PostModal({open, handleClose}){
       content,
       level,
       imageURL,
-      type
+      type,
     } = values;
 
     fetch(addPostURL, {
@@ -47,74 +47,67 @@ export default function PostModal({open, handleClose}){
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
-        "title": title,
-        "content": content,
-        "level": level,
-        "postedBy": postedBy,
-        "type": type,
-        "fandomName": fandomName,
-        "postPhotoURL": imageURL
-      }, console.log(title + content + level + postedBy + type + fandomName + imageURL))
-    }).then(response => {
-      console.log("registration response:", response);
+        title: title,
+        content: content,
+        level: level,
+        postedBy: postedBy,
+        type: type,
+        fandomName: fandomName,
+        postPhotoURL: imageURL,
+      }),
+    }).then((response) => {
       switch (response.status) {
         case 200:
-          alert("Post Created!");
+          alert('Post Created!');
           break;
         default:
-          alert("Something went wrong creating the post.");
+          alert('Something went wrong creating the post.');
       }
-    }).catch(err => {
-      alert("Error sending the request. ", err);
+    }).catch((err) => {
+      alert('Error sending the request. ', err);
     });
   }
 
   const [fandoms, setFandoms] = useState();
- /**
+  const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${postedBy}`;
+  /**
    * Handles updating the Fandom Dropdown using a get request from the url:
    * http://localhost:8080/account/userFandoms
    */
-  useEffect (() => {
-    fetch('http://localhost:8080/account/userFandoms?username='+postedBy, {
+  const update = () => {
+    fetch(getUserFandoms, {
       method: 'GET',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
+      },
+    }).then((response) => {
+      switch (response.status) {
+        case 200:
+          return response.json();
+        default:
+          alert('Uh oh! Something went wrong.');
       }
-      }).then(response => {
-        switch (response.status) {
-          case 200:
-            return response.json();
-          default:
-            alert("Uh oh! Something went wrong.");
-        }
-      }).then(data => {
-        setFandoms({data});
-      }).catch(err => {
-        alert("Error sending the request. ", err);
-      });
-    }, []);      
-      
-  const classes = useStyles();
+    }).then((data) => {
+      setFandoms({ data });
+    }).catch((err) => {
+      alert('Error sending the request. ', err);
+    });
+  };
 
-  const { values, handleChange, handleSubmitp } = useForm(null, initialState);
+  const classes = useStyles();
 
   const [fandomName, setFandomName] = useState('');
 
-  const handleFandomNameChange = event =>{
+  const handleFandomNameChange = (event) => {
     setFandomName(event.target.value);
-  }
+  };
 
-  const handlePost = event =>{
-    handleSubmit();
-    handleResetClose(event);
-  }
- 
-  const handleReset = event =>{
+  const handleReset = (event) => {
     values.imageURL = '';
     values.text = '';
     values.title = '';
@@ -122,15 +115,24 @@ export default function PostModal({open, handleClose}){
     values.type = '';
     setFandomName('');
     handleChange(event);
-  }
+  };
 
-  const handleResetClose = event => {
+  const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
   };
 
-    return (
-      <Modal
+  const handlePost = (event) => {
+    handleSubmit();
+    handleResetClose(event);
+  };
+
+  if (open) {
+    update();
+  }
+
+  return (
+    <Modal
       className={classes.modal}
       open={open}
       onClose={handleClose}
@@ -139,83 +141,91 @@ export default function PostModal({open, handleClose}){
       BackdropProps={{
         timeout: 500,
       }}
-      >
-        <Fade in={open}>
-          <Grid
+    >
+      <Fade in={open}>
+        <Grid
           item
-          style={{ textAlign: "center" }}
+          style={{ textAlign: 'center' }}
           elevation={0}
-          >
-            <div className={classes.paper}>
-              <div className="modal-header">
-                <h3>Create Post</h3>
-              </div>
-              <div className="modal-body">
-                <Grid container spacing={1}>
-                  <Grid item xs={4}>
-                    <FormControl  variant="outlined" fullWidth>
-                      <InputLabel>
-                        Level
+        >
+          <div className={classes.paper}>
+            <div className="modal-header">
+              <h3>Create Post</h3>
+            </div>
+            <div className="modal-body">
+              <Grid container spacing={1}>
+                <Grid item xs={4}>
+                  <FormControl variant="outlined" fullWidth>
+                    <InputLabel>
+                      Level
                       </InputLabel>
-                      <Select
+                    <Select
                       labelWidth={40}
                       onChange={handleChange}
                       value={values.level}
                       required
-                      name= 'level'
-                      >
-                        <MenuItem value={"1"}>1 - Limited</MenuItem>
-                        <MenuItem value={"2"}>2 - Casual</MenuItem>
-                        <MenuItem value={"3"}>3 - Very Involved</MenuItem>
-                        <MenuItem value={"4"}>4 - Expert</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl 
-                    variant="outlined"  
-                    fullWidth >
-                      <InputLabel>
-                        Type
+                      name="level"
+                    >
+                      <MenuItem value="1">1 - Limited</MenuItem>
+                      <MenuItem value="2">2 - Casual</MenuItem>
+                      <MenuItem value="3">3 - Very Involved</MenuItem>
+                      <MenuItem value="4">4 - Expert</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  <FormControl
+                    variant="outlined"
+                    fullWidth
+                  >
+                    <InputLabel>
+                      Type
                       </InputLabel>
-                      <Select
+                    <Select
                       onChange={handleChange}
                       value={values.type}
                       required
                       labelWidth={35}
-                      name='type'
-                      >
-                        <MenuItem value={"General"}>General</MenuItem>
-                        <MenuItem value={"Vendor/Artist"}>Vendor/Artist</MenuItem>
-                        <MenuItem value={"Cosplayer"}>Cosplayer</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    {fandoms?(
-                    <FormControl 
-                    variant="outlined"  
-                    fullWidth >
+                      name="type"
+                    >
+                      <MenuItem value="General">General</MenuItem>
+                      <MenuItem value="Vendor/Artist">Vendor/Artist</MenuItem>
+                      <MenuItem value="Cosplayer">Cosplayer</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={4}>
+                  {fandoms ? (
+                    <FormControl
+                      variant="outlined"
+                      fullWidth
+                    >
                       <InputLabel>
                         Fandom
                       </InputLabel>
-                      
+
                       <Select
-                      onChange={handleFandomNameChange}
-                      value={fandomName}
-                      type="text"
-                      required
-                      labelWidth={60}
+                        onChange={handleFandomNameChange}
+                        value={fandomName}
+                        type="text"
+                        required
+                        labelWidth={60}
                       >
-                      {fandoms.data.fandomNames.map((fandomName) =><MenuItem key={fandomName} value={fandomName}> {fandomName} </MenuItem>)}    
+                        {fandoms.data.fandomNames.map((fandomName) => (
+                          <MenuItem key={fandomName} value={fandomName}>
+                            {' '}
+                            {fandomName}
+                            {' '}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
-                    ):(<CircularProgress />)}
-                  </Grid>    
+                  ) : (<CircularProgress />)}
                 </Grid>
-                <Grid container>
-                  <Grid item xs={12} >
-                    <TextField
+              </Grid>
+              <Grid container>
+                <Grid item xs={12}>
+                  <TextField
                     variant="outlined"
                     margin="normal"
                     required
@@ -225,22 +235,22 @@ export default function PostModal({open, handleClose}){
                     type="text"
                     value={values.title}
                     onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
                     variant="outlined"
                     margin="normal"
                     fullWidth
                     label="Paste Image URL Here"
-                    name="imgURL"
+                    name="imageURL"
                     type="text"
                     value={values.imageURL}
                     onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12} zeroMinWidth>
-                    <TextField
+                  />
+                </Grid>
+                <Grid item xs={12} zeroMinWidth>
+                  <TextField
                     variant="outlined"
                     margin="normal"
                     fullWidth
@@ -251,30 +261,30 @@ export default function PostModal({open, handleClose}){
                     rows="4"
                     value={values.content}
                     onChange={handleChange}
-                    />
-                  </Grid>
+                  />
                 </Grid>
-              </div>
-              <div className="modal-footer" >
-                <Button
+              </Grid>
+            </div>
+            <div className="modal-footer">
+              <Button
                 variant="contained"
                 onClick={handleResetClose}
                 className={classes.button}
                 color="default"
-                >
-                  Close
+              >
+                Close
                 </Button>
-                <Button
+              <Button
                 variant="contained"
                 className={classes.button}
                 onClick={handlePost}
-                >
-                  Post
-               </Button>
-              </div>
+              >
+                Post
+                </Button>
             </div>
-          </Grid>
-        </Fade>
-      </Modal>
-    )
+          </div>
+        </Grid>
+      </Fade>
+    </Modal>
+  );
 }

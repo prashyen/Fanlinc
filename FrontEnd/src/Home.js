@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
+import Post from './Post';
 //import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
@@ -14,7 +15,9 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         setCookie={setCookie}
       />
-
+      <Post 
+        loggedInUser={loggedInUser}
+      />
       {/*
       Add future routes to feed and profile here like this:
       <Router>

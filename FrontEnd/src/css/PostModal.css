@@ -4,6 +4,9 @@
     padding-top: 2rem;
   }
 
+  .margin{
+    padding: 50px;
+  }
 
   .modal-footer{
     padding-top: 10px;
