@@ -16,7 +16,7 @@ export default function Feed(props) {
   const classes = useStylesPosts();
   //set up api url for different type of feed
   if (props.postsType == "user"){
-    const filterPostsURL = `localhost:8080/post/postByUser?userName=${props.filterParam}&level=noFilter&type=noFilter`;
+    const filterPostsURL = `localhost:8080/post/postByUser?userName=${props.filterParam}`;
   }else{
     const filterPostsURL = `localhost:8080/post/filteredPosts?fandomName=${props.post.filterParam}&level=noFilter&type=noFilter`;
   }

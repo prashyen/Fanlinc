@@ -65,7 +65,7 @@ export default function Login(props) {
       });
   }
 
-  const classes = useStyles();
+  const classes = useStylesLogin();
 
   return (
     <ThemeProvider theme={theme}>

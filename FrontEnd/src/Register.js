@@ -97,7 +97,7 @@ export default function Register(props) {
     });
   }
 
-  const classes = useStyles();
+  const classes = useStylesLogin();
 
   return (
     <ThemeProvider theme={theme}>
