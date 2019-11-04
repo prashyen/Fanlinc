@@ -4,10 +4,10 @@ import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
-import com.teamrocket.fanlinc.exceptions.UserNotInFandomException;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Post;
+import com.teamrocket.fanlinc.exceptions.UserNotInFandomException;
 import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.FandomRepository;
@@ -16,7 +16,7 @@ import com.teamrocket.fanlinc.repositories.PostRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
-import com.teamrocket.fanlinc.responses.FilterPostsResponse;
+import com.teamrocket.fanlinc.responses.GetPostsResponse;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,20 +32,35 @@ public class PostService {
   private FandomRepository fandomRepository;
   private UserRepository userRepository;
   private JoinedRepository joinedRepository;
-  private final List<String> levels = Arrays.asList(new String[] {"1", "2", "3", "4", "noFilter"});
+  private final List<String> levels = Arrays.asList(new String[]{"1", "2", "3", "4", "noFilter"});
   private final List<String> types =
       Arrays.asList(new String[] {"General", "Cosplayer", "Vendor/Artist", "noFilter"});
 
-  public PostService(
-      PostRepository postRepository,
-      FandomRepository fandomRepository,
-      UserRepository userRepository,
-      JoinedRepository joinedRepository) {
+  public PostService(PostRepository postRepository, FandomRepository fandomRepository,
+                     UserRepository userRepository, JoinedRepository joinedRepository) {
     this.postRepository = postRepository;
     this.fandomRepository = fandomRepository;
     this.userRepository = userRepository;
     this.joinedRepository = joinedRepository;
   }
+
+  /**
+   * Finds all posts made by a user with the specified username and returns an object of all the posts.
+   *
+   * @return a {@link GetPostsResponse} object of all posts made by that user
+   * @throws UserNotFoundException if the username is not valid
+   */
+  public GetPostsResponse getPostsByUser(String username) {
+
+    User requestedUser = userRepository.findByUsername(username);
+    if (requestedUser == null) {
+      throw new UserNotFoundException("User with username " + username + " not found");
+    }
+
+    List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
+    return new GetPostsResponse(posts);
+  }
+
   /**
    * Creates a post with the given info in the request, which contains the content, title, user,
    * date, Url for the photo, type, and Fandom of the post
@@ -110,14 +125,14 @@ public class PostService {
    * given fandom. If only one filter is specified it will find posts based on the given filter and
    * fandom.
    *
-   * @return a {@link FilterPostsResponse} object containing the list of all posts matching the
+   * @return a {@link GetPostsResponse} object containing the list of all posts matching the
    *     filters
    * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
    *     "Vendor/Artist" or "noFilter"
    */
-  public FilterPostsResponse getFilteredPosts(String fandomName, String level, String type) {
+  public GetPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
     // check if the requested fandom exists
     Fandom requestedFandom = fandomRepository.findByFandomName(fandomName);
@@ -146,6 +161,6 @@ public class PostService {
               fandomName, level, type);
     }
 
-    return new FilterPostsResponse(posts);
+    return new GetPostsResponse(posts);
   }
 }
