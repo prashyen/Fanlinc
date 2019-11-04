@@ -1,8 +1,12 @@
 package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddUserRequest;
+import com.teamrocket.fanlinc.requests.UserDetailsRequest;
+import com.teamrocket.fanlinc.requests.UserFandomsRequest;
 import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.responses.AddUserResponse;
+import com.teamrocket.fanlinc.responses.UserDetailsResponse;
+import com.teamrocket.fanlinc.responses.UserFandomsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
 import com.teamrocket.fanlinc.services.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +23,13 @@ public class AccountController {
   public AccountController(AccountService accountService) {
     this.accountService = accountService;
   }
-  @CrossOrigin(origins = "http://localhost:3000")
-  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.POST)
+
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/validateUser", method = RequestMethod.GET)
   @ResponseBody
-  public ValidateUserResponse validateUser(@Valid @RequestBody ValidateUserRequest request) {
-    return accountService.validateUser(request);
+  public ValidateUserResponse validateUser(@RequestParam(name = "username") String username,
+      @RequestParam(name = "password") String password) {
+    return accountService.validateUser(username, password);
   }
 
   @CrossOrigin
@@ -33,4 +39,17 @@ public class AccountController {
     return accountService.addUser(request);
   }
 
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/userDetails", method = RequestMethod.GET)
+  @ResponseBody
+  public UserDetailsResponse getUserDetails(@RequestParam(name="username") String username) {
+    return accountService.getUserDetails(username);
+  }
+
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/userFandoms", method = RequestMethod.GET)
+  @ResponseBody
+  public UserFandomsResponse getUserFandoms(@RequestParam(name="username") String username) {
+    return accountService.getUserFandoms(username);
+  }
 }
