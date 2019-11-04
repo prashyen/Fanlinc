@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import Feed from './Feed'
+import Feed from './Feed';
 
 
 export default function Home(props) {

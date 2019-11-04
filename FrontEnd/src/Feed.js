@@ -11,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 //import Hidden from '@material-ui/core/Hidden';
 import { useState, useEffect } from 'react';
+import moment from 'moment'
 import { Copyright, theme, useStylesPosts } from './materialUIStyle';
 
 export default function Feed(props) {
@@ -65,7 +66,7 @@ export default function Feed(props) {
                           {post.title}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
-                          Posted by: {post.postedBy}  Fandom: {post.fandomName} Level: {post.level} Type: {post.type} Date:{post.postedTime}
+                          Posted by: {post.postedBy}  Fandom: {post.fandomName} Level: {post.level} Type: {post.type} {moment(post.postedTime).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
                           {post.content}
