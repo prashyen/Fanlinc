@@ -65,8 +65,12 @@ export default function PostModal(props) {
         case 200:
           alert('Post Created!');
           break;
+        case 404:
+          throw new Error('Username and/or fandom name not found');
+        case 400:
+          throw new Error(`Invalid type/level and/or you are not part of${fandomName}`);
         default:
-          throw new Error('Uh Oh! Something went wrong');
+          throw new Error('Uh Oh! Something went wrong when creating the post.');
       }
     }).catch((err) => {
       alert(err);
@@ -91,6 +95,8 @@ export default function PostModal(props) {
       switch (response.status) {
         case 200:
           return response.json();
+        case 404:
+          throw new Error('Username not found');
         default:
           throw new Error('Uh oh! Something went wrong.');
       }
