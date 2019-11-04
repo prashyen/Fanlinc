@@ -55,7 +55,7 @@ export default function Feed(props) {
                         <Typography variant="subtitle1" color="textSecondary">
                           Posted by: {post.postedBy}  Fandom: {post.fandomName} Level: {post.level} Type: {post.type} Date:{post.postedTime}
                         </Typography>
-                        <Typography variant="subtitle1" noWrap={true} paragraph>
+                        <Typography variant="subtitle1" paragraph>
                           {post.content}
                         </Typography>
                       </CardContent>
