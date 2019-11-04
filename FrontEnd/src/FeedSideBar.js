@@ -51,10 +51,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
+//for testing
 const user = 'tarannu7';
 
-export default function SideBar() {
+export default function SideBar(currentUser) {
 
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -64,7 +64,7 @@ export default function SideBar() {
     setValue(newValue);
   };
 
-  var getFandomListAPI = "http://localhost:8080/account/userFandoms?username=tarannu7";
+  var getFandomListAPI = "http://localhost:8080/account/userFandoms?username=${currentUser}";
 
    useEffect(() => {
       fetch(getFandomListAPI, {
@@ -96,7 +96,7 @@ export default function SideBar() {
     <CssBaseline />
 
       {/* Feed Body */}
-      <Grid container lg style={{minheight: '80vh'}}>
+      <Grid container lg >
 
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
@@ -106,7 +106,7 @@ export default function SideBar() {
               variant="scrollable"
               value={value}
               onChange={handleChange}
-              aria-label="Vertical tabs example"
+              aria-label="Vertical tabs"
               className={classes.tabs}
             >
             { fandoms.map((fandomName) => <Tab label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))}/>) }
