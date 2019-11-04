@@ -14,7 +14,7 @@ import Link from '@material-ui/core/Link';
 import PropTypes from 'prop-types';
 import Fanlinclogo from './img/fanlinc_logo.png';
 import useForm from './useForm';
-import { Copyright, theme, useStyles } from './loginStyle';
+import { Copyright, theme, useStylesLogin } from './materialUIStyle';
 
 const initialState = {
   username: '',
