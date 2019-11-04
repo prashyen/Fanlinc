@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+//import Feed from './Post';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,24 +49,56 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getFandomListAPI = "http://localhost:8080/account/userFandoms";
+
+const user = 'tarannu7';
 
 export default function SideBar() {
 
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [FandomList, setFandomList] = useState( [] );
+  const [fandoms, setFandoms] = useState('');
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  //empty array - fetch api called once instead of everytime component is rendered
-  useEffect(async () =>{
-    const response = await fetch(getFandomListAPI);
-  },[]);
+  var getFandomListAPI = "http://localhost:8080/account/userFandoms?username=tarannu7";
 
+   useEffect(() => {
+      fetch(getFandomListAPI, {
+         method: 'get',
+         mode: 'cors',
+         headers: {
+           Accept: 'application/json',
+           'Content-Type': 'application/json',
+         },
+       }).then((response) => {
+
+         switch (response.status) {
+           case 200:
+             alert("Post received");
+             return response.json()
+           default:
+             alert("Something went wrong when retrieving post");
+         }
+       }).then((data) => {
+//         console.log(data.fandomNames)
+         setFandoms(data.fandomNames)
+         console.log(fandoms)
+       })
+         .catch((err) => {
+           alert(err);
+         });
+
+      },[]);
+
+      var fandomsList = fandoms.map(function(name){
+                      return <Tab label={name}  />;
+                    })
+      console.log(fandomsList);
   return (
-    <div className={classes.root}>
+    <React.Fragment>
+
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -74,38 +107,31 @@ export default function SideBar() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-
-        <Tab label="Avengers" {...a11yProps(0)} />
-        <Tab label="Naruto" {...a11yProps(1)} />
-        <Tab label="Game of Thrones" {...a11yProps(2)} />
-        <Tab label="Fortnite" {...a11yProps(3)} />
-        <Tab label="PubG" {...a11yProps(4)} />
-        <Tab label="One Piece" {...a11yProps(5)} />
-        <Tab label="Harry Potter" {...a11yProps(6)} />
+        { fandomsList }
       </Tabs>
 
        {/*Call the post component with appropriate fandoms*/}
       <TabPanel value={value} index={0}>
-        Avengers posts
+        {/*<Feed fandomName={'Avengers'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Naruto posts
+        {/*<Feed fandomName={'Naruto'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Game of Thrones posts
+        {/*<Feed fandomName={'Game of Thrones'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Fortnite posts
+        {/*<Feed fandomName={'Fortnite'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={4}>
-        PubG posts
+        {/*<Feed fandomName={'PubG'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={5}>
-        One Piece posts
+         {/*<Feed fandomName={'One Piece'}/>*/}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        Harry Potter posts
+        {/*<Feed fandomName={'Harry Potter'}/>*/}
       </TabPanel>
-    </div>
+    </React.Fragment>
     );
   }
