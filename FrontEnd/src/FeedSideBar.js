@@ -116,13 +116,16 @@ export default function SideBar(currentUser) {
 
         {/* Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
+            {/* fandoms.map((fandomName) =>
+            <TabPanel value={value} index=fandoms.indexOf(fandomName)/>
+                <Feed fandomName={fandomName}/>
+            </TabPanel>
+            ) */}
             <TabPanel value={value} index={0}>
               This is a dummy post1
-              {/*<Feed fandomName={'Avengers'}/>*/}
              </TabPanel>
             <TabPanel value={value} index={1}>
               This is a dummy post2
-              {/*<Feed fandomName={'Naruto'}/>*/}
             </TabPanel>
         </Grid>
         {/* Feed End */}
