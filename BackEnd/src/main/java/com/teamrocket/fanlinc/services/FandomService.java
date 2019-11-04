@@ -21,7 +21,6 @@ import java.util.List;
 
 @Service
 public class FandomService {
-
   private JoinedRepository joinedRepository;
   private UserRepository userRepository;
   private FandomRepository fandomRepository;
@@ -60,12 +59,11 @@ public class FandomService {
     // if the fandom doesn't exist then create a new fandom node
     fandomRepository.save(
         new FandomBuilder()
-            .fandomName(request.getFandomName())
+            .fandomName(request.getFandomName()) // adds it to the database
             .description(request.getDescription())
             .genre(request.getGenre())
             .displayPhotoURL(request.getDisplayPhotoURL())
             .build());
-
     return new AddFandomResponse(request.getFandomName());
   }
 
@@ -130,7 +128,6 @@ public class FandomService {
             .build();
 
     joinedRepository.save(joined);
-
     return new AddJoinedFandomResponse(request.getType(), request.getLevel());
   }
 }

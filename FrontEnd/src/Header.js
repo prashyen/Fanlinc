@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
-import { headerStyle } from './headerStyle';
+/* eslint-disable react/jsx-filename-extension */
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,18 +7,26 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import PropTypes from 'prop-types';
+import { headerStyle } from './headerStyle';
 import Fanlinclogo from './img/fanlinc_logo.png';
 
-export default function Header() {
+export default function Header(props) {
   const classes = headerStyle();
   const [anchorEl, setAnchorEl] = useState(null);
+  const { loggedInUser, setCookie } = props;
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // set loggedInUser cookie to null to end session and log out user
+    setCookie('loggedInUser', null);
   };
 
   return (
@@ -34,11 +41,11 @@ export default function Header() {
           />
         </div>
         <Typography variant="h6" className={classes.title}>
-          Fanlinc
+            Fanlinc
         </Typography>
         <div>
           <Typography variant="h6" className={classes.title}>
-            AllMight123
+            {loggedInUser}
           </Typography>
         </div>
         <div>
@@ -57,12 +64,17 @@ export default function Header() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
             getContentAnchorEl={null}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </Toolbar>
     </AppBar>
-  )
+  );
 }
+
+Header.propTypes = {
+  loggedInUser: PropTypes.string.isRequired,
+  setCookie: PropTypes.func.isRequired,
+};
