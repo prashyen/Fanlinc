@@ -18,7 +18,7 @@ import {
 import Link from '@material-ui/core/Link';
 import PropTypes from 'prop-types';
 import Fanlinclogo from './img/fanlinc_logo.png';
-import { Copyright, theme, useStyles } from './loginStyle';
+import { Copyright, theme, useStylesLogin } from './materialUIStyle';
 import useForm from './useForm';
 
 const initialState = {
@@ -97,7 +97,7 @@ export default function Register(props) {
     });
   }
 
-  const classes = useStyles();
+  const classes = useStylesLogin();
 
   return (
     <ThemeProvider theme={theme}>
