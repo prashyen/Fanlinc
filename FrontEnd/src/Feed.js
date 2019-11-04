@@ -9,17 +9,17 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
-import Hidden from '@material-ui/core/Hidden';
+//import Hidden from '@material-ui/core/Hidden';
 import { useState, useEffect } from 'react';
 import { Copyright, theme, useStylesPosts } from './materialUIStyle';
 
 export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
   const classes = useStylesPosts();
-  const filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${props.filterParam}&level=noFilter&type=noFilter`;
+  let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${props.filterParam}&level=noFilter&type=noFilter`;
   //set up api url for different type of feed
-  if (props.postsType == "user"){
-    const filterPostsURL = `http://localhost:8080/post/postByUser?userName=${props.filterParam}`;
+  if (props.postsType === "user"){
+    filterPostsURL = `http://localhost:8080/post/postByUser?userName=${props.filterParam}`;
    }
   useEffect(() => {
     fetch(filterPostsURL, {
@@ -34,16 +34,20 @@ export default function Feed(props) {
       switch (response.status) {
         case 200:
           return response.json()
+        case 400:
+          throw new Error('Fandom not found');
+        case 404:
+          throw new Error('Invalid type or level');
         default:
           throw new Error('Error occurred while retrieving posts');
       }
     }).then((data) => {
         setPosts(data.posts)
       })
-        .catch((err) => {
-          alert(err);
-        });
-    })
+    .catch((err) => {
+      alert(err);
+    });
+   })
 
   return (
     <React.Fragment>
@@ -68,12 +72,6 @@ export default function Feed(props) {
                         </Typography>
                       </CardContent>
                     </div>
-                    <Hidden xsDown>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image={post.displayPhotoUrl}
-                      />
-                    </Hidden>
                   </Card>
                 </CardActionArea>
                 {/* end Card */}
