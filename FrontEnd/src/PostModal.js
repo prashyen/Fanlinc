@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
+
 import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -50,12 +50,12 @@ export default function PostModal(props) {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        title: title,
-        content: content,
-        level: level,
-        postedBy: postedBy,
-        type: type,
-        fandomName: fandomName,
+        title,
+        content,
+        level,
+        postedBy,
+        type,
+        fandomName,
         postPhotoURL: imageURL,
       }),
     }).then((response) => {
@@ -158,7 +158,7 @@ export default function PostModal(props) {
                   <FormControl variant="outlined" fullWidth>
                     <InputLabel>
                       Level
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       labelWidth={40}
                       onChange={handleChange}
@@ -180,7 +180,7 @@ export default function PostModal(props) {
                   >
                     <InputLabel>
                       Type
-                      </InputLabel>
+                    </InputLabel>
                     <Select
                       onChange={handleChange}
                       value={values.type}
@@ -273,14 +273,14 @@ export default function PostModal(props) {
                 color="default"
               >
                 Close
-                </Button>
+              </Button>
               <Button
                 variant="contained"
                 className={classes.button}
                 onClick={handlePost}
               >
                 Post
-                </Button>
+              </Button>
             </div>
           </div>
         </Grid>
