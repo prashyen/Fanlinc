@@ -1,6 +1,6 @@
 import React from 'react';
 import useForm from './useForm';
-import './PostModal.css'
+import './css/PostModal.css'
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -33,7 +33,7 @@ export default function PostModal({open, handleClose}){
    * Handles the clicking of the post button and sends a post request to the url:
    * http://localhost:8080/post/addPost
    */
-  /*function submit() {
+  function handleSubmit() {
     const {
       title,
       content,
@@ -53,17 +53,16 @@ export default function PostModal({open, handleClose}){
         "title": title,
         "content": content,
         "level": level,
-        "username": postedBy,
+        "postedBy": postedBy,
         "type": type,
-        "fandomName": fandomName
+        "fandomName": fandomName,
         "postPhotoURL": imageURL
-      })
+      }, console.log(title + content + level + postedBy + type + fandomName + imageURL))
     }).then(response => {
       console.log("registration response:", response);
       switch (response.status) {
         case 200:
           alert("Post Created!");
-          handleReset(event);
           break;
         default:
           alert("Something went wrong creating the post.");
@@ -71,7 +70,7 @@ export default function PostModal({open, handleClose}){
     }).catch(err => {
       alert("Error sending the request. ", err);
     });
-  }*/
+  }
 
   const [fandoms, setFandoms] = useState();
  /**
@@ -102,7 +101,7 @@ export default function PostModal({open, handleClose}){
       
   const classes = useStyles();
 
-  const { values, handleChange, handleSubmit } = useForm(null, initialState);
+  const { values, handleChange, handleSubmitp } = useForm(null, initialState);
 
   const [fandomName, setFandomName] = useState('');
 

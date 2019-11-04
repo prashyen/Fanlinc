@@ -4,7 +4,7 @@ import './App.css'
 import PostModal from './PostModal'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import './PostModal.css'
+import './css/PostModal.css'
 
 
 export default function Post() {
