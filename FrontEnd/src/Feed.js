@@ -14,12 +14,12 @@ import { useState, useEffect } from 'react';
 import { Copyright, theme, useStylesPosts } from './materialUIStyle';
 
 export default function Feed(props) {
-  const [Posts, setPosts] = useState('');
+  const [Posts, setPosts] = useState([]);
   const classes = useStylesPosts();
-  const filterPostsURL = `localhost:8080/post/filteredPosts?fandomName=${props.filterParam}&level=noFilter&type=noFilter`;
+  const filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${props.filterParam}&level=noFilter&type=noFilter`;
   //set up api url for different type of feed
   if (props.postsType == "user"){
-    const filterPostsURL = `localhost:8080/post/postByUser?userName=${props.filterParam}`;
+    const filterPostsURL = `http://localhost:8080/post/postByUser?userName=${props.filterParam}`;
    }
   useEffect(() => {
     fetch(filterPostsURL, {
@@ -33,15 +33,17 @@ export default function Feed(props) {
       //update state post content
       switch (response.status) {
         case 200:
-          setPosts(response.body)
-          break;
+          return response.json()
         default:
-          alert("Something went wrong when retrieving post");
+          throw new Error('Error occurred while retrieving posts');
       }
-    }).catch(err => {
-      alert("Error sending the request. ", err);
-    });
-   });
+    }).then((data) => {
+        setPosts(data.posts)
+      })
+        .catch((err) => {
+          alert(err);
+        });
+    })
 
   return (
     <React.Fragment>

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import Feed from './Feed'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
 export default function Home(props) {
@@ -16,6 +15,14 @@ export default function Home(props) {
         setCookie={setCookie}
       />
        <Feed filterParam="Naruto" postsType="feed" />
+         {/*
+         Add future routes to feed and profile here like this:
+         <Router>
+           <Switch>
+             <Route exact path={`${props.match.path}/feed`} component={} />
+           </Switch>
+         </Router>
+         */}
     </div>
   );
 }
