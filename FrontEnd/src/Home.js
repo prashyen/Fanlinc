@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
+import SideBar from './FeedSideBar';
 //import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 
