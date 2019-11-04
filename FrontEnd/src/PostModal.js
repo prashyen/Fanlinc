@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
 
 import './css/PostModal.css';
@@ -28,6 +29,7 @@ const addPostURL = 'http://localhost:8080/post/addPost';
 export default function PostModal(props) {
   const { open, handleClose, loggedInUser } = props;
   const { values, handleChange } = useForm(null, initialState);
+  const [fandomName, setFandomName] = useState('');
   const postedBy = loggedInUser;
   /**
    * Handles the clicking of the post button and sends a post request to the url:
@@ -64,10 +66,10 @@ export default function PostModal(props) {
           alert('Post Created!');
           break;
         default:
-          alert('Something went wrong creating the post.');
+          throw new Error('Uh Oh! Something went wrong');
       }
     }).catch((err) => {
-      alert('Error sending the request. ', err);
+      alert(err);
     });
   }
 
@@ -90,18 +92,16 @@ export default function PostModal(props) {
         case 200:
           return response.json();
         default:
-          alert('Uh oh! Something went wrong.');
+          throw new Error('Uh oh! Something went wrong.');
       }
     }).then((data) => {
       setFandoms({ data });
     }).catch((err) => {
-      alert('Error sending the request. ', err);
+      alert(err);
     });
   };
 
   const classes = useStyles();
-
-  const [fandomName, setFandomName] = useState('');
 
   const handleFandomNameChange = (event) => {
     setFandomName(event.target.value);

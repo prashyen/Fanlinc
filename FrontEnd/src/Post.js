@@ -21,7 +21,7 @@ export default function Post(props) {
       <PostModal
           open={open}
           handleClose={handleClose}
-          loggedinUser={loggedInUser}
+          loggedInUser={loggedInUser}
            />
     </div>
   );
