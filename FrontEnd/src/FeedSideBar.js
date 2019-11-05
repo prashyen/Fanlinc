@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 
 function TabPanel(props) {
-  const { children, fandomName, value, index, ...other } = props;
+  const { children, value, index, ...other } = props;
 
   return (
     <Typography
@@ -34,14 +34,13 @@ function TabPanel(props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      <Feed filterParam={fandomName} postsType="feed" />
+       <Box p={3}>{children}</Box>
     </Typography>
   );
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
-  fandomName: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
@@ -54,10 +53,7 @@ function a11yProps(index) {
 }
 
 
-//for testing
-const user = 'tarannu7';
-
-export default function SideBar(currentUser) {
+export default function SideBar(props) {
 
   const classes = useStyles();
   const [value, setValue] = useState(0);
@@ -67,7 +63,7 @@ export default function SideBar(currentUser) {
     setValue(newValue);
   };
 
-  var getFandomListAPI = "http://localhost:8080/account/userFandoms?username=${currentUser}";
+  let getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
 
    useEffect(() => {
       fetch(getFandomListAPI, {
@@ -80,7 +76,6 @@ export default function SideBar(currentUser) {
        }).then((response) => {
          switch (response.status) {
            case 200:
-             alert("Post received");
              return response.json()
            default:
              alert("Something went wrong when retrieving post");
@@ -99,7 +94,7 @@ export default function SideBar(currentUser) {
     <CssBaseline />
 
       {/* Feed Body */}
-      <Grid container lg >
+      <Grid container>
 
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
@@ -112,19 +107,27 @@ export default function SideBar(currentUser) {
               aria-label="Vertical tabs"
               className={classes.tabs}
             >
-            { fandoms.map((fandomName) => <Tab label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))}/>) }
+
+            { fandoms.map((fandomName) =>  <Tab key={fandoms.indexOf(fandomName)} label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))}/> ) }
           </Tabs>
         </Grid>
         {/* Sidebar End */}
 
         {/* Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
-            {fandoms.map((fandomName) =>
-            <TabPanel fandomName={fandomName} value={value} index={fandoms.indexOf(fandomName)}/>
-            )}
+
+        {fandoms.map((fandomName)  =>(
+           <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
+             <Feed filterParam={fandomName} postsType="feed" />
+           </TabPanel>
+        ))}
         </Grid>
         {/* Feed End */}
       </Grid>
     </React.Fragment>
     );
   }
+
+  SideBar.propTypes = {
+    loggedInUser: PropTypes.string.isRequired,
+  };

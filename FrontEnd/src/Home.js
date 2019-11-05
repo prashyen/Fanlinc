@@ -18,7 +18,6 @@ export default function Home(props) {
 
       <SideBar
         loggedInUser={loggedInUser}
-        setCookie={setCookie}
       />
 
       {/*
