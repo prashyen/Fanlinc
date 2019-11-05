@@ -15,8 +15,11 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         setCookie={setCookie}
       />
-      <SideBar currentUser={loggedInUser}/>
-      <Feed filterParam="Naruto" postsType="feed" />
+      <SideBar
+        loggedInUser={loggedInUser}
+        setCookie={setCookie}
+      />
+
       {/*
       Add future routes to feed and profile here like this:
       <Router>

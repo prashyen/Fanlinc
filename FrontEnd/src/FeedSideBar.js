@@ -7,37 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-//import Feed from './Post';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
+import Feed from './Feed';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,6 +20,39 @@ const useStyles = makeStyles(theme => ({
     borderRight: `1px solid ${theme.palette.divider}`,
   },
 }));
+
+
+function TabPanel(props) {
+  const { children, fandomName, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      <Feed filterParam={fandomName} postsType="feed" />
+    </Typography>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  fandomName: PropTypes.any.isRequired,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
 
 //for testing
 const user = 'tarannu7';
@@ -116,17 +119,9 @@ export default function SideBar(currentUser) {
 
         {/* Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
-            {/* fandoms.map((fandomName) =>
-            <TabPanel value={value} index=fandoms.indexOf(fandomName)/>
-                <Feed fandomName={fandomName}/>
-            </TabPanel>
-            ) */}
-            <TabPanel value={value} index={0}>
-              This is a dummy post1
-             </TabPanel>
-            <TabPanel value={value} index={1}>
-              This is a dummy post2
-            </TabPanel>
+            {fandoms.map((fandomName) =>
+            <TabPanel fandomName={fandomName} value={value} index={fandoms.indexOf(fandomName)}/>
+            )}
         </Grid>
         {/* Feed End */}
       </Grid>
