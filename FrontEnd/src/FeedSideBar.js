@@ -118,7 +118,7 @@ export default function SideBar(props) {
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
         {fandoms.map((fandomName)  =>(
            <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-             <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
+             <Feed filterParam={fandomName} loggedInUser={props.loggedInUser} postsType="feed" />
            </TabPanel>
         ))}
         </Grid>
