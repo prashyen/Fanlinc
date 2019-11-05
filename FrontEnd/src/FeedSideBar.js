@@ -80,7 +80,7 @@ export default function SideBar(props) {
            case 404:
              throw new Error('Username not found');
            default:
-             alert("Something went wrong when retrieving fandoms");
+             throw new Error("Something went wrong when retrieving fandoms");
          }
        })
        .then(data => {
