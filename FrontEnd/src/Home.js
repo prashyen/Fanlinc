@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import SideBar from './FeedSideBar';
-import Feed from './Feed';
 
 export default function Home(props) {
   const { loggedInUser, removeCookie } = props;
