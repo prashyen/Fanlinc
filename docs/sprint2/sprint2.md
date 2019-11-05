@@ -52,8 +52,8 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 		ii) Record front-end architecture in System Design document                         [ASSIGNED TO: Carl Alvares]
 		
 	User Story e) TEAM-9: Create Posts
-		i) Create modal for post creation                                                   [ASSIGNED TO: Aamir Haroon]
-		ii) Implement createPost API                                                        [ASSIGNED TO: Prashyen Kanagarajah]
+		i) Create modal for post creation                                                   [ASSIGNED TO: Prashyen Kanagarajah]
+		ii) Implement createPost API                                                        [ASSIGNED TO: Aamir Haroon]
 		
 	User Story f) TEAM-7: View Profiles
 		i) Create sidebar component                                                         [ASSIGNED TO: Aamir Haroon]
