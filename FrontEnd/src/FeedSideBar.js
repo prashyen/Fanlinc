@@ -78,9 +78,9 @@ export default function SideBar(props) {
            case 200:
              return response.json()
            case 404:
-             throw new Error('Invalid fandom');
+             throw new Error('Username not found');
            default:
-             alert("Something went wrong when retrieving post");
+             alert("Something went wrong when retrieving fandoms");
          }
        })
        .then(data => {
@@ -118,7 +118,7 @@ export default function SideBar(props) {
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
         {fandoms.map((fandomName)  =>(
            <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-             <Feed filterParam={fandomName} postsType="feed" />
+             <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
            </TabPanel>
         ))}
         </Grid>
