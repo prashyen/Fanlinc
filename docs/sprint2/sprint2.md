@@ -57,7 +57,6 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 		
 	User Story f) TEAM-7: View Profiles
 		i) Create sidebar component                                                         [ASSIGNED TO: Aamir Haroon]
-		ii) Create posts by user component                                                  [ASSIGNED TO: Ruidan Ji]
 		iii) Implement getPostsByUser API                                                   [ASSIGNED TO: Abel Debalkew]
 		iv) Implement getUserDetails API                                                    [ASSIGNED TO: Rahul Ramani]
 		
