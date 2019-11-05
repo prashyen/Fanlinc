@@ -6,16 +6,16 @@ import Feed from './Feed';
 
 
 export default function Home(props) {
-  const { loggedInUser, setCookie } = props;
+  const { loggedInUser, removeCookie } = props;
 
   return (
     <div>
       <Header
         loggedInUser={loggedInUser}
-        setCookie={setCookie}
+        removeCookie={removeCookie}
       />
-       <Feed filterParam="Naruto" postsType="feed" />
-         {/*
+      <Feed filterParam="Naruto" postsType="feed" />
+      {/*
          Add future routes to feed and profile here like this:
          <Router>
            <Switch>
@@ -29,5 +29,5 @@ export default function Home(props) {
 
 Home.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  setCookie: PropTypes.func.isRequired,
+  removeCookie: PropTypes.func.isRequired,
 };

@@ -24,6 +24,7 @@ const initialState = {
 export default function Login(props) {
   // eslint-disable-next-line no-use-before-define
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
+  const { setCookie } = props;
 
   /**
      * Handles the clicking of the submit button and sends a post request to the url:
@@ -55,7 +56,7 @@ export default function Login(props) {
       }
     }).then((data) => {
       if (data.accepted) {
-        props.setCookie('loggedInUser', data.username, { path: '/' });
+        setCookie('loggedInUser', data.username, { path: '/' });
         return Promise.resolve();
       }
       throw new Error('Incorrect password');
