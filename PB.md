@@ -1,6 +1,7 @@
 The numerical series we are using to estimate our stories are the Fibonacci
 numbers from 1-21 (namely 1,2,3,5,8,13,21). We decided that 5 should be a story
 with an average amount of work, and will judge the other stories relative to 5. 
+
 | Priority |                                                                               Story                                                                              | Story Points |                                                           Criteria of Satisfaction                                                           |
 |----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------:|:--------------------------------------------------------------------------------------------------------------------------------------------:|
 | Highest  | As a new user, I would like to sign up to Fanlinc and create a profile so that I can use the application.                                                        |       8      | Type in username, password and user info, and creates new profile and feed page is displayed.                                                |
