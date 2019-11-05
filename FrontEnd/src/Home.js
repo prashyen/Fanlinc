@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import Post from './Post';
-//import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Feed from './Feed';
 
 
 export default function Home(props) {
@@ -15,17 +14,15 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         setCookie={setCookie}
       />
-      <Post 
-        loggedInUser={loggedInUser}
-      />
-      {/*
-      Add future routes to feed and profile here like this:
-      <Router>
-        <Switch>
-          <Route exact path={`${props.match.path}/feed`} component={} />
-        </Switch>
-      </Router>
-      */}
+       <Feed filterParam="Naruto" postsType="feed" />
+         {/*
+         Add future routes to feed and profile here like this:
+         <Router>
+           <Switch>
+             <Route exact path={`${props.match.path}/feed`} component={} />
+           </Switch>
+         </Router>
+         */}
     </div>
   );
 }
