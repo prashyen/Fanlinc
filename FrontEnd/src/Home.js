@@ -19,14 +19,13 @@ export default function Home(props) {
       />
 
       {/*
-      Add future routes to feed and profile here like this:
-      <Router>
-       <Switch>
-         <Route exact path={`${props.match.path}/feed`} component={} />
-       </Switch>
-      </Router>
-      */}
-
+         Add future routes to feed and profile here like this:
+         <Router>
+           <Switch>
+             <Route exact path={`${props.match.path}/feed`} component={} />
+           </Switch>
+         </Router>
+         */}
     </div>
   );
 }
