@@ -54,6 +54,7 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 	User Story e) TEAM-9: Create Posts
 		i) Create modal for post creation                                                   [ASSIGNED TO: Prashyen Kanagarajah]
 		ii) Implement createPost API                                                        [ASSIGNED TO: Aamir Haroon]
+		iii) Implement GetUserFandoms API                                                   [ASSIGNED TO: Prashyen Kanagarajah]
 		
 	User Story f) TEAM-7: View Profiles
 		i) Create sidebar component                                                         [ASSIGNED TO: Aamir Haroon]
