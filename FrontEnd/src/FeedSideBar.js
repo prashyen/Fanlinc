@@ -63,7 +63,7 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
-  let getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
+  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
 
    useEffect(() => {
       fetch(getFandomListAPI, {
