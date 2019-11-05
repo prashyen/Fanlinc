@@ -77,8 +77,6 @@ export default function SideBar(props) {
          switch (response.status) {
            case 200:
              return response.json()
-           case 400:
-             throw new Error('Fandom not found');
            case 404:
              throw new Error('Invalid fandom');
            default:
