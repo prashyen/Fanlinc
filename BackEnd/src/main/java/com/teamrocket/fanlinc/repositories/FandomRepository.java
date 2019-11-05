@@ -7,6 +7,4 @@ import org.springframework.data.repository.query.Param;
 public interface FandomRepository extends Neo4jRepository<Fandom, Long> {
 
   Fandom findByFandomName(@Param("fandomName") String fandomName);
-
 }
-

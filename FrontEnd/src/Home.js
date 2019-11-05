@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import SideBar from './FeedSideBar';
 //import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import Feed from './Feed';
 
 export default function Home(props) {
   const { loggedInUser, setCookie } = props;
@@ -15,15 +15,14 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         setCookie={setCookie}
       />
-
       <SideBar currentUser={loggedInUser}/>
-
+      <Feed filterParam="Naruto" postsType="feed" />
       {/*
       Add future routes to feed and profile here like this:
       <Router>
-        <Switch>
-          <Route exact path={`${props.match.path}/feed`} component={} />
-        </Switch>
+       <Switch>
+         <Route exact path={`${props.match.path}/feed`} component={} />
+       </Switch>
       </Router>
       */}
     </div>

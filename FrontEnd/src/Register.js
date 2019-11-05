@@ -1,45 +1,46 @@
-import React from 'react';
-import useForm from './useForm';
-import { useState } from 'react';
-import { Copyright, theme, useStyles } from './registerStyle';
+/* eslint-disable react/jsx-filename-extension */
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Fanlinclogo from './img/fanlinc_logo.png';
 import 'date-fns';
 import moment from 'moment';
 import DateFnsUtils from '@date-io/date-fns';
 import {
+  KeyboardDatePicker,
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
 } from '@material-ui/pickers';
+import Link from '@material-ui/core/Link';
+import PropTypes from 'prop-types';
+import Fanlinclogo from './img/fanlinc_logo.png';
+import { Copyright, theme, useStylesLogin } from './materialUIStyle';
+import useForm from './useForm';
 
 const initialState = {
-  firstName: "",
-  lastName: "",
-  username: "",
-  password: "",
-  password_confirmation: "",
-  bio: "",
-  location: "",
-  profilePhotoUrl: ""
+  firstName: '',
+  lastName: '',
+  username: '',
+  password: '',
+  password_confirmation: '',
+  bio: '',
+  location: '',
+  profilePhotoUrl: '',
 };
 
-const addUserURL = "http://localhost:8080/account/addUser";
+const addUserURL = 'http://localhost:8080/account/addUser';
 
-export default function Register() {
-
+export default function Register(props) {
   // use hook to store the states
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
   const [dateOfBirth, setSelectedDate] = useState(new Date('2019-09-31'));
+  const { setCookie } = props;
 
-  const handleDateChange = date => {
+  const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
@@ -52,14 +53,14 @@ export default function Register() {
       firstName,
       lastName,
       password,
-      password_confirmation,
+      passwordConfirmation,
       username,
       bio,
       location,
-      profilePhotoUrl
+      profilePhotoUrl,
     } = values;
 
-    if (password !== password_confirmation) {
+    if (password !== passwordConfirmation) {
       alert("Passwords don't match");
       return;
     }
@@ -69,36 +70,34 @@ export default function Register() {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
-        "firstName": firstName,
-        "lastName": lastName,
-        "password": password,
-        "username": username,
-        "dateOfBirth": moment(dateOfBirth).format("YYYY-MM-DD"),
-        "bio": bio,
-        "location": location,
-        "profilePhotoUrl": profilePhotoUrl
-      })
-    }).then(response => {
-      console.log("registration response:", response);
+        firstName,
+        lastName,
+        password,
+        username,
+        dateOfBirth: moment(dateOfBirth).format('YYYY-MM-DD'),
+        bio,
+        location,
+        profilePhotoUrl,
+      }),
+    }).then((response) => {
       switch (response.status) {
         case 200:
-          alert("Profile Created!");
-          break;
+          setCookie('loggedInUser', username);
+          return Promise.resolve();
         case 409:
-          alert("User with that username already exists.");
-          break;
+          throw new Error('User with that username already exists');
         default:
-          alert("Something went wrong creating the user.");
+          throw new Error('Something went wrong creating the user');
       }
-    }).catch(err => {
-      alert("Error sending the request. ", err);
+    }).catch((err) => {
+      alert(err);
     });
   }
 
-  const classes = useStyles();
+  const classes = useStylesLogin();
 
   return (
     <ThemeProvider theme={theme}>
@@ -114,10 +113,11 @@ export default function Register() {
         <Grid
           item
           xs={4}
-          style={{ textAlign: "center" }}
+          style={{ textAlign: 'center' }}
           component={Paper}
           elevation={0}
-          square>
+          square
+        >
           <div className={classes.paper}>
             <img
               src={Fanlinclogo}
@@ -126,8 +126,8 @@ export default function Register() {
               alt="Fanlinc logo"
             />
             <Typography component="h1" variant="h5">
-              Sign Up!
-          </Typography>
+                Sign Up!
+            </Typography>
             <form
               className={classes.form}
               noValidate
@@ -197,9 +197,9 @@ export default function Register() {
                 required
                 fullWidth
                 label="Confirm Password"
-                name="password_confirmation"
+                name="passwordConfirmation"
                 type="password"
-                value={values.password_confirmation}
+                value={values.passwordConfirmation}
                 onChange={handleChange}
               />
               <TextField
@@ -232,12 +232,12 @@ export default function Register() {
                 className={classes.submit}
                 color="primary"
               >
-                Sign Up
-            </Button>
+                  Sign Up
+              </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Have an account? Login"}
+                  <Link href="/login" variant="body2">
+                    {'Have an account? Login'}
                   </Link>
                 </Grid>
               </Grid>
@@ -251,3 +251,7 @@ export default function Register() {
     </ThemeProvider>
   );
 }
+
+Register.propTypes = {
+  setCookie: PropTypes.func.isRequired,
+};

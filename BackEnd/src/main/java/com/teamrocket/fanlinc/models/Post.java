@@ -11,88 +11,89 @@ import java.util.Date;
 @NodeEntity
 public class Post {
 
-  @GeneratedValue
-  @Id
-  private Long id;
-  private String title;
-  private String content;
-  private String level;
-  private String type;
-  private String postedBy;
-  private String fandomName;
-  @DateLong
-  private Date postedTime;
-  private String displayPhotoUrl;
+    @GeneratedValue
+    @Id
+    private Long id;
+    private String title;
+    private String content;
+    private String level;
+    private String type;
+    private String postedBy;
+    private String fandomName;
+    @DateLong
+    private Date postedTime;
+    // private String displayPhotoUrl;
+    private String postPhotoUrl;
 
-  public String getLevel() {
-    return level;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setLevel(String level) {
-    this.level = level;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public String getFandomName() {
-    return fandomName;
-  }
+    public String getContent() {
+        return content;
+    }
 
-  public void setFandomName(String fandomName) {
-    this.fandomName = fandomName;
-  }
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public String getLevel() {
+        return level;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public String getContent() {
-    return content;
-  }
+    public String getPostedBy() {
+        return postedBy;
+    }
 
-  public void setContent(String content) {
-    this.content = content;
-  }
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
+    }
 
-  public String getPostedBy() {
-    return postedBy;
-  }
+    public String getFandomName() {
+        return fandomName;
+    }
 
-  public void setPostedBy(String postedBy) {
-    this.postedBy = postedBy;
-  }
+    public void setFandomName(String fandomName) {
+        this.fandomName = fandomName;
+    }
 
-  public Date getPostedTime() {
-    return postedTime;
-  }
+    public Date getPostedTime() {
+        return postedTime;
+    }
 
-  public void setPostedTime(Date postedTime) {
-    this.postedTime = postedTime;
-  }
+    public void setPostedTime(Date postedTime) {
+        this.postedTime = postedTime;
+    }
 
-  public String getDisplayPhotoUrl() {
-    return displayPhotoUrl;
-  }
+    public String getPostPhotoUrl() {
+        return postPhotoUrl;
+    }
 
-  public void setDisplayPhotoUrl(String displayPhotoUrl) {
-    this.displayPhotoUrl = displayPhotoUrl;
-  }
+    public void setPostPhotoUrl(String postPhotoUrl) {
+        this.postPhotoUrl = postPhotoUrl;
+    }
 }

@@ -3,10 +3,10 @@ package com.teamrocket.fanlinc.responses;
 import com.teamrocket.fanlinc.models.Post;
 import java.util.List;
 
-public class FilterPostsResponse {
+public class GetPostsResponse {
   private List<Post> posts;
 
-  public FilterPostsResponse(List<Post> posts){
+  public GetPostsResponse(List<Post> posts){
     this.posts = posts;
   }
 

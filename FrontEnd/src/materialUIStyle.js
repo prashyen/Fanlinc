@@ -28,7 +28,7 @@ export const theme = createMuiTheme({
   },
 });
 
-export const useStyles = makeStyles(theme => ({
+export const useStylesLogin = makeStyles(theme => ({
   root: {
     height: '100vh',
     background: `url(${Image})`,
@@ -57,5 +57,34 @@ export const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
 
+  },
+}));
+
+export const useStylesPosts = makeStyles(theme => ({
+  mainFeaturedPost: {
+    position: 'relative',
+    backgroundColor: theme.palette.grey[800],
+    color: theme.palette.common.white,
+    backgroundImage: 'Grey',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+  },
+  card: {
+     display: 'block',
+     width: '55vw',
+     transitionDuration: '0.3s',
+     height: '15vw'
+  },
+  cardDetails: {
+    flex: 1,
+  },
+  cardMedia: {
+    width: 160,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    marginTop: theme.spacing(8),
+    padding: theme.spacing(6, 0),
   },
 }));
