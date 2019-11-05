@@ -14,7 +14,7 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         removeCookie={removeCookie}
       />
-      <Feed filterParam="Naruto" postsType="feed" />
+      <Feed filterParam="Naruto" postsType="feed" loggedInUser={loggedInUser} />
       {/*
          Add future routes to feed and profile here like this:
          <Router>
