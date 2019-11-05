@@ -7,14 +7,15 @@ import SideBar from './FeedSideBar';
 import Feed from './Feed';
 
 export default function Home(props) {
-  const { loggedInUser, setCookie } = props;
+  const { loggedInUser, removeCookie } = props;
 
   return (
     <div>
       <Header
         loggedInUser={loggedInUser}
-        setCookie={setCookie}
+        removeCookie={removeCookie}
       />
+
       <SideBar
         loggedInUser={loggedInUser}
         setCookie={setCookie}
@@ -28,11 +29,12 @@ export default function Home(props) {
        </Switch>
       </Router>
       */}
+
     </div>
   );
 }
 
 Home.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  setCookie: PropTypes.func.isRequired,
+  removeCookie: PropTypes.func.isRequired,
 };

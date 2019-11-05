@@ -14,7 +14,7 @@ import Fanlinclogo from './img/fanlinc_logo.png';
 export default function Header(props) {
   const classes = headerStyle();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { loggedInUser, setCookie } = props;
+  const { loggedInUser, removeCookie } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,8 +25,8 @@ export default function Header(props) {
   };
 
   const handleLogout = () => {
-    // set loggedInUser cookie to null to end session and log out user
-    setCookie('loggedInUser', null);
+    // remove loggedInUser cookie to end session and log out user
+    removeCookie('loggedInUser', { path: '/' });
   };
 
   return (
@@ -76,5 +76,5 @@ export default function Header(props) {
 
 Header.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  setCookie: PropTypes.func.isRequired,
+  removeCookie: PropTypes.func.isRequired,
 };

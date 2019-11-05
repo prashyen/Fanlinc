@@ -14,20 +14,20 @@ import Home from './Home';
 
 export default function App() {
   // declare loggedInUser cookie
-  const [cookies, setCookie] = useCookies(['loggedInUser']);
+  const [cookies, setCookie, removeCookie] = useCookies(['loggedInUser']);
 
   return (
     <Router>
       <Switch>
         <Route exact path="/">
           {
-              cookies.loggedInUser !== 'null'
-              // if loggedInUser is not null, render homepage and pass
-              // loggedInUser as well as method to update cookies
+              cookies.loggedInUser
+              // if loggedInUser cookie is present, render homepage and pass
+              // loggedInUser as well as method to remove cookies
                 ? (
                   <Home
                     loggedInUser={cookies.loggedInUser}
-                    setCookie={setCookie}
+                    removeCookie={removeCookie}
                   />
                 )
               // otherwise, redirect to login page
@@ -36,16 +36,16 @@ export default function App() {
         </Route>
         <Route exact path="/login">
           {
-              // if loggedInUser is not null, redirect to homepage
-              cookies.loggedInUser !== 'null' ? <Redirect to="/" />
+              // if loggedInUser cookie is present, redirect to homepage
+              cookies.loggedInUser ? <Redirect to="/" />
               // otherwise, route user to login page
                 : <Login setCookie={setCookie} />
             }
         </Route>
         <Route exact path="/register">
           {
-              // if loggedInUser is not null, redirect to homepage
-              cookies.loggedInUser !== 'null' ? <Redirect to="/" />
+              // if loggedInUser cookie is present, redirect to homepage
+              cookies.loggedInUser ? <Redirect to="/" />
               // otherwise, route user to registration page
                 : <Register setCookie={setCookie} />
             }
