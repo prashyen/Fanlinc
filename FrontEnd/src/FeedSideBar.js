@@ -77,6 +77,10 @@ export default function SideBar(props) {
          switch (response.status) {
            case 200:
              return response.json()
+           case 400:
+             throw new Error('Fandom not found');
+           case 404:
+             throw new Error('Invalid fandom');
            default:
              alert("Something went wrong when retrieving post");
          }
@@ -107,15 +111,13 @@ export default function SideBar(props) {
               aria-label="Vertical tabs"
               className={classes.tabs}
             >
-
             { fandoms.map((fandomName) =>  <Tab key={fandoms.indexOf(fandomName)} label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))}/> ) }
           </Tabs>
         </Grid>
         {/* Sidebar End */}
 
-        {/* Feed Start */}
+        {/* Main Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{backgroundColor: 'white', minheight: '80vw'}}>
-
         {fandoms.map((fandomName)  =>(
            <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
              <Feed filterParam={fandomName} postsType="feed" />
@@ -126,8 +128,8 @@ export default function SideBar(props) {
       </Grid>
     </React.Fragment>
     );
-  }
+}
 
-  SideBar.propTypes = {
+SideBar.propTypes = {
     loggedInUser: PropTypes.string.isRequired,
-  };
+};
