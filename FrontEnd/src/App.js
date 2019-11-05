@@ -1,32 +1,56 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import './App.css';
-import LoginPage from './Login';
-import LogoutPage from './Logout';
-import ResponseForm from './LoginResponse';
-
 import {
   BrowserRouter as Router,
-  Switch,
+  Redirect,
   Route,
-} from "react-router-dom";
+  Switch,
+} from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import Login from './Login';
+import Register from './Register';
+import Home from './Home';
 
-function App() {
+export default function App() {
+  // declare loggedInUser cookie
+  const [cookies, setCookie, removeCookie] = useCookies(['loggedInUser']);
+
   return (
-      <Router>
-          <Switch>
-            <Route path="/login">
-              <LoginPage/>
-            </Route>
-            <Route path="/responseForm">
-                <ResponseForm />
-            </Route>
-            <Route path="/logout">
-                <LogoutPage/>
-            </Route>
-
-          </Switch>
-      </Router>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          {
+              cookies.loggedInUser
+              // if loggedInUser cookie is present, render homepage and pass
+              // loggedInUser as well as method to remove cookies
+                ? (
+                  <Home
+                    loggedInUser={cookies.loggedInUser}
+                    removeCookie={removeCookie}
+                  />
+                )
+              // otherwise, redirect to login page
+                : <Redirect to="/login" />
+            }
+        </Route>
+        <Route exact path="/login">
+          {
+              // if loggedInUser cookie is present, redirect to homepage
+              cookies.loggedInUser ? <Redirect to="/" />
+              // otherwise, route user to login page
+                : <Login setCookie={setCookie} />
+            }
+        </Route>
+        <Route exact path="/register">
+          {
+              // if loggedInUser cookie is present, redirect to homepage
+              cookies.loggedInUser ? <Redirect to="/" />
+              // otherwise, route user to registration page
+                : <Register setCookie={setCookie} />
+            }
+        </Route>
+      </Switch>
+    </Router>
   );
 }
-
-export default App;
