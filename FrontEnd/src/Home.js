@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import Feed from './Feed';
-
+import SideBar from './FeedSideBar';
 
 export default function Home(props) {
   const { loggedInUser, removeCookie } = props;
@@ -14,7 +13,11 @@ export default function Home(props) {
         loggedInUser={loggedInUser}
         removeCookie={removeCookie}
       />
-      <Feed filterParam="Naruto" postsType="feed" loggedInUser={loggedInUser} />
+
+      <SideBar
+        loggedInUser={loggedInUser}
+      />
+
       {/*
          Add future routes to feed and profile here like this:
          <Router>

@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import PropTypes from 'prop-types';
 import { useStyles } from './postModalStyle';
 import useForm from './useForm';
 
@@ -63,7 +64,6 @@ export default function PostModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          alert('Post Created!');
           break;
         case 404:
           throw new Error('Username and/or fandom name not found');
@@ -294,3 +294,9 @@ export default function PostModal(props) {
     </Modal>
   );
 }
+
+PostModal.propTypes = {
+  loggedInUser: PropTypes.string.isRequired,
+  open: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
