@@ -59,7 +59,7 @@ public class PostService {
     }
 
     List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
-    return new GetPostsResponse(posts);
+    return new GetPostsResponse(posts, null);
   }
 
   /**
@@ -163,8 +163,12 @@ public class PostService {
     }
     // define list to store all user objects
     List<User> users = new ArrayList<User>();
-    // for each post object get it's
+    // for each post object get it's corresponding user object
+    for (Post post : posts){
+      User curr_user = userRepository.findByUsername(post.getPostedBy());
+      users.add(curr_user);
+    }
 
-    return new GetPostsResponse(posts);
+    return new GetPostsResponse(posts, users);
   }
 }

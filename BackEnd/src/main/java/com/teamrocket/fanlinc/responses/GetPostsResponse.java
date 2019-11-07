@@ -9,9 +9,9 @@ public class GetPostsResponse {
   private List<Post> posts;
   private List<User> users;
 
-  public GetPostsResponse(List<Post> posts /*List<User> users*/){
+  public GetPostsResponse(List<Post> posts, List<User> users){
     this.posts = posts;
-    //this.users = users;
+    this.users = users;
   }
 
   public List<Post> getPosts() {
