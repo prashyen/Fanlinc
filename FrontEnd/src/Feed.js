@@ -8,6 +8,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import './css/PostModal.css';
+import EditIcon from '@material-ui/icons/Edit';
+
 
 import moment from 'moment';
 import AddIcon from '@material-ui/icons/Add';
@@ -15,11 +17,14 @@ import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
+import EditModal from './EditModal';
 import PostModal from './PostModal';
 
 export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
   const { open, handleOpen, handleClose } = useModal();
+  const edit  = useModal();
+  
   const { postsType, filterParam, loggedInUser } = props;
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
@@ -73,6 +78,7 @@ export default function Feed(props) {
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
           {Posts.map((post) => (
             <Grid item key={post.id} xs={12}>
+
               {/* creating card for each of the post */}
               <CardActionArea>
                 <Card className={classes.card}>
@@ -86,10 +92,28 @@ export default function Feed(props) {
                       <Typography variant="subtitle1" paragraph>
                         {post.content}
                       </Typography>
+                      
                     </CardContent>
                   </div>
                 </Card>
               </CardActionArea>
+              {post.postedBy === loggedInUser?(
+              <div className="margin">
+                      <Fab style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} color="primary" size="small" aria-label="add" onClick={edit.handleOpen}>
+                        <EditIcon style={{maxWidth: '15px', maxHeight: '15px', minWidth: '15px', minHeight: '15px'}} />
+                      </Fab>
+                      <EditModal
+                        title={post.title}
+                        content={post.content}
+                        type={post.type}
+                        level={post.level}
+                        postedBy={post.postedBy}
+                        fandomName={post.fandomName}
+                        open={edit.open}
+                        handleClose={edit.handleClose}
+                        loggedInUser={loggedInUser}
+                      />
+                    </div>):null}
               {/* end Card */}
             </Grid>
           ))}
