@@ -21,6 +21,7 @@ import com.teamrocket.fanlinc.responses.GetPostsResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -126,7 +127,7 @@ public class PostService {
    * fandom.
    *
    * @return a {@link GetPostsResponse} object containing the list of all posts matching the
-   *     filters
+   *     filters and the corresponding
    * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
@@ -150,7 +151,7 @@ public class PostService {
     List<Post> posts;
     if (level.equals("noFilter") && type.equals("noFilter")) {
       // if no filters were provided just return all posts for the given fandom
-      posts = postRepository.findByFandomName(fandomName);
+      posts = postRepository.findByFandomNameOrderByPostedTimeDesc(fandomName);
     } else if (level.equals("noFilter") && !type.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
     } else if (!level.equals("noFilter") && type.equals("noFilter")) {
@@ -160,6 +161,9 @@ public class PostService {
           postRepository.findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(
               fandomName, level, type);
     }
+    // define list to store all user objects
+    List<User> users = new ArrayList<User>();
+    // for each post object get it's
 
     return new GetPostsResponse(posts);
   }

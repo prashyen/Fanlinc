@@ -19,7 +19,7 @@ public interface PostRepository extends Neo4jRepository<Post, Long> {
   List<Post> findByFandomNameAndTypeOrderByPostedTimeDesc(
       @Param("fandomName") String fandomName, @Param("type") String type);
 
-  List<Post> findByFandomName(@Param("fandomName") String fandomName);
+  List<Post> findByFandomNameOrderByPostedTimeDesc(@Param("fandomName") String fandomName);
 
   List<Post> findByPostedByOrderByPostedTimeDesc(@Param("postedBy") String postedBy);
 }
