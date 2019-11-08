@@ -37,11 +37,11 @@ Practices to continue to next sprint
   * Merging branch to develop after 2 approvals
   * Merging develop to master after end of sprint
 * Making sure we follow requirements from handouts
+* Assign reviewers - one expert and another beginner (which will be subjective to each task)
+* Communicate every time we create a pull request
 
 New Practices
 
-* Assign reviewers - one expert and another beginner (which will be subjective to each task)
-* Communicate every time we create a pull request
 * Adhere to Google Java style guide for back-end code and Airbnb JavaScript style guide for front-end code
   
 Harmful Practices
