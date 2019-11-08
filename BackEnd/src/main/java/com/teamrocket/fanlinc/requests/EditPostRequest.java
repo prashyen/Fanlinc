@@ -40,4 +40,12 @@ public class EditPostRequest {
   public String getPostPhotoURL() {
     return postPhotoURL;
   }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public Date getPostedTime() {
+    return postedTime;
+  }
 }

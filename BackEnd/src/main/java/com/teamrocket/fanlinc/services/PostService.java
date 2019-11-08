@@ -15,7 +15,9 @@ import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.PostRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddPostRequest;
+import com.teamrocket.fanlinc.requests.EditPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
+import com.teamrocket.fanlinc.responses.EditPostResponse;
 import com.teamrocket.fanlinc.responses.GetPostsResponse;
 
 import org.springframework.stereotype.Service;
@@ -162,5 +164,11 @@ public class PostService {
     }
 
     return new GetPostsResponse(posts);
+  }
+
+  public EditPostResponse editPost(EditPostRequest request){
+    // relevant post based on username and time it was posted
+    Post originalPost = postRepository.findByPostedByAndPostedTime(request.getUsername(), request.getPostedTime());
+    
   }
 }
