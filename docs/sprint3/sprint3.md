@@ -25,11 +25,11 @@ We will have unit tests for the backend
 We set priorities for the sprint and divided tasks among ourselves as outlined below. Furthermore, stories were added to Jira, divided into tasks and assigned equally to all team members.
 
 ## User stories to be completed in Sprint 3
-* TEAM-4:Join Fandoms
+* TEAM-4: Join Fandoms
     * Implement Join Fandom Functionality                                                  [Assigned to Tahasun Tarannum]
-* TEAM-7:View Profiles
+* TEAM-7: View Profiles
     * Create Sidebar Component                                                             [Assigned to Aamir Haroon]
-* TEAM-12:Filter Posts
+* TEAM-12: Filter Posts
     * Add filter functionality to post feed component                                      [Assigned to Carl Alvares]
     * Update feed to filter to logged in user's type and level by default                  [Assigned to Abel Debalkew]
 * TEAM-49: Test Application
