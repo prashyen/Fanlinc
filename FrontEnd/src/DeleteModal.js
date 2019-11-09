@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,31 +12,32 @@ import Grid from '@material-ui/core/Grid';
 
 
 export default function ConfirmationModal(props) {
-  const{open, handleClose, postedBy} = props;  
+  const { open, handleClose, postedBy } = props;
 
   return (
     <div>
       <Dialog onClose={handleClose} open={open}>
-      <MuiDialogTitle >
-        <Grid container>
-      <Grid item xs={6} className={classes.title}>
-      <Typography variant="h6">
-         Delete Post</Typography>
-      </Grid>
-      <Grid item xs={6}>
-        <IconButton  onClick={handleClose}>
-          <CloseIcon />
-        </IconButton>
-        </Grid>
-        </Grid>
-    </MuiDialogTitle>
+        <MuiDialogTitle>
+          <Grid container>
+            <Grid item xs={6}>
+              <Typography variant="h6">
+         Delete Post
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <IconButton onClick={handleClose}>
+                <CloseIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </MuiDialogTitle>
         <MuiDialogContent dividers>
           <Typography>
             Are you sure want to delete this post?
           </Typography>
         </MuiDialogContent>
         <MuiDialogActions padding="5px">
-          <Button  onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Delete
           </Button>
         </MuiDialogActions>

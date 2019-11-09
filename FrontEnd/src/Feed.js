@@ -21,17 +21,17 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
+import { IconButton } from '@material-ui/core';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
 import DeleteModal from './DeleteModal';
-import { IconButton } from '@material-ui/core';
 
 export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
   const { open, handleOpen, handleClose } = useModal();
-  const edit  = useModal();
+  const edit = useModal();
   const deleteModal = useModal();
 
   const { postsType, filterParam, loggedInUser } = props;
@@ -73,7 +73,7 @@ export default function Feed(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const ellipseOpen = Boolean(anchorEl);
 
-  const handleEllipseClick = event => {
+  const handleEllipseClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -100,66 +100,85 @@ export default function Feed(props) {
           {Posts.map((post) => (
             <Grid item key={post.id} xs={12}>
               {/* creating card for each of the post */}
-                <Card className={classes.card}>
-                  <div className={classes.cardDetails}>
+              <Card className={classes.card}>
+                <div className={classes.cardDetails}>
                   <CardHeader
                     action={
-                      post.postedBy === loggedInUser?(
+                      post.postedBy === loggedInUser ? (
                         <div>
-                      <IconButton aria-label="settings" onClick={handleEllipseClick}>
-                        <MoreVertIcon />
-                        
-                      </IconButton>
-                      <Menu
-                        anchorEl={anchorEl}
-                        open={ellipseOpen}
-                        onClose={handleEllipseClose}
-                      >
-                        <MenuItem onClick={edit.handleOpen} >
-                        <ListItemIcon>
-                            <EditIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="Edit Post" />
-                          </MenuItem>
-                          <MenuItem  onClick={deleteModal.handleOpen} >
-                        <ListItemIcon>
-                            <DeleteIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="Delete Post" />
-                          </MenuItem>
-                      </Menu>
-                      </div>
-                      ):null
+                          <IconButton aria-label="settings" onClick={handleEllipseClick}>
+                            <MoreVertIcon />
+
+                          </IconButton>
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={ellipseOpen}
+                            onClose={handleEllipseClose}
+                          >
+                            <MenuItem onClick={edit.handleOpen}>
+                              <ListItemIcon>
+                                <EditIcon fontSize="small" />
+                              </ListItemIcon>
+                              <ListItemText primary="Edit Post" />
+                            </MenuItem>
+                            <MenuItem onClick={deleteModal.handleOpen}>
+                              <ListItemIcon>
+                                <DeleteIcon fontSize="small" />
+                              </ListItemIcon>
+                              <ListItemText primary="Delete Post" />
+                            </MenuItem>
+                          </Menu>
+                        </div>
+                      ) : null
                     }
-                    />
-                    <CardContent>
-                      <Typography component="h2" variant="h5">
-                        {post.title}
-                      </Typography>
-                      <Typography variant="subtitle2" color="textSecondary">Posted By: { post.postedBy } Fandom: { post.fandomName } Level: { post.level } Type: { post.type } Date: {moment(post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
-                      </Typography>
-                      <Typography variant="subtitle1" paragraph>
-                        {post.content}
-                      </Typography>
-                    </CardContent>
-                  </div>
-                      <EditModal
-                        title={post.title}
-                        content={post.content}
-                        type={post.type}
-                        level={post.level}
-                        postedBy={post.postedBy}
-                        fandomName={post.fandomName}
-                        open={edit.open}
-                        handleClose={edit.handleClose}
-                        loggedInUser={loggedInUser}
-                      />
-                      <DeleteModal
-                        open={deleteModal.open}
-                        handleClose={deleteModal.handleClose}
-                        postedBy={post.postedBy}
-                        />
-                </Card>
+                  />
+                  <CardContent>
+                    <Typography component="h2" variant="h5">
+                      {post.title}
+                    </Typography>
+                    <Typography variant="subtitle2" color="textSecondary">
+Posted By:
+                      {' '}
+                      { post.postedBy }
+                      {' '}
+Fandom:
+                      {' '}
+                      { post.fandomName }
+                      {' '}
+Level:
+                      {' '}
+                      { post.level }
+                      {' '}
+Type:
+                      {' '}
+                      { post.type }
+                      {' '}
+Date:
+                      {' '}
+                      {moment(post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                    </Typography>
+                    <Typography variant="subtitle1" paragraph>
+                      {post.content}
+                    </Typography>
+                  </CardContent>
+                </div>
+                <EditModal
+                  title={post.title}
+                  content={post.content}
+                  type={post.type}
+                  level={post.level}
+                  postedBy={post.postedBy}
+                  fandomName={post.fandomName}
+                  open={edit.open}
+                  handleClose={edit.handleClose}
+                  loggedInUser={loggedInUser}
+                />
+                <DeleteModal
+                  open={deleteModal.open}
+                  handleClose={deleteModal.handleClose}
+                  postedBy={post.postedBy}
+                />
+              </Card>
               {/* end Card */}
             </Grid>
           ))}

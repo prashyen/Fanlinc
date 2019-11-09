@@ -20,13 +20,13 @@ import useForm from './useForm';
 const editPostURL = 'http://localhost:8080/post/addPost';
 
 export default function EditModal(props) {
-  const { title, postedBy, content, type, level, fandomName, open, handleClose, loggedInUser} = props;
+  const {title, postedBy, content, type, level, fandomName, open, handleClose, loggedInUser} = props;
   const current = {
-    title: title,
-    content: content,
+    title,
+    content,
     imageURL: '',
-    type: type,
-    level: level
+    type,
+    level,
   };
   const { values, handleChange } = useForm(null, current);
 
@@ -74,7 +74,7 @@ export default function EditModal(props) {
     }).catch((err) => {
       alert(err);
     });
-  }*/
+  } */
 
   const [fandoms, setFandoms] = useState();
   const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${postedBy}`;
@@ -128,7 +128,7 @@ export default function EditModal(props) {
   };
 
   const handlePost = (event) => {
-    //handleSubmit();
+    // handleSubmit();
     handleResetClose(event);
   };
 
