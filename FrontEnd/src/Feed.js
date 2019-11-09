@@ -4,27 +4,36 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import './css/PostModal.css';
 import EditIcon from '@material-ui/icons/Edit';
+import CardHeader from '@material-ui/core/CardHeader';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import moment from 'moment';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
+import DeleteModal from './DeleteModal';
+import { IconButton } from '@material-ui/core';
 
 export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
   const { open, handleOpen, handleClose } = useModal();
   const edit  = useModal();
-  
+  const deleteModal = useModal();
+
   const { postsType, filterParam, loggedInUser } = props;
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
@@ -60,6 +69,18 @@ export default function Feed(props) {
         alert(err);
       });
   });
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const ellipseOpen = Boolean(anchorEl);
+
+  const handleEllipseClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleEllipseClose = () => {
+    setAnchorEl(null);
+  };
+
   // Card component for the posts
   return (
     <>
@@ -78,11 +99,39 @@ export default function Feed(props) {
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
           {Posts.map((post) => (
             <Grid item key={post.id} xs={12}>
-
               {/* creating card for each of the post */}
-              <CardActionArea>
                 <Card className={classes.card}>
                   <div className={classes.cardDetails}>
+                  <CardHeader
+                    action={
+                      post.postedBy === loggedInUser?(
+                        <div>
+                      <IconButton aria-label="settings" onClick={handleEllipseClick}>
+                        <MoreVertIcon />
+                        
+                      </IconButton>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={ellipseOpen}
+                        onClose={handleEllipseClose}
+                      >
+                        <MenuItem onClick={edit.handleOpen} >
+                        <ListItemIcon>
+                            <EditIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Edit Post" />
+                          </MenuItem>
+                          <MenuItem  onClick={deleteModal.handleOpen} >
+                        <ListItemIcon>
+                            <DeleteIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Delete Post" />
+                          </MenuItem>
+                      </Menu>
+                      </div>
+                      ):null
+                    }
+                    />
                     <CardContent>
                       <Typography component="h2" variant="h5">
                         {post.title}
@@ -92,16 +141,8 @@ export default function Feed(props) {
                       <Typography variant="subtitle1" paragraph>
                         {post.content}
                       </Typography>
-                      
                     </CardContent>
                   </div>
-                </Card>
-              </CardActionArea>
-              {post.postedBy === loggedInUser?(
-              <div className="margin">
-                      <Fab style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} color="primary" size="small" aria-label="add" onClick={edit.handleOpen}>
-                        <EditIcon style={{maxWidth: '15px', maxHeight: '15px', minWidth: '15px', minHeight: '15px'}} />
-                      </Fab>
                       <EditModal
                         title={post.title}
                         content={post.content}
@@ -113,7 +154,12 @@ export default function Feed(props) {
                         handleClose={edit.handleClose}
                         loggedInUser={loggedInUser}
                       />
-                    </div>):null}
+                      <DeleteModal
+                        open={deleteModal.open}
+                        handleClose={deleteModal.handleClose}
+                        postedBy={post.postedBy}
+                        />
+                </Card>
               {/* end Card */}
             </Grid>
           ))}

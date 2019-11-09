@@ -27,5 +27,11 @@ import { makeStyles } from '@material-ui/core/styles';
       },
       marginLeft: theme.spacing(0.5),
       marginRight: theme.spacing(0.5),
-    }
+    },
+     fab: {
+      margin: theme.spacing(1),
+    },
+    extendedIcon: {
+      marginRight: theme.spacing(1),
+    },
 }));

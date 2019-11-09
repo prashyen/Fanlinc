@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
-
 import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -212,7 +211,7 @@ export default function EditModal(props) {
 
                       <Select
                         onChange={handleFandomNameChange}
-                        value={fandomName}
+                        value={newFandomName}
                         type="text"
                         required
                         labelWidth={60}
