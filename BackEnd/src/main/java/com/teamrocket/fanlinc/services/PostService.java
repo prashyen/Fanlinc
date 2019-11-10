@@ -2,7 +2,7 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
-import com.teamrocket.fanlinc.exceptions.InvalidEditRequestException;
+import com.teamrocket.fanlinc.exceptions.InvalidTitleEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
 import com.teamrocket.fanlinc.exceptions.PostNotFoundException;
@@ -179,7 +179,7 @@ public class PostService {
    * @throws InvalidLevelException       if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException        if the type specified is not "General", "Cosplayer",
    *                                     "Vendor/Artist" or "noFilter"
-   * @throws InvalidEditRequestException if title, level or type are passed in as empty strings
+   * @throws InvalidTitleEditException if title, level or type are passed in as empty strings
    */
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
@@ -195,7 +195,7 @@ public class PostService {
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
     if (request.getTitle().equals("")) {
-      throw new InvalidEditRequestException("Title cannot be an empty string");
+      throw new InvalidTitleEditException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
       originalPost.setTitle(request.getTitle());
@@ -209,10 +209,7 @@ public class PostService {
       originalPost.setContent(request.getContent());
     }
 
-    if (request.getLevel().equals("")) {
-      throw new InvalidEditRequestException("Level cannot be an empty string");
-
-    } else if (request.getType() != null && !levels.contains(request.getLevel())) {
+    if (request.getType() != null && !levels.contains(request.getLevel())) {
       // ensure the level passed in is a valid level
       throw new InvalidLevelException(request.getLevel() + " is not a valid level");
 
@@ -220,10 +217,7 @@ public class PostService {
       originalPost.setLevel(request.getLevel());
     }
 
-    if (request.getType().equals("")) {
-      throw new InvalidEditRequestException("Type cannot be an empty string");
-
-    } else if (request.getType() != null && !types.contains(request.getType())) {
+     if (request.getType() != null && !types.contains(request.getType())) {
       // ensure the type passed in is a valid type
       throw new InvalidTypeException(request.getType() + " is not a valid type");
 

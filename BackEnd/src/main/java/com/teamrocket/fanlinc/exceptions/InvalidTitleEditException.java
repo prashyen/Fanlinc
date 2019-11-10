@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidEditRequestException extends RuntimeException {
+public class InvalidTitleEditException extends RuntimeException {
 
-  public InvalidEditRequestException(String message) {
+  public InvalidTitleEditException(String message) {
     super(message);
   }
 }
