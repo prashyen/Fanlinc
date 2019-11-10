@@ -1,19 +1,24 @@
 package com.teamrocket.fanlinc.responses;
 
-import com.teamrocket.fanlinc.models.Post;;
+import com.teamrocket.fanlinc.models.Post;
+import java.util.Date;;
 
 public class EditPostResponse {
-  private Post post;
+  private String username;
+  private Date postedTime;
 
-  public Post getPost() {
-    return post;
+
+
+  public EditPostResponse(String username, Date postedTime){
+    this.username = username;
+    this.postedTime = postedTime;
   }
 
-  public void setPost(Post post) {
-    this.post = post;
+  public String getUsername() {
+    return username;
   }
 
-  public EditPostResponse(Post post){
-    this.post = post;
+  public Date getPostedTime() {
+    return postedTime;
   }
 }

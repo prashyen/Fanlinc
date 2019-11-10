@@ -2,8 +2,10 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
+import com.teamrocket.fanlinc.exceptions.InvalidEditRequestException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
+import com.teamrocket.fanlinc.exceptions.PostNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Post;
@@ -36,10 +38,10 @@ public class PostService {
   private JoinedRepository joinedRepository;
   private final List<String> levels = Arrays.asList(new String[]{"1", "2", "3", "4", "noFilter"});
   private final List<String> types =
-      Arrays.asList(new String[] {"General", "Cosplayer", "Vendor/Artist", "noFilter"});
+      Arrays.asList(new String[]{"General", "Cosplayer", "Vendor/Artist", "noFilter"});
 
   public PostService(PostRepository postRepository, FandomRepository fandomRepository,
-                     UserRepository userRepository, JoinedRepository joinedRepository) {
+      UserRepository userRepository, JoinedRepository joinedRepository) {
     this.postRepository = postRepository;
     this.fandomRepository = fandomRepository;
     this.userRepository = userRepository;
@@ -47,7 +49,8 @@ public class PostService {
   }
 
   /**
-   * Finds all posts made by a user with the specified username and returns an object of all the posts.
+   * Finds all posts made by a user with the specified username and returns an object of all the
+   * posts.
    *
    * @return a {@link GetPostsResponse} object of all posts made by that user
    * @throws UserNotFoundException if the username is not valid
@@ -69,11 +72,11 @@ public class PostService {
    *
    * @param request a {@link AddPostRequest} object containing the information for the new post
    * @return a {@link AddPostResponse} object containing the title of the post, the user who posted
-   *     the post, and the Fandom the post was posted to
-   * @throws FandomNotFoundException if requested Fandom was not found
-   * @throws InvalidLevelException if requested level is invalid
-   * @throws InvalidTypeException if requested type is invalid
-   * @throws UserNotFoundException if requested User was not found
+   * the post, and the Fandom the post was posted to
+   * @throws FandomNotFoundException  if requested Fandom was not found
+   * @throws InvalidLevelException    if requested level is invalid
+   * @throws InvalidTypeException     if requested type is invalid
+   * @throws UserNotFoundException    if requested User was not found
    * @throws UserNotInFandomException if the user is not in the fandom the post was being posted to
    */
   @Transactional(readOnly = false)
@@ -121,18 +124,18 @@ public class PostService {
     // returns an instantiation of the response object you defined
     return new AddPostResponse(request.getTitle(), request.getPostedBy(), request.getFandomName());
   }
+
   /**
    * Finds all posts in a given fandom based on a given filter, if no filter is specified and the
    * keyword noFilter is passed in for both level and type this method will find all posts for a
    * given fandom. If only one filter is specified it will find posts based on the given filter and
    * fandom.
    *
-   * @return a {@link GetPostsResponse} object containing the list of all posts matching the
-   *     filters
+   * @return a {@link GetPostsResponse} object containing the list of all posts matching the filters
    * @throws FandomNotFoundException if the specified fandom does not exist
-   * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
-   *     "Vendor/Artist" or "noFilter"
+   * @throws InvalidLevelException   if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException    if the type specified is not "General", "Cosplayer",
+   *                                 "Vendor/Artist" or "noFilter"
    */
   public GetPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
@@ -166,9 +169,50 @@ public class PostService {
     return new GetPostsResponse(posts);
   }
 
-  public EditPostResponse editPost(EditPostRequest request){
+  public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
-    Post originalPost = postRepository.findByPostedByAndPostedTime(request.getUsername(), request.getPostedTime());
-    
+    Post originalPost = postRepository
+        .findByPostedByAndPostedTime(request.getUsername(), request.getPostedTime());
+    // check if the requested post exists
+    if (originalPost == null) {
+      throw new PostNotFoundException(
+          "Post from user, " + request.getUsername() + " posted at, " + request.getPostedTime()
+              .toString() + " was not found");
+    }
+
+    // ensure title level and type are not empty
+    // check which properties need to be changed and change if they need to
+    if (request.getTitle() == "") {
+      throw new InvalidEditRequestException("Title cannot be an empty string");
+
+    } else if (request.getTitle() != null) {
+      originalPost.setTitle(request.getTitle());
+    }
+
+    if (request.getPostPhotoURL() != null) {
+      originalPost.setPostPhotoUrl(request.getPostPhotoURL());
+    }
+
+    if (request.getContent() != null) {
+      originalPost.setContent(request.getContent());
+    }
+
+    if (request.getLevel() == "") {
+      throw new InvalidEditRequestException("Level cannot be an empty string");
+
+    } else if (request.getLevel() != null) {
+      originalPost.setLevel(request.getLevel());
+    }
+
+    if (request.getType() == "") {
+      throw new InvalidEditRequestException("Type cannot be an empty string");
+    }
+    if (request.getType() != null) {
+      originalPost.setType(request.getType());
+    }
+
+    postRepository.save(originalPost);
+    return new EditPostResponse(originalPost.getPostedBy(), originalPost.getPostedTime());
+
   }
 }
