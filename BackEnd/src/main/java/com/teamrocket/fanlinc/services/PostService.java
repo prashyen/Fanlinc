@@ -127,7 +127,7 @@ public class PostService {
    * fandom.
    *
    * @return a {@link GetPostsResponse} object containing the list of all posts matching the
-   *     filters and the corresponding
+   *     filters and the corresponding users
    * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
