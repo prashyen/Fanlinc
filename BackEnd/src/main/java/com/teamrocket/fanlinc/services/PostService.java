@@ -22,6 +22,7 @@ import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.EditPostResponse;
 import com.teamrocket.fanlinc.responses.GetPostsResponse;
 
+import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -175,10 +176,10 @@ public class PostService {
    *
    * @return a {@link EditPostResponse} object containing the username, date and fields changed of
    * the edited post
-   * @throws PostNotFoundException       if the specified post does not exist
-   * @throws InvalidLevelException       if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException        if the type specified is not "General", "Cosplayer",
-   *                                     "Vendor/Artist" or "noFilter"
+   * @throws PostNotFoundException     if the specified post does not exist
+   * @throws InvalidLevelException     if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException      if the type specified is not "General", "Cosplayer",
+   *                                   "Vendor/Artist" or "noFilter"
    * @throws InvalidTitleEditException if title, level or type are passed in as empty strings
    */
   public EditPostResponse editPost(EditPostRequest request) {
@@ -191,6 +192,8 @@ public class PostService {
           "Post from user, " + request.getPostedBy() + " posted at, " + request.getPostedTime()
               .toString() + " was not found");
     }
+    // define a list of modified fields
+    List<String> modifiedFields = new ArrayList<>();
 
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
@@ -199,14 +202,17 @@ public class PostService {
 
     } else if (request.getTitle() != null) {
       originalPost.setTitle(request.getTitle());
+      modifiedFields.add("title");
     }
 
     if (request.getPostPhotoURL() != null) {
       originalPost.setPostPhotoUrl(request.getPostPhotoURL());
+      modifiedFields.add("postPhotoURL");
     }
 
     if (request.getContent() != null) {
       originalPost.setContent(request.getContent());
+      modifiedFields.add("content");
     }
 
     if (request.getType() != null && !levels.contains(request.getLevel())) {
@@ -215,18 +221,21 @@ public class PostService {
 
     } else if (request.getLevel() != null) {
       originalPost.setLevel(request.getLevel());
+      modifiedFields.add("level");
     }
 
-     if (request.getType() != null && !types.contains(request.getType())) {
+    if (request.getType() != null && !types.contains(request.getType())) {
       // ensure the type passed in is a valid type
       throw new InvalidTypeException(request.getType() + " is not a valid type");
 
     } else if (request.getType() != null) {
       originalPost.setType(request.getType());
+      modifiedFields.add("type");
     }
 
     postRepository.save(originalPost);
-    return new EditPostResponse(originalPost.getPostedBy(), originalPost.getPostedTime());
+    return new EditPostResponse(originalPost.getPostedBy(), originalPost.getPostedTime(),
+        modifiedFields);
 
   }
 }
