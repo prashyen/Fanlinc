@@ -1,7 +1,9 @@
 package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddPostRequest;
+import com.teamrocket.fanlinc.requests.EditPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
+import com.teamrocket.fanlinc.responses.EditPostResponse;
 import com.teamrocket.fanlinc.responses.GetPostsResponse;
 import com.teamrocket.fanlinc.services.PostService;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +42,12 @@ public class PostController {
   @RequestMapping(value = BASE_PATH + "/postsByUser", method = RequestMethod.GET)
   public GetPostsResponse getPostsByUser(@RequestParam(name = "username") String username) {
     return postService.getPostsByUser(username);
+  }
+
+  @CrossOrigin
+  @ResponseBody
+  @RequestMapping(value = BASE_PATH + "/editPost", method = RequestMethod.POST)
+  public EditPostResponse editPost(EditPostRequest request) {
+    return postService.editPost(request);
   }
 }
