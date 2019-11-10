@@ -17,7 +17,7 @@ public class EditPostRequest {
 
   private String postPhotoURL;
   @NotEmpty
-  private String username;
+  private String postedBy;
   @NotNull
   private Date postedTime;
 
@@ -41,8 +41,8 @@ public class EditPostRequest {
     return postPhotoURL;
   }
 
-  public String getUsername() {
-    return username;
+  public String getPostedBy() {
+    return postedBy;
   }
 
   public Date getPostedTime() {

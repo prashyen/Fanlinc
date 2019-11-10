@@ -172,11 +172,11 @@ public class PostService {
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
     Post originalPost = postRepository
-        .findByPostedByAndPostedTime(request.getUsername(), request.getPostedTime());
+        .findByPostedByAndPostedTime(request.getPostedBy(), request.getPostedTime());
     // check if the requested post exists
     if (originalPost == null) {
       throw new PostNotFoundException(
-          "Post from user, " + request.getUsername() + " posted at, " + request.getPostedTime()
+          "Post from user, " + request.getPostedBy() + " posted at, " + request.getPostedTime()
               .toString() + " was not found");
     }
 

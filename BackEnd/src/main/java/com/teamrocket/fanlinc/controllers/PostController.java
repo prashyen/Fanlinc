@@ -47,7 +47,7 @@ public class PostController {
   @CrossOrigin
   @ResponseBody
   @RequestMapping(value = BASE_PATH + "/editPost", method = RequestMethod.POST)
-  public EditPostResponse editPost(EditPostRequest request) {
+  public EditPostResponse editPost(@Valid @RequestBody EditPostRequest request) {
     return postService.editPost(request);
   }
 }
