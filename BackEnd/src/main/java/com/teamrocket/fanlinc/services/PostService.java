@@ -36,9 +36,9 @@ public class PostService {
   private FandomRepository fandomRepository;
   private UserRepository userRepository;
   private JoinedRepository joinedRepository;
-  private final List<String> levels = Arrays.asList(new String[]{"1", "2", "3", "4", "noFilter"});
+  private final List<String> levels = Arrays.asList("1", "2", "3", "4", "noFilter");
   private final List<String> types =
-      Arrays.asList(new String[]{"General", "Cosplayer", "Vendor/Artist", "noFilter"});
+      Arrays.asList("General", "Cosplayer", "Vendor/Artist", "noFilter");
 
   public PostService(PostRepository postRepository, FandomRepository fandomRepository,
       UserRepository userRepository, JoinedRepository joinedRepository) {
@@ -79,7 +79,7 @@ public class PostService {
    * @throws UserNotFoundException    if requested User was not found
    * @throws UserNotInFandomException if the user is not in the fandom the post was being posted to
    */
-  @Transactional(readOnly = false)
+  @Transactional()
   public AddPostResponse addPost(AddPostRequest request) {
     Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
     // ensure the requested fandom has already been created
@@ -156,9 +156,9 @@ public class PostService {
     if (level.equals("noFilter") && type.equals("noFilter")) {
       // if no filters were provided just return all posts for the given fandom
       posts = postRepository.findByFandomName(fandomName);
-    } else if (level.equals("noFilter") && !type.equals("noFilter")) {
+    } else if (level.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
-    } else if (!level.equals("noFilter") && type.equals("noFilter")) {
+    } else if (type.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndLevelOrderByPostedTimeDesc(fandomName, level);
     } else {
       posts =
@@ -169,6 +169,18 @@ public class PostService {
     return new GetPostsResponse(posts);
   }
 
+  /**
+   * Finds a post given a username and the time it was posted as a key and edits the requested
+   * parameters to the value specified.
+   *
+   * @return a {@link EditPostResponse} object containing the username, date and fields changed of
+   * the edited post
+   * @throws PostNotFoundException       if the specified post does not exist
+   * @throws InvalidLevelException       if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException        if the type specified is not "General", "Cosplayer",
+   *                                     "Vendor/Artist" or "noFilter"
+   * @throws InvalidEditRequestException if title, level or type are passed in as empty strings
+   */
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
     Post originalPost = postRepository
@@ -182,7 +194,7 @@ public class PostService {
 
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
-    if (request.getTitle() == "") {
+    if (request.getTitle().equals("")) {
       throw new InvalidEditRequestException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
@@ -197,17 +209,25 @@ public class PostService {
       originalPost.setContent(request.getContent());
     }
 
-    if (request.getLevel() == "") {
+    if (request.getLevel().equals("")) {
       throw new InvalidEditRequestException("Level cannot be an empty string");
+
+    } else if (request.getType() != null && !levels.contains(request.getLevel())) {
+      // ensure the level passed in is a valid level
+      throw new InvalidLevelException(request.getLevel() + " is not a valid level");
 
     } else if (request.getLevel() != null) {
       originalPost.setLevel(request.getLevel());
     }
 
-    if (request.getType() == "") {
+    if (request.getType().equals("")) {
       throw new InvalidEditRequestException("Type cannot be an empty string");
-    }
-    if (request.getType() != null) {
+
+    } else if (request.getType() != null && !types.contains(request.getType())) {
+      // ensure the type passed in is a valid type
+      throw new InvalidTypeException(request.getType() + " is not a valid type");
+
+    } else if (request.getType() != null) {
       originalPost.setType(request.getType());
     }
 
