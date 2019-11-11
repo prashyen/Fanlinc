@@ -162,7 +162,7 @@ public class PostService {
     List<Post> posts;
     if (level.equals("noFilter") && type.equals("noFilter")) {
       // if no filters were provided just return all posts for the given fandom
-      posts = postRepository.findByFandomName(fandomName);
+      posts = postRepository.findByFandomNameOrderByPostedTimeDesc(fandomName);
     } else if (level.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
     } else if (type.equals("noFilter")) {
@@ -223,7 +223,7 @@ public class PostService {
 
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
-    if (request.getTitle().equals("")) {
+    if (("").equals(request.getTitle())) {
       throw new InvalidTitleEditException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
