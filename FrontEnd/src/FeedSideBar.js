@@ -74,7 +74,7 @@ export default function SideBar(props) {
 
   const { open, handleOpen, handleClose } = useModal();
 
-  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
+  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
 
   useEffect(() => {
     fetch(getFandomListAPI, {
@@ -97,9 +97,10 @@ export default function SideBar(props) {
       .then((data) => {
         setFandoms(data.fandomNames);
       }).catch((err) => {
-        alert(err);
+      console.log("stupid error")
+//        alert(err);
       });
-  }, []);
+  });
 
   return (
     <>
@@ -107,7 +108,6 @@ export default function SideBar(props) {
 
       {/* Feed Body */}
       <Grid container>
-
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
@@ -139,12 +139,13 @@ export default function SideBar(props) {
         <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-              <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
+                <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
             </TabPanel>
           ))}
         </Grid>
         {/* Feed End */}
       </Grid>
+
     </>
   );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
 
-import './css/PostModal.css';
+import './css/FandomModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -23,16 +23,17 @@ const initialState = {
   level: '',
 };
 
-const joinFandomURL = `http://localhost:8080/Joined/addJoinedFandom`;
+
 
 export default function FandomModal(props) {
   const { open, handleClose, loggedInUser } = props;
   const { values, handleChange } = useForm(null, initialState);
 //  const [fandomName, setFandomName] = useState('');
 
+  const joinFandomURL = `http://localhost:8080/fandom/addJoinedFandom`;
   /**
    * Handles the clicking of the join button and sends a join fandom request to the url:
-   * http://localhost:8080/Joined/addJoinedFandom
+   * http://localhost:8080/fandom/addJoinedFandom
    */
   function handleSubmit() {
     const {
@@ -55,37 +56,35 @@ export default function FandomModal(props) {
         "fandomName": fandomName,
         "username": props.loggedInUser
       })
-    }).then(response => {
+    }).then((response) => {
       switch (response.status) {
         case 200:
-          throw new Error("Joined Required Fandom!");
-          break;
+          console.log("successfully joined a fandom")
         case 404:
           throw new Error("Fandom not found.");
-          break;
         case 409:
           throw new Error("User already joined fandom.");
-          break;
         case 400:
           throw new Error("Invalid type or Field.");
-          break;
         default:
           throw new Error("Something went wrong joining a fandom.");
       }
-    }).catch(err => {
-      alert("Error sending the request. ", err);
+    }).catch((err) => {
+//      alert(err);
+        console.log("maybe this is the stupid error")
     });
   }
   // Fandom Drop Down List
   const FandomList = ["Naruto", "Avengers", "Game of Thrones", "Fortnite", "PubG", "One Piece", "Harry Potter"];
-
+  // Remove the fandoms that the user has already joined
 
 //  const [fandoms, setFandoms] = useState();
-//  const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${postedBy}`;
-//  /**
-//   * Handles updating the Fandom Dropdown using a get request from the url:
-//   * http://localhost:8080/account/userFandoms
-//   */
+
+//  const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
+  /**
+   * Handles updating the Fandom Dropdown using a get request from the url:
+   * http://localhost:8080/account/userFandoms
+   */
 //  const update = () => {
 //    fetch(getUserFandoms, {
 //      method: 'GET',
@@ -261,6 +260,6 @@ export default function FandomModal(props) {
 
 FandomModal.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  open: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
