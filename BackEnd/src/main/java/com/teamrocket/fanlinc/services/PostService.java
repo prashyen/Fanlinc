@@ -11,6 +11,7 @@ import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Post;
 import com.teamrocket.fanlinc.exceptions.UserNotInFandomException;
 import com.teamrocket.fanlinc.models.Joined;
+import com.teamrocket.fanlinc.models.PostUserPair;
 import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.FandomRepository;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +66,10 @@ public class PostService {
     }
 
     List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
-    return new GetPostsResponse(posts);
+
+    // define list to store all user objects
+    List<PostUserPair> postsAndUsers = generatePostUserPairList(posts);
+    return new GetPostsResponse(postsAndUsers);
   }
 
   /**
@@ -133,6 +138,7 @@ public class PostService {
    * fandom.
    *
    * @return a {@link GetPostsResponse} object containing the list of all posts matching the filters
+   * and the corresponding users
    * @throws FandomNotFoundException if the specified fandom does not exist
    * @throws InvalidLevelException   if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException    if the type specified is not "General", "Cosplayer",
@@ -156,7 +162,7 @@ public class PostService {
     List<Post> posts;
     if (level.equals("noFilter") && type.equals("noFilter")) {
       // if no filters were provided just return all posts for the given fandom
-      posts = postRepository.findByFandomName(fandomName);
+      posts = postRepository.findByFandomNameOrderByPostedTimeDesc(fandomName);
     } else if (level.equals("noFilter")) {
       posts = postRepository.findByFandomNameAndTypeOrderByPostedTimeDesc(fandomName, type);
     } else if (type.equals("noFilter")) {
@@ -166,8 +172,28 @@ public class PostService {
           postRepository.findByFandomNameAndLevelAndTypeOrderByPostedTimeDesc(
               fandomName, level, type);
     }
+    // define list to store all user objects
+    List<PostUserPair> postsAndUsers = generatePostUserPairList(posts);
+    return new GetPostsResponse(postsAndUsers);
+  }
 
-    return new GetPostsResponse(posts);
+  /**
+   * Creates a list of posts and the users that posted them
+   *
+   * @return a {@link List<PostUserPair>} a List of posts and the user the posted them
+   * @throws UserNotFoundException if a user for a given could not be found in the database
+   */
+  private List<PostUserPair> generatePostUserPairList(List<Post> posts) {
+    List<PostUserPair> postsAndUsers = new ArrayList<PostUserPair>();
+    for (Post post : posts) {
+      User curr_user = userRepository.findByUsername(post.getPostedBy());
+      if (curr_user == null) {
+        throw new UserNotFoundException("The user with username: " + curr_user
+            + " was not found, Invalid postedBy parameter for post entity");
+      }
+      postsAndUsers.add(new PostUserPair(post, curr_user));
+    }
+    return postsAndUsers;
   }
 
   /**
@@ -197,7 +223,7 @@ public class PostService {
 
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
-    if (request.getTitle().equals("")) {
+    if (("").equals(request.getTitle())) {
       throw new InvalidTitleEditException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
