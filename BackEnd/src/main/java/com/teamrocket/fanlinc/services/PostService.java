@@ -9,6 +9,7 @@ import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Post;
 import com.teamrocket.fanlinc.exceptions.UserNotInFandomException;
 import com.teamrocket.fanlinc.models.Joined;
+import com.teamrocket.fanlinc.models.PostUserPair;
 import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.FandomRepository;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
@@ -35,10 +36,10 @@ public class PostService {
   private JoinedRepository joinedRepository;
   private final List<String> levels = Arrays.asList(new String[]{"1", "2", "3", "4", "noFilter"});
   private final List<String> types =
-      Arrays.asList(new String[] {"General", "Cosplayer", "Vendor/Artist", "noFilter"});
+      Arrays.asList(new String[]{"General", "Cosplayer", "Vendor/Artist", "noFilter"});
 
   public PostService(PostRepository postRepository, FandomRepository fandomRepository,
-                     UserRepository userRepository, JoinedRepository joinedRepository) {
+      UserRepository userRepository, JoinedRepository joinedRepository) {
     this.postRepository = postRepository;
     this.fandomRepository = fandomRepository;
     this.userRepository = userRepository;
@@ -46,7 +47,8 @@ public class PostService {
   }
 
   /**
-   * Finds all posts made by a user with the specified username and returns an object of all the posts.
+   * Finds all posts made by a user with the specified username and returns an object of all the
+   * posts.
    *
    * @return a {@link GetPostsResponse} object of all posts made by that user
    * @throws UserNotFoundException if the username is not valid
@@ -59,7 +61,10 @@ public class PostService {
     }
 
     List<Post> posts = postRepository.findByPostedByOrderByPostedTimeDesc(username);
-    return new GetPostsResponse(posts, null);
+
+    // define list to store all user objects
+    List<PostUserPair> postsAndUsers = generatePostUserPairList(posts);
+    return new GetPostsResponse(postsAndUsers);
   }
 
   /**
@@ -68,11 +73,11 @@ public class PostService {
    *
    * @param request a {@link AddPostRequest} object containing the information for the new post
    * @return a {@link AddPostResponse} object containing the title of the post, the user who posted
-   *     the post, and the Fandom the post was posted to
-   * @throws FandomNotFoundException if requested Fandom was not found
-   * @throws InvalidLevelException if requested level is invalid
-   * @throws InvalidTypeException if requested type is invalid
-   * @throws UserNotFoundException if requested User was not found
+   * the post, and the Fandom the post was posted to
+   * @throws FandomNotFoundException  if requested Fandom was not found
+   * @throws InvalidLevelException    if requested level is invalid
+   * @throws InvalidTypeException     if requested type is invalid
+   * @throws UserNotFoundException    if requested User was not found
    * @throws UserNotInFandomException if the user is not in the fandom the post was being posted to
    */
   @Transactional(readOnly = false)
@@ -120,18 +125,19 @@ public class PostService {
     // returns an instantiation of the response object you defined
     return new AddPostResponse(request.getTitle(), request.getPostedBy(), request.getFandomName());
   }
+
   /**
    * Finds all posts in a given fandom based on a given filter, if no filter is specified and the
    * keyword noFilter is passed in for both level and type this method will find all posts for a
    * given fandom. If only one filter is specified it will find posts based on the given filter and
    * fandom.
    *
-   * @return a {@link GetPostsResponse} object containing the list of all posts matching the
-   *     filters and the corresponding users
+   * @return a {@link GetPostsResponse} object containing the list of all posts matching the filters
+   * and the corresponding users
    * @throws FandomNotFoundException if the specified fandom does not exist
-   * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
-   *     "Vendor/Artist" or "noFilter"
+   * @throws InvalidLevelException   if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException    if the type specified is not "General", "Cosplayer",
+   *                                 "Vendor/Artist" or "noFilter"
    */
   public GetPostsResponse getFilteredPosts(String fandomName, String level, String type) {
 
@@ -162,13 +168,26 @@ public class PostService {
               fandomName, level, type);
     }
     // define list to store all user objects
-    List<User> users = new ArrayList<User>();
-    // for each post object get it's corresponding user object
-    for (Post post : posts){
-      User curr_user = userRepository.findByUsername(post.getPostedBy());
-      users.add(curr_user);
-    }
+    List<PostUserPair> postsAndUsers = generatePostUserPairList(posts);
+    return new GetPostsResponse(postsAndUsers);
+  }
 
-    return new GetPostsResponse(posts, users);
+  /**
+   * Creates a list of posts and the users that posted them
+   *
+   * @return a {@link List<PostUserPair>} a List of posts and the user the posted them
+   * @throws UserNotFoundException if a user for a given could not be found in the database
+   */
+  private List<PostUserPair> generatePostUserPairList(List<Post> posts) {
+    List<PostUserPair> postsAndUsers = new ArrayList<PostUserPair>();
+    for (Post post : posts) {
+      User curr_user = userRepository.findByUsername(post.getPostedBy());
+      if (curr_user == null) {
+        throw new UserNotFoundException("The user with username: " + curr_user
+            + " was not found, Invalid postedBy parameter for post entity");
+      }
+      postsAndUsers.add(new PostUserPair(post, curr_user));
+    }
+    return postsAndUsers;
   }
 }
