@@ -59,7 +59,7 @@ export default function FandomModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          console.log("successfully joined a fandom")
+          return response.json();
         case 404:
           throw new Error("Fandom not found.");
         case 409:
@@ -70,8 +70,8 @@ export default function FandomModal(props) {
           throw new Error("Something went wrong joining a fandom.");
       }
     }).catch((err) => {
-//      alert(err);
-        console.log("maybe this is the stupid error")
+      alert(err);
+//        console.log("join Fandom error");
     });
   }
   // Fandom Drop Down List

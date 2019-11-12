@@ -93,12 +93,11 @@ export default function SideBar(props) {
         default:
           throw new Error('Something went wrong when retrieving fandoms');
       }
-    })
-      .then((data) => {
+    }).then((data) => {
         setFandoms(data.fandomNames);
       }).catch((err) => {
-      console.log("stupid error")
-//        alert(err);
+//      console.log("get userFandoms API fetch error")
+        alert(err);
       });
   });
 
