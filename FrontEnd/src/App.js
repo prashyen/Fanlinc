@@ -11,6 +11,7 @@ import { useCookies } from 'react-cookie';
 import Login from './Login';
 import Register from './Register';
 import Home from './Home';
+import Profile from './Profile';
 
 export default function App() {
   // declare loggedInUser cookie
@@ -50,6 +51,21 @@ export default function App() {
                 : <Register setCookie={setCookie} />
             }
         </Route>
+        <Route exact path="/profile">
+                  {
+                      cookies.loggedInUser
+                      // if loggedInUser cookie is present, render homepage and pass
+                      // loggedInUser as well as method to remove cookies
+                        ? (
+                          <Profile
+                          loggedInUser={cookies.loggedInUser}
+                           removeCookie={removeCookie}
+                           />
+                            )
+                        // otherwise, redirect to login page
+                        : <Redirect to="/login" />
+                    }
+          </Route>
       </Switch>
     </Router>
   );
