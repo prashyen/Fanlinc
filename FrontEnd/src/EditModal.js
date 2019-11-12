@@ -17,36 +17,38 @@ import { useStyles } from './postModalStyle';
 import useForm from './useForm';
 
 
-const editPostURL = 'http://localhost:8080/post/addPost';
+const editPostURL = 'http://localhost:8080/post/editPost';
 
 export default function EditModal(props) {
-  const {title, postedBy, content, type, level, fandomName, open, handleClose, loggedInUser} = props;
-  const current = {
+  const {post, open, handleClose} = props;
+  const {title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl} = post;
+
+  const initialValues = {
     title,
     content,
-    imageURL: '',
+    postPhotoUrl,
     type,
     level,
   };
-  const { values, handleChange } = useForm(null, current);
+  const { values, handleChange } = useForm(null, initialValues);
 
   const [newFandomName, setNewFandomName] = useState(fandomName);
   /**
-   * Handles the clicking of the post button and sends a post request to the url:
-   * http://localhost:8080/post/addPost
+   * Handles the clicking of the edit post button and sends a edit post request to the url:
+   * http://localhost:8080/post/editPost
    */
-  /**function handleSubmit() {
+  function handleSubmit() {
     const {
       title,
       content,
       level,
-      imageURL,
+      postPhotoUrl,
       type,
     } = values;
 
-    fetch(addPostURL, {
-      method: 'post',
-      mode: 'cors',
+    fetch(editPostURL, {
+      method: 'patch',
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -57,8 +59,9 @@ export default function EditModal(props) {
         level,
         postedBy,
         type,
-        fandomName,
-        postPhotoURL: imageURL,
+        postedTime,
+        fandomName : newFandomName,
+        postPhotoUrl,
       }),
     }).then((response) => {
       switch (response.status) {
@@ -69,12 +72,12 @@ export default function EditModal(props) {
         case 400:
           throw new Error(`Invalid type/level and/or you are not part of${fandomName}`);
         default:
-          throw new Error('Uh Oh! Something went wrong when creating the post.');
+          throw new Error('Uh Oh! Something went wrong when editing the post.');
       }
     }).catch((err) => {
       alert(err);
     });
-  } */
+  } 
 
   const [fandoms, setFandoms] = useState();
   const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${postedBy}`;
@@ -113,11 +116,11 @@ export default function EditModal(props) {
   };
 
   const handleReset = (event) => {
-    values.imageURL = '';
-    values.content = current.content;
-    values.title = current.title;
-    values.level = current.level;
-    values.type = current.type;
+    values.postPhotoUrl = initialValues.postPhotoUrl;
+    values.content = initialValues.content;
+    values.title = initialValues.title;
+    values.level = initialValues.level;
+    values.type = initialValues.type;
     setNewFandomName(fandomName);
     handleChange(event);
   };
@@ -128,7 +131,7 @@ export default function EditModal(props) {
   };
 
   const handlePost = (event) => {
-    // handleSubmit();
+    handleSubmit();
     handleResetClose(event);
   };
 
@@ -248,9 +251,9 @@ export default function EditModal(props) {
                     margin="normal"
                     fullWidth
                     label="Paste Image URL Here"
-                    name="imageURL"
+                    name="postPhotoUrl"
                     type="text"
-                    value={values.imageURL}
+                    value={values.postPhotoUrl}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -295,7 +298,7 @@ export default function EditModal(props) {
 }
 
 EditModal.propTypes = {
-  loggedInUser: PropTypes.string.isRequired,
-  open: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 };

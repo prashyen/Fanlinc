@@ -297,6 +297,6 @@ export default function PostModal(props) {
 
 PostModal.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  open: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
 };

@@ -70,16 +70,22 @@ export default function Feed(props) {
       });
   });
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const ellipseOpen = Boolean(anchorEl);
+  
+  const [currPost, setCurrPost] = useState(null);
 
   const handleEllipseClick = (event) => {
+    setCurrPost(event.currentTarget.value);
     setAnchorEl(event.currentTarget);
   };
 
   const handleEllipseClose = () => {
     setAnchorEl(null);
+    setCurrPost(null);
   };
+  
+  
 
   // Card component for the posts
   return (
@@ -97,7 +103,7 @@ export default function Feed(props) {
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
-          {Posts.map((post) => (
+          {Posts.map((post, index) => (
             <Grid item key={post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card className={classes.card}>
@@ -105,17 +111,17 @@ export default function Feed(props) {
                   <CardHeader
                     action={
                       post.postedBy === loggedInUser ? (
-                        <div>
-                          <IconButton aria-label="settings" onClick={handleEllipseClick}>
+                        <div >
+                          <IconButton value={index} onClick={handleEllipseClick}>
                             <MoreVertIcon />
-
                           </IconButton>
                           <Menu
                             anchorEl={anchorEl}
                             open={ellipseOpen}
                             onClose={handleEllipseClose}
                           >
-                            <MenuItem onClick={edit.handleOpen}>
+                            <MenuItem 
+                              onClick={edit.handleOpen}>
                               <ListItemIcon>
                                 <EditIcon fontSize="small" />
                               </ListItemIcon>
@@ -162,24 +168,13 @@ Date:
                     </Typography>
                   </CardContent>
                 </div>
-                <EditModal
-                  title={post.title}
-                  content={post.content}
-                  type={post.type}
-                  level={post.level}
-                  postedBy={post.postedBy}
-                  fandomName={post.fandomName}
-                  open={edit.open}
-                  handleClose={edit.handleClose}
-                  loggedInUser={loggedInUser}
-                />
-                <DeleteModal
-                  open={deleteModal.open}
-                  handleClose={deleteModal.handleClose}
-                  postedBy={post.postedBy}
-                />
               </Card>
               {/* end Card */}
+              {currPost!=null?(<EditModal
+                  post={Posts[currPost]}
+                  open={edit.open}
+                  handleClose={edit.handleClose}
+                />):null}
             </Grid>
           ))}
         </Grid>
