@@ -253,6 +253,10 @@ public class PostService {
         // User not a member of the fandom, output exception
         throw new UserNotInFandomException("User not in " + request.getFandom());
       }
+
+      // if the fandom exists and the user has joined the fandom then make the edit
+      originalPost.setFandomName(request.getFandom());
+      modifiedFields.add("fandom");
     }
 
     if (request.getPostPhotoURL() != null) {
