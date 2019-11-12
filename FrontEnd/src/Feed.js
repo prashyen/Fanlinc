@@ -30,8 +30,8 @@ import DeleteModal from './DeleteModal';
 
 export default function Feed(props) {
   const [Posts, setPosts] = useState([]);
-  const { open, handleOpen, handleClose } = useModal();
-  const edit = useModal();
+  const postModal = useModal();
+  const editModal = useModal();
   const deleteModal = useModal();
 
   const { postsType, filterParam, loggedInUser } = props;
@@ -68,11 +68,9 @@ export default function Feed(props) {
       .catch((err) => {
         alert(err);
       });
-  });
-
+  }, [editModal.open, postModal.open, filterParam, postsType]);
   const [anchorEl, setAnchorEl] = useState(null);
   const ellipseOpen = Boolean(anchorEl);
-  
   const [currPost, setCurrPost] = useState(null);
 
   const handleEllipseClick = (event) => {
@@ -84,21 +82,33 @@ export default function Feed(props) {
     setAnchorEl(null);
     setCurrPost(null);
   };
-  
-  
 
   // Card component for the posts
   return (
     <>
       <div className="margin">
-        <Fab color="primary" size="small" aria-label="add" onClick={handleOpen}>
+        <Fab color="primary" size="small" aria-label="add" onClick={postModal.handleOpen}>
           <AddIcon />
         </Fab>
         <PostModal
-          open={open}
-          handleClose={handleClose}
+          open={postModal.open}
+          handleClose={postModal.handleClose}
           loggedInUser={loggedInUser}
         />
+        {currPost != null ? (
+          <div>
+            <EditModal
+              post={Posts[currPost]}
+              open={editModal.open}
+              handleClose={editModal.handleClose}
+            />
+            <DeleteModal
+              post={Posts[currPost]}
+              open={deleteModal.open}
+              handleClose={deleteModal.handleClose}
+            />
+          </div>
+        ) : null}
       </div>
       <CssBaseline />
       <Container maxWidth="lg">
@@ -111,7 +121,7 @@ export default function Feed(props) {
                   <CardHeader
                     action={
                       post.postedBy === loggedInUser ? (
-                        <div >
+                        <div>
                           <IconButton value={index} onClick={handleEllipseClick}>
                             <MoreVertIcon />
                           </IconButton>
@@ -120,8 +130,7 @@ export default function Feed(props) {
                             open={ellipseOpen}
                             onClose={handleEllipseClose}
                           >
-                            <MenuItem 
-                              onClick={edit.handleOpen}>
+                            <MenuItem onClick={editModal.handleOpen}>
                               <ListItemIcon>
                                 <EditIcon fontSize="small" />
                               </ListItemIcon>
@@ -170,11 +179,7 @@ Date:
                 </div>
               </Card>
               {/* end Card */}
-              {currPost!=null?(<EditModal
-                  post={Posts[currPost]}
-                  open={edit.open}
-                  handleClose={edit.handleClose}
-                />):null}
+
             </Grid>
           ))}
         </Grid>

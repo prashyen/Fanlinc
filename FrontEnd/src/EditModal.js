@@ -20,8 +20,10 @@ import useForm from './useForm';
 const editPostURL = 'http://localhost:8080/post/editPost';
 
 export default function EditModal(props) {
-  const {post, open, handleClose} = props;
-  const {title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl} = post;
+  const { post, open, handleClose } = props;
+  const {
+    title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl,
+  } = post;
 
   const initialValues = {
     title,
@@ -47,8 +49,8 @@ export default function EditModal(props) {
     } = values;
 
     fetch(editPostURL, {
-      method: 'patch',
-      mode: 'no-cors',
+      method: 'PATCH',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -60,7 +62,7 @@ export default function EditModal(props) {
         postedBy,
         type,
         postedTime,
-        fandomName : newFandomName,
+        fandomName: newFandomName,
         postPhotoUrl,
       }),
     }).then((response) => {
@@ -77,7 +79,7 @@ export default function EditModal(props) {
     }).catch((err) => {
       alert(err);
     });
-  } 
+  }
 
   const [fandoms, setFandoms] = useState();
   const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${postedBy}`;

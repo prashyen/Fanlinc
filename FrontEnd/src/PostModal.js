@@ -115,7 +115,7 @@ export default function PostModal(props) {
 
   const handleReset = (event) => {
     values.imageURL = '';
-    values.text = '';
+    values.content = '';
     values.title = '';
     values.level = '';
     values.type = '';
