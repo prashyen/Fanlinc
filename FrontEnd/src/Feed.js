@@ -29,10 +29,11 @@ import PostModal from './PostModal';
 import DeleteModal from './DeleteModal';
 
 export default function Feed(props) {
-  const [Posts, setPosts] = useState([]);
   const postModal = useModal();
   const editModal = useModal();
   const deleteModal = useModal();
+  const [postsAndUsers, setPostsAndUsers] = useState([]);
+  const { open, handleOpen, handleClose } = useModal();
 
   const { postsType, filterParam, loggedInUser } = props;
   const classes = useStylesPosts();
@@ -63,7 +64,7 @@ export default function Feed(props) {
       }
     }).then((data) => {
       // update state posts content
-      setPosts(data.posts);
+      setPostsAndUsers(data.postsAndUsers);
     })
       .catch((err) => {
         alert(err);
@@ -113,8 +114,8 @@ export default function Feed(props) {
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
-          {Posts.map((post, index) => (
-            <Grid item key={post.id} xs={12}>
+          {Posts.map((postEntry, index) => (
+            <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card className={classes.card}>
                 <div className={classes.cardDetails}>
@@ -148,34 +149,18 @@ export default function Feed(props) {
                     }
                   />
                   <CardContent>
-                    <Typography component="h2" variant="h5">
-                      {post.title}
-                    </Typography>
-                    <Typography variant="subtitle2" color="textSecondary">
-Posted By:
-                      {' '}
-                      { post.postedBy }
-                      {' '}
-Fandom:
-                      {' '}
-                      { post.fandomName }
-                      {' '}
-Level:
-                      {' '}
-                      { post.level }
-                      {' '}
-Type:
-                      {' '}
-                      { post.type }
-                      {' '}
-Date:
-                      {' '}
-                      {moment(post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
-                    </Typography>
-                    <Typography variant="subtitle1" paragraph>
-                      {post.content}
-                    </Typography>
-                  </CardContent>
+                      <Typography component="h2" variant="h5">
+                        {postEntry.post.title}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                      Posted By: { postEntry.post.postedBy } Fandom: { postEntry.post.fandomName } Level: { postEntry.post.level } Type: { postEntry.post.type }
+                      </Typography>
+                       <Typography variant="subtitle2" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                       </Typography>
+                      <Typography variant="subtitle1" paragraph>
+                        {postEntry.post.content}
+                      </Typography>
+                    </CardContent>
                 </div>
               </Card>
               {/* end Card */}
