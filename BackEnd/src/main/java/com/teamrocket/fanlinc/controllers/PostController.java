@@ -7,7 +7,6 @@ import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.EditPostResponse;
 import com.teamrocket.fanlinc.responses.GetPostsResponse;
 import com.teamrocket.fanlinc.services.PostService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -54,7 +53,6 @@ public class PostController {
   }
 
   @CrossOrigin
-  @ResponseStatus(value = HttpStatus.OK)
   @RequestMapping(value = BASE_PATH + "/deletePost", method = RequestMethod.DELETE)
   public void deletePost(@Valid @RequestBody DeletePostRequest request) {
     postService.deletePost(request);
