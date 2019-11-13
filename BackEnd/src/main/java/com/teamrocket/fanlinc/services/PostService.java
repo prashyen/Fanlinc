@@ -201,14 +201,15 @@ public class PostService {
    *
    * @return a {@link EditPostResponse} object containing the username, date and fields changed of
    * the edited post
-   * @throws PostNotFoundException if the specified post does not exist
-   * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException  if the type specified is not "General", "Cosplayer",
-   *                               "Vendor/Artist" or "noFilter"
-   * @throws InvalidEditException  if title, level or type are passed in as empty strings
-   * @throws  FandomNotFoundException if a fandom that does not exist is requested
+   * @throws PostNotFoundException    if the specified post does not exist
+   * @throws InvalidLevelException    if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException     if the type specified is not "General", "Cosplayer",
+   *                                  "Vendor/Artist" or "noFilter"
+   * @throws InvalidEditException     if title, level or type are passed in as empty strings
+   * @throws FandomNotFoundException  if a fandom that does not exist is requested
    * @throws UserNotInFandomException if the given user is not in the requested fandom
    */
+  @Transactional()
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
     Post originalPost = postRepository
@@ -242,16 +243,6 @@ public class PostService {
       if (requestedFandom == null) {
         throw new FandomNotFoundException(
             "Fandom with the name: " + request.getFandom() + " does not exist");
-      }
-
-      // if the fandom exists check if the user is a part of the fandom
-      Joined requestedRelation =
-          joinedRepository.findJoinedByUsernameAndFandomName(
-              request.getPostedBy(), request.getFandom());
-      // ensure the user is already a member of the fandom
-      if (requestedRelation == null) {
-        // User not a member of the fandom, output exception
-        throw new UserNotInFandomException("User not in " + request.getFandom());
       }
 
       // if the fandom exists and the user has joined the fandom then make the edit
