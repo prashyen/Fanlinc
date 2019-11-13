@@ -1,11 +1,13 @@
 package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddPostRequest;
+import com.teamrocket.fanlinc.requests.DeletePostRequest;
 import com.teamrocket.fanlinc.requests.EditPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.EditPostResponse;
 import com.teamrocket.fanlinc.responses.GetPostsResponse;
 import com.teamrocket.fanlinc.services.PostService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -49,5 +51,12 @@ public class PostController {
   @RequestMapping(value = BASE_PATH + "/editPost", method = RequestMethod.PATCH)
   public EditPostResponse editPost(@Valid @RequestBody EditPostRequest request) {
     return postService.editPost(request);
+  }
+
+  @CrossOrigin
+  @ResponseStatus(value = HttpStatus.OK)
+  @RequestMapping(value = BASE_PATH + "/deletePost", method = RequestMethod.DELETE)
+  public void deletePost(@Valid @RequestBody DeletePostRequest request) {
+    postService.deletePost(request);
   }
 }
