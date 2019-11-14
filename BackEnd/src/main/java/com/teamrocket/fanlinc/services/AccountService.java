@@ -8,17 +8,13 @@ import com.teamrocket.fanlinc.models.User;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddUserRequest;
-import com.teamrocket.fanlinc.requests.UserDetailsRequest;
-import com.teamrocket.fanlinc.requests.UserFandomsRequest;
-import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.responses.AddUserResponse;
 import com.teamrocket.fanlinc.responses.UserDetailsResponse;
 import com.teamrocket.fanlinc.responses.UserFandomsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class AccountService {
@@ -35,9 +31,10 @@ public class AccountService {
    * Checks if user with given username is present in database, and if so, checks if the given
    * password matches the one stored for that user
    *
-   * @param request a {@link ValidateUserRequest} object containing a username and a password
+   * @param username username of given user
+   * @param password password of given user
    * @return a {@link ValidateUserResponse} object containing the given username and whether or not
-   *     the given password matches the stored password
+   * the given password matches the stored password
    * @throws UserNotFoundException if user with given username was not found
    */
   @Transactional(readOnly = true)
@@ -61,7 +58,7 @@ public class AccountService {
    * @return a {@link AddUserResponse} object containing the given username of the new user
    * @throws UsernameNotUniqueException if user with given username already exists
    */
-  @Transactional(readOnly = false)
+  @Transactional()
   public AddUserResponse addUser(AddUserRequest request) {
     // check to see if the user with the given username already exists
     User requestedUser = userRepository.findByUsername(request.getUsername());
@@ -89,7 +86,7 @@ public class AccountService {
    * Checks if a user with a given username exists in the database and if so it will return that
    * user's information
    *
-   * @param request a {@link UserDetailsRequest} object containing the requested username
+   * @param username username of given user
    * @return a {@link UserDetailsResponse} object containing the requested users information
    * @throws UserNotFoundException if user with given username was not found
    */
@@ -118,7 +115,7 @@ public class AccountService {
   /**
    * Checks if given user exist, if so returns all the fandom names the user has joined
    *
-   * @param request a {@link UserFandomsRequest} object containing username of user
+   * @param username username of given user
    * @return a {@link UserFandomsResponse} object containing the fandom names
    * @throws UserNotFoundException if a user with the given username does not exist
    */
