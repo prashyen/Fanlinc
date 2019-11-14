@@ -33,8 +33,9 @@ export default function Feed(props) {
   const editModal = useModal();
   const deleteModal = useModal();
   const [postsAndUsers, setPostsAndUsers] = useState([]);
-  const { open, handleOpen, handleClose } = useModal();
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const ellipseOpen = Boolean(anchorEl);
+  const [currPost, setCurrPost] = useState(null);
   const { postsType, filterParam, loggedInUser } = props;
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
@@ -69,10 +70,7 @@ export default function Feed(props) {
       .catch((err) => {
         alert(err);
       });
-  }, [editModal.open, postModal.open, filterParam, postsType]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const ellipseOpen = Boolean(anchorEl);
-  const [currPost, setCurrPost] = useState(null);
+  }, [filterParam, postsType, editModal.open, postModal.open, deleteModal.open]);
 
   const handleEllipseClick = (event) => {
     setCurrPost(event.currentTarget.value);
@@ -99,14 +97,16 @@ export default function Feed(props) {
         {currPost != null ? (
           <div>
             <EditModal
-              post={Posts[currPost]}
+              post={postsAndUsers[currPost].post}
               open={editModal.open}
               handleClose={editModal.handleClose}
+              menuHandleClose={handleEllipseClose}
             />
             <DeleteModal
-              post={Posts[currPost]}
+              post={postsAndUsers[currPost].post}
               open={deleteModal.open}
               handleClose={deleteModal.handleClose}
+              menuHandleClose={handleEllipseClose}
             />
           </div>
         ) : null}
@@ -114,14 +114,14 @@ export default function Feed(props) {
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
-          {Posts.map((postEntry, index) => (
+          {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card className={classes.card}>
                 <div className={classes.cardDetails}>
                   <CardHeader
                     action={
-                      post.postedBy === loggedInUser ? (
+                      postEntry.post.postedBy === loggedInUser ? (
                         <div>
                           <IconButton value={index} onClick={handleEllipseClick}>
                             <MoreVertIcon />

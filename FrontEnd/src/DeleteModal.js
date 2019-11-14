@@ -13,7 +13,9 @@ import PropTypes from 'prop-types';
 
 
 export default function DeleteModal(props) {
-  const { open, handleClose, post } = props;
+  const {
+    open, handleClose, post, menuHandleClose,
+  } = props;
 
   const { postedBy, postedTime } = post;
   const deletePostURL = 'http://localhost:8080/post/deletePost';
@@ -22,7 +24,7 @@ export default function DeleteModal(props) {
    * http://localhost:8080/post/deletePost
    */
   function handleSubmit() {
-    /** fetch(editPostURL, {
+    fetch(deletePostURL, {
       method: 'delete',
       mode: 'cors',
       headers: {
@@ -31,24 +33,28 @@ export default function DeleteModal(props) {
       },
       body: JSON.stringify({
         postedBy,
-        postedTime
+        postedTime,
       }),
     }).then((response) => {
       switch (response.status) {
         case 200:
           break;
         case 404:
-          throw new Error('Username and/or Post not found');
-        case 400:
-          throw new Error(`Invalid type/level and/or you are not part of${fandomName}`);
+          throw new Error('Post not found');
         default:
-          throw new Error('Uh Oh! Something went wrong when editing the post.');
+          throw new Error('Uh Oh! Something went wrong when deleting the post.');
       }
     }).catch((err) => {
       alert(err);
-    }); */
+    });
     handleClose();
+    menuHandleClose();
   }
+
+  const handleCloseModal = () => {
+    handleClose();
+    menuHandleClose();
+  };
 
   return (
     <div>
@@ -61,7 +67,7 @@ export default function DeleteModal(props) {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <IconButton onClick={handleClose}>
+              <IconButton onClick={handleCloseModal}>
                 <CloseIcon />
               </IconButton>
             </Grid>
@@ -86,4 +92,5 @@ DeleteModal.propTypes = {
   post: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  menuHandleClose: PropTypes.func.isRequired,
 };

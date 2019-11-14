@@ -20,7 +20,9 @@ import useForm from './useForm';
 const editPostURL = 'http://localhost:8080/post/editPost';
 
 export default function EditModal(props) {
-  const { post, open, handleClose } = props;
+  const {
+    post, open, handleClose, menuHandleClose,
+  } = props;
   const {
     title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl,
   } = post;
@@ -130,11 +132,13 @@ export default function EditModal(props) {
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
+    menuHandleClose();
   };
 
   const handlePost = (event) => {
     handleSubmit();
     handleResetClose(event);
+    menuHandleClose();
   };
 
   if (open) {
@@ -303,4 +307,5 @@ EditModal.propTypes = {
   post: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  menuHandleClose: PropTypes.func.isRequired,
 };
