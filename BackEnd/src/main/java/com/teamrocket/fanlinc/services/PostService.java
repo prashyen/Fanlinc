@@ -18,6 +18,7 @@ import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.PostRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddPostRequest;
+import com.teamrocket.fanlinc.requests.DeletePostRequest;
 import com.teamrocket.fanlinc.requests.EditPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.EditPostResponse;
@@ -193,6 +194,27 @@ public class PostService {
       postsAndUsers.add(new PostUserPair(post, curr_user));
     }
     return postsAndUsers;
+  }
+
+  /**
+   * Finds a post given a username and the time it was posted as a key and deletes it.
+   *
+   * @throws PostNotFoundException if the specified post does not exist
+   */
+  public void deletePost(DeletePostRequest request) {
+    String postedBy = request.getPostedBy();
+    Date postedTime = request.getPostedTime();
+
+    Post post = postRepository.findByPostedByAndPostedTime(postedBy, postedTime);
+    if (post == null) {
+      throw new PostNotFoundException(
+          "Post from user, "
+              + postedBy
+              + " posted at, "
+              + postedTime.toString()
+              + " was not found");
+    }
+    postRepository.delete(post);
   }
 
   /**

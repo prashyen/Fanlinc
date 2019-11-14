@@ -1,6 +1,7 @@
 package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddPostRequest;
+import com.teamrocket.fanlinc.requests.DeletePostRequest;
 import com.teamrocket.fanlinc.requests.EditPostRequest;
 import com.teamrocket.fanlinc.responses.AddPostResponse;
 import com.teamrocket.fanlinc.responses.EditPostResponse;
@@ -49,5 +50,11 @@ public class PostController {
   @RequestMapping(value = BASE_PATH + "/editPost", method = RequestMethod.PATCH)
   public EditPostResponse editPost(@Valid @RequestBody EditPostRequest request) {
     return postService.editPost(request);
+  }
+
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/deletePost", method = RequestMethod.DELETE)
+  public void deletePost(@Valid @RequestBody DeletePostRequest request) {
+    postService.deletePost(request);
   }
 }
