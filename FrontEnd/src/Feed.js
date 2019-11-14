@@ -64,7 +64,7 @@ export default function Feed(props) {
         default:
           throw new Error('Error occurred while retrieving posts');
       }
-    }).then((data) => { 
+    }).then((data) => {
       setUpdateTrigger(false);
       // update state posts content
       setPostsAndUsers(data.postsAndUsers);

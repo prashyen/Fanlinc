@@ -64,7 +64,6 @@ export default function EditModal(props) {
         postedBy,
         type,
         postedTime,
-        fandomName: newFandomName,
         postPhotoUrl,
       }),
     }).then((response) => {
@@ -213,6 +212,7 @@ export default function EditModal(props) {
                     <FormControl
                       variant="outlined"
                       fullWidth
+                      disabled
                     >
                       <InputLabel>
                         Fandom
