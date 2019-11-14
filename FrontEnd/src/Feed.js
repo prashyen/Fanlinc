@@ -37,6 +37,7 @@ export default function Feed(props) {
   const ellipseOpen = Boolean(anchorEl);
   const [currPost, setCurrPost] = useState(null);
   const { postsType, filterParam, loggedInUser } = props;
+  const [updateTrigger, setUpdateTrigger] = useState(false);
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
 
@@ -63,14 +64,15 @@ export default function Feed(props) {
         default:
           throw new Error('Error occurred while retrieving posts');
       }
-    }).then((data) => {
+    }).then((data) => { 
+      setUpdateTrigger(false);
       // update state posts content
       setPostsAndUsers(data.postsAndUsers);
     })
       .catch((err) => {
         alert(err);
       });
-  }, [filterParam, postsType, editModal.open, postModal.open, deleteModal.open]);
+  }, [filterParam, updateTrigger]);
 
   const handleEllipseClick = (event) => {
     setCurrPost(event.currentTarget.value);
@@ -80,6 +82,7 @@ export default function Feed(props) {
   const handleEllipseClose = () => {
     setAnchorEl(null);
     setCurrPost(null);
+    setUpdateTrigger(true);
   };
 
   // Card component for the posts
@@ -93,6 +96,7 @@ export default function Feed(props) {
           open={postModal.open}
           handleClose={postModal.handleClose}
           loggedInUser={loggedInUser}
+          handleTrigger={setUpdateTrigger}
         />
         {currPost != null ? (
           <div>

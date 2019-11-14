@@ -28,7 +28,7 @@ const initialState = {
 const addPostURL = 'http://localhost:8080/post/addPost';
 
 export default function PostModal(props) {
-  const { open, handleClose, loggedInUser } = props;
+  const { open, handleClose, loggedInUser, handleTrigger } = props;
   const { values, handleChange } = useForm(null, initialState);
   const [fandomName, setFandomName] = useState('');
   const postedBy = loggedInUser;
@@ -126,6 +126,7 @@ export default function PostModal(props) {
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
+    handleTrigger(true);
   };
 
   const handlePost = (event) => {

@@ -74,7 +74,7 @@ export default function EditModal(props) {
         case 404:
           throw new Error('Username and/or fandom name not found');
         case 400:
-          throw new Error(`Invalid type/level and/or you are not part of${fandomName}`);
+          throw new Error('Invalid type/level');
         default:
           throw new Error('Uh Oh! Something went wrong when editing the post.');
       }
