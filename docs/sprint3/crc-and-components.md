@@ -548,12 +548,12 @@ Responsibilities:
 
 Collaborators:
 
-Class name: InvalidTitleEditException\
+Class name: InvalidEditException\
 Parent class (if any): RuntimeException\
 Subclasses (if any):\
 Responsibilities:
 
--   Exception error for throwing when title is an empty string
+-   Exception error for throwing when title or fandom is an empty string
 
 Collaborators:
 

@@ -2,7 +2,7 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
-import com.teamrocket.fanlinc.exceptions.InvalidTitleEditException;
+import com.teamrocket.fanlinc.exceptions.InvalidEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
 import com.teamrocket.fanlinc.exceptions.PostNotFoundException;
@@ -223,12 +223,15 @@ public class PostService {
    *
    * @return a {@link EditPostResponse} object containing the username, date and fields changed of
    * the edited post
-   * @throws PostNotFoundException     if the specified post does not exist
-   * @throws InvalidLevelException     if the level specified is not 1,2,3,4 or noFilter
-   * @throws InvalidTypeException      if the type specified is not "General", "Cosplayer",
-   *                                   "Vendor/Artist" or "noFilter"
-   * @throws InvalidTitleEditException if title, level or type are passed in as empty strings
+   * @throws PostNotFoundException    if the specified post does not exist
+   * @throws InvalidLevelException    if the level specified is not 1,2,3,4 or noFilter
+   * @throws InvalidTypeException     if the type specified is not "General", "Cosplayer",
+   *                                  "Vendor/Artist" or "noFilter"
+   * @throws InvalidEditException     if title, level or type are passed in as empty strings
+   * @throws FandomNotFoundException  if a fandom that does not exist is requested
+   * @throws UserNotInFandomException if the given user is not in the requested fandom
    */
+  @Transactional()
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
     Post originalPost = postRepository
@@ -245,11 +248,28 @@ public class PostService {
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
     if (("").equals(request.getTitle())) {
-      throw new InvalidTitleEditException("Title cannot be an empty string");
+      throw new InvalidEditException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
       originalPost.setTitle(request.getTitle());
       modifiedFields.add("title");
+    }
+
+    if (("").equals(request.getFandom())) {
+      throw new InvalidEditException("Fandom cannot be an empty string");
+    }
+
+    if (request.getFandom() != null) {
+      // check if the given fandom exists
+      Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandom());
+      if (requestedFandom == null) {
+        throw new FandomNotFoundException(
+            "Fandom with the name: " + request.getFandom() + " does not exist");
+      }
+
+      // if the fandom exists and the user has joined the fandom then make the edit
+      originalPost.setFandomName(request.getFandom());
+      modifiedFields.add("fandom");
     }
 
     if (request.getPostPhotoURL() != null) {
