@@ -18,7 +18,7 @@ import useModal from './useModal';
 import PostModal from './PostModal';
 
 export default function Feed(props) {
-  const [Posts, setPosts] = useState([]);
+  const [postsAndUsers, setPostsAndUsers] = useState([]);
   const { open, handleOpen, handleClose } = useModal();
   const { postsType, filterParam, loggedInUser } = props;
   const classes = useStylesPosts();
@@ -49,12 +49,15 @@ export default function Feed(props) {
       }
     }).then((data) => {
       // update state posts content
-      setPosts(data.posts);
+      setPostsAndUsers(data.postsAndUsers);
     })
       .catch((err) => {
         alert(err);
       });
   });
+
+
+
   // Card component for the posts
   return (
     <>
@@ -71,20 +74,23 @@ export default function Feed(props) {
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
-          {Posts.map((post) => (
-            <Grid item key={post.id} xs={12}>
+          {postsAndUsers.map((postEntry) => (
+            <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <CardActionArea>
                 <Card className={classes.card}>
                   <div className={classes.cardDetails}>
                     <CardContent>
                       <Typography component="h2" variant="h5">
-                        {post.title}
+                        {postEntry.post.title}
                       </Typography>
-                      <Typography variant="subtitle2" color="textSecondary">Posted By: { post.postedBy } Fandom: { post.fandomName } Level: { post.level } Type: { post.type } Date: {moment(post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                      <Typography variant="subtitle1" color="textSecondary">
+                      Posted By: { postEntry.post.postedBy } Fandom: { postEntry.post.fandomName } Level: { postEntry.post.level } Type: { postEntry.post.type }
                       </Typography>
+                       <Typography variant="subtitle2" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                       </Typography>
                       <Typography variant="subtitle1" paragraph>
-                        {post.content}
+                        {postEntry.post.content}
                       </Typography>
                     </CardContent>
                   </div>
