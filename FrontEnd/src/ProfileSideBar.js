@@ -100,6 +100,8 @@ export default function SideBar(props) {
       });
   }, []);
 
+  console.log(location);
+
   return (
     <>
       <CssBaseline />
@@ -110,14 +112,11 @@ export default function SideBar(props) {
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
-          <typography>
-
-          </typography>
-            // { fandoms.map((fandomName) => <Tab key={fandoms.indexOf(fandomName)} label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))} />) }
-            /*
-            { picture }
-            { location }
-            */
+          <Typography variant="body" component="h2" gutterBottom>
+              {location}
+              {bio}
+              {picture}
+          </Typography>
         </Grid>
         {/* Sidebar End */}
 
