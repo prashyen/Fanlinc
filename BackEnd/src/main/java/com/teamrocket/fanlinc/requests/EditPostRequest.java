@@ -15,6 +15,8 @@ public class EditPostRequest {
 
   private String type;
 
+  private String fandom;
+
   private String postPhotoURL;
   @NotEmpty
   private String postedBy;
@@ -47,5 +49,9 @@ public class EditPostRequest {
 
   public Date getPostedTime() {
     return postedTime;
+  }
+
+  public String getFandom() {
+    return fandom;
   }
 }
