@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
-import { useStyles } from './postModalStyle';
+import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
 
 
@@ -113,7 +113,7 @@ export default function EditModal(props) {
     });
   };
 
-  const classes = useStyles();
+  const classes = useStylesModal();
 
   const handleFandomNameChange = (event) => {
     setNewFandomName(event.target.value);

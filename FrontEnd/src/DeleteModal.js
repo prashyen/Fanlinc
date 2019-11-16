@@ -75,7 +75,7 @@ export default function DeleteModal(props) {
         </MuiDialogTitle>
         <MuiDialogContent dividers>
           <Typography>
-            Are you sure want to delete this post?
+            Are you sure you want to delete this post?
           </Typography>
         </MuiDialogContent>
         <MuiDialogActions padding="5px">

@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
-import { useStyles } from './postModalStyle';
+import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
 
 const initialState = {
@@ -108,7 +108,7 @@ export default function PostModal(props) {
     });
   };
 
-  const classes = useStyles();
+  const classes = useStylesModal();
 
   const handleFandomNameChange = (event) => {
     setFandomName(event.target.value);
