@@ -102,7 +102,7 @@ export default function PostModal(props) {
       }
     }).then((data) => {
       setFandoms({ data });
-      Promise.resolve();
+      return Promise.resolve();
     }).catch((err) => {
       alert(err);
     });
@@ -301,4 +301,5 @@ PostModal.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleTrigger: PropTypes.func.isRequired,
 };

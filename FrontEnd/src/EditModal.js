@@ -107,7 +107,7 @@ export default function EditModal(props) {
       }
     }).then((data) => {
       setFandoms({ data });
-      Promise.resolve();
+      return Promise.resolve();
     }).catch((err) => {
       alert(err);
     });
