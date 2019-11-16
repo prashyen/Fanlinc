@@ -26,7 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class AccountServiceTests {
+public class AccountServiceImplTests {
 
   private static final String EXAMPLE_USERNAME = "example";
   private static final String EXAMPLE_PASSWORD = "password";
@@ -42,7 +42,7 @@ public class AccountServiceTests {
   private static final String EXAMPLE_FANDOM_2 = "example2";
 
   @InjectMocks
-  AccountService accountService;
+  AccountServiceImpl accountService;
 
   @Mock
   UserRepository userRepository;
@@ -92,7 +92,8 @@ public class AccountServiceTests {
 
   @Test
   public void validateUser_CorrectPassword_ResponseWithAcceptedTrue() {
-    ValidateUserResponse response = accountService.validateUser(EXAMPLE_USERNAME, EXAMPLE_PASSWORD);
+    ValidateUserResponse response = accountService
+        .validateUser(EXAMPLE_USERNAME, EXAMPLE_PASSWORD);
 
     assertThat(response.getUsername()).isEqualTo(EXAMPLE_USERNAME);
     assertThat(response.isAccepted()).isTrue();
