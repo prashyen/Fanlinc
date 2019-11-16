@@ -38,7 +38,7 @@ export default function DeleteModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          break;
+          return Promise.resolve();
         case 404:
           throw new Error('Post not found');
         default:

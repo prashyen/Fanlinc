@@ -64,7 +64,7 @@ export default function PostModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          break;
+          return Promise.resolve();
         case 404:
           throw new Error('Username and/or fandom name not found');
         case 400:
@@ -102,6 +102,7 @@ export default function PostModal(props) {
       }
     }).then((data) => {
       setFandoms({ data });
+      Promise.resolve();
     }).catch((err) => {
       alert(err);
     });
