@@ -96,7 +96,6 @@ export default function SideBar(props) {
     }).then((data) => {
         setFandoms(data.fandomNames);
       }).catch((err) => {
-//      console.log("get userFandoms API fetch error")
         alert(err);
       });
   });
@@ -109,7 +108,7 @@ export default function SideBar(props) {
       <Grid container>
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
+        <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
           <div className="joinFandomButton">
               <Fab color="primary" variant="extended"  size="small" aria-label="add" onClick={handleOpen}>
                 <AddIcon className={classes.extendedIcon}/>

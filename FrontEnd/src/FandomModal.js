@@ -28,7 +28,6 @@ const initialState = {
 export default function FandomModal(props) {
   const { open, handleClose, loggedInUser } = props;
   const { values, handleChange } = useForm(null, initialState);
-//  const [fandomName, setFandomName] = useState('');
 
   const joinFandomURL = `http://localhost:8080/fandom/addJoinedFandom`;
   /**
@@ -71,50 +70,13 @@ export default function FandomModal(props) {
       }
     }).catch((err) => {
       alert(err);
-//        console.log("join Fandom error");
     });
   }
   // Fandom Drop Down List
   const FandomList = ["Naruto", "Avengers", "Game of Thrones", "Fortnite", "PubG", "One Piece", "Harry Potter"];
-  // Remove the fandoms that the user has already joined
-
-//  const [fandoms, setFandoms] = useState();
-
-//  const getUserFandoms = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
-  /**
-   * Handles updating the Fandom Dropdown using a get request from the url:
-   * http://localhost:8080/account/userFandoms
-   */
-//  const update = () => {
-//    fetch(getUserFandoms, {
-//      method: 'GET',
-//      mode: 'cors',
-//      headers: {
-//        'Content-Type': 'application/json',
-//        Accept: 'application/json',
-//      },
-//    }).then((response) => {
-//      switch (response.status) {
-//        case 200:
-//          return response.json();
-//        case 404:
-//          throw new Error('Username not found');
-//        default:
-//          throw new Error('Uh oh! Something went wrong.');
-//      }
-//    }).then((data) => {
-//      setFandoms({ data });
-//    }).catch((err) => {
-//      alert(err);
-//    });
-//  };
 
   const classes = useStyles();
 
-//  const handleFandomNameChange = (event) => {
-//    setFandomName(event.target.value);
-//  };
-//
   const handleReset = (event) => {
     values.fandomName = '';
     values.level = '';
@@ -134,10 +96,6 @@ export default function FandomModal(props) {
     handleSubmit();
     handleResetClose(event);
   };
-
-//  if (open) {
-//    update();
-//  }
 
   return (
     <Modal
