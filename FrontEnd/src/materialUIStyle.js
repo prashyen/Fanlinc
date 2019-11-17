@@ -1,20 +1,21 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles , createMuiTheme } from '@material-ui/core/styles';
 import Image from './img/loginBackground.jpg';
 import orange from '@material-ui/core/colors/orange';
-import { createMuiTheme } from '@material-ui/core/styles';
+
 
 export function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      Copyright © 
       <Link color="inherit" href="https://material-ui.com/">
         Fanlinc
-      </Link>{' '}
+      </Link>
+{' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -28,12 +29,12 @@ export const theme = createMuiTheme({
   },
 });
 
-export const useStylesLogin = makeStyles(theme => ({
+export const useStylesLogin = makeStyles((theme) => ({
   root: {
     height: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
 
   },
   image: {
@@ -52,7 +53,7 @@ export const useStylesLogin = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   palette: {
-      primary: 'orange',
+    primary: 'orange',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -60,7 +61,7 @@ export const useStylesLogin = makeStyles(theme => ({
   },
 }));
 
-export const useStylesPosts = makeStyles(theme => ({
+export const useStylesPosts = makeStyles((theme) => ({
   mainFeaturedPost: {
     position: 'relative',
     backgroundColor: theme.palette.grey[800],
@@ -71,10 +72,10 @@ export const useStylesPosts = makeStyles(theme => ({
     backgroundPosition: 'center',
   },
   card: {
-     display: 'block',
-     width: '55vw',
-     transitionDuration: '0.3s',
-     height: '15vw'
+    display: 'block',
+    width: '55vw',
+    transitionDuration: '0.3s',
+    height: '15vw',
   },
   cardDetails: {
     flex: 1,
@@ -86,5 +87,40 @@ export const useStylesPosts = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing(8),
     padding: theme.spacing(6, 0),
+  },
+}));
+
+export const useStylesModal = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  formControl: {
+    marginLeft: theme.spacing(0.5),
+    marginTop: theme.spacing(0.5),
+    minWidth: 80,
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  button: {
+    color: '#ffffff',
+    backgroundColor: '#1D1E3D',
+    fontColor: 'white',
+    '&:hover': {
+      backgroundColor: '#242775',
+    },
+    marginLeft: theme.spacing(0.5),
+    marginRight: theme.spacing(0.5),
+  },
+  fab: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
   },
 }));

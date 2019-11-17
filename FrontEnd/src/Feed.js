@@ -4,23 +4,40 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import './css/PostModal.css';
+import EditIcon from '@material-ui/icons/Edit';
+import CardHeader from '@material-ui/core/CardHeader';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import moment from 'moment';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
+import { IconButton } from '@material-ui/core';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
+import EditModal from './EditModal';
 import PostModal from './PostModal';
+import DeleteModal from './DeleteModal';
 
 export default function Feed(props) {
+  const postModal = useModal();
+  const editModal = useModal();
+  const deleteModal = useModal();
   const [postsAndUsers, setPostsAndUsers] = useState([]);
-  const { open, handleOpen, handleClose } = useModal();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const ellipseOpen = Boolean(anchorEl);
+  const [currPost, setCurrPost] = useState(null);
   const { postsType, filterParam, loggedInUser } = props;
+  const [updateTrigger, setUpdateTrigger] = useState(false);
   const classes = useStylesPosts();
   let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
 
@@ -48,39 +65,94 @@ export default function Feed(props) {
           throw new Error('Error occurred while retrieving posts');
       }
     }).then((data) => {
+      setUpdateTrigger(false);
       // update state posts content
       setPostsAndUsers(data.postsAndUsers);
     })
       .catch((err) => {
         alert(err);
       });
-  });
+  }, [filterParam, updateTrigger]);
 
+  const handleEllipseClick = (event) => {
+    setCurrPost(event.currentTarget.value);
+    setAnchorEl(event.currentTarget);
+  };
 
+  const handleEllipseClose = () => {
+    setAnchorEl(null);
+    setCurrPost(null);
+    setUpdateTrigger(true);
+  };
 
   // Card component for the posts
   return (
     <>
       <div className="margin">
-        <Fab color="primary" size="small" aria-label="add" onClick={handleOpen}>
+        <Fab color="primary" size="small" aria-label="add" onClick={postModal.handleOpen}>
           <AddIcon />
         </Fab>
         <PostModal
-          open={open}
-          handleClose={handleClose}
+          open={postModal.open}
+          handleClose={postModal.handleClose}
           loggedInUser={loggedInUser}
+          handleTrigger={setUpdateTrigger}
         />
+        {currPost != null ? (
+          <div>
+            <EditModal
+              post={postsAndUsers[currPost].post}
+              open={editModal.open}
+              handleClose={editModal.handleClose}
+              menuHandleClose={handleEllipseClose}
+            />
+            <DeleteModal
+              post={postsAndUsers[currPost].post}
+              open={deleteModal.open}
+              handleClose={deleteModal.handleClose}
+              menuHandleClose={handleEllipseClose}
+            />
+          </div>
+        ) : null}
       </div>
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
-          {postsAndUsers.map((postEntry) => (
+          {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
-              <CardActionArea>
-                <Card className={classes.card}>
-                  <div className={classes.cardDetails}>
-                    <CardContent>
+              <Card className={classes.card}>
+                <div className={classes.cardDetails}>
+                  <CardHeader
+                    action={
+                      postEntry.post.postedBy === loggedInUser ? (
+                        <div>
+                          <IconButton value={index} onClick={handleEllipseClick}>
+                            <MoreVertIcon />
+                          </IconButton>
+                          <Menu
+                            anchorEl={anchorEl}
+                            open={ellipseOpen}
+                            onClose={handleEllipseClose}
+                          >
+                            <MenuItem onClick={editModal.handleOpen}>
+                              <ListItemIcon>
+                                <EditIcon fontSize="small" />
+                              </ListItemIcon>
+                              <ListItemText primary="Edit Post" />
+                            </MenuItem>
+                            <MenuItem onClick={deleteModal.handleOpen}>
+                              <ListItemIcon>
+                                <DeleteIcon fontSize="small" />
+                              </ListItemIcon>
+                              <ListItemText primary="Delete Post" />
+                            </MenuItem>
+                          </Menu>
+                        </div>
+                      ) : null
+                    }
+                  />
+                  <CardContent>
                       <Typography component="h2" variant="h5">
                         {postEntry.post.title}
                       </Typography>
@@ -93,10 +165,10 @@ export default function Feed(props) {
                         {postEntry.post.content}
                       </Typography>
                     </CardContent>
-                  </div>
-                </Card>
-              </CardActionArea>
+                </div>
+              </Card>
               {/* end Card */}
+
             </Grid>
           ))}
         </Grid>
