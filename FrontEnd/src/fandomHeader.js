@@ -38,10 +38,9 @@ export default function FandomHeader(props) {
             justify="flex-start"
             alignItems="center"
         >
-            {/* Grid has 12 columns width - photo:details = 4:8 */}
+            {/* Grid has 12 columns width - photo:details = 3:9 */}
             <Grid item sm={3} style={{ }}>
-                <img src="https://i.ibb.co/S3S5YCD/game-Of-Thrones.jpg" alt="game-Of-Thrones" width="160px" height="150px"
-                 style={{borderRadius: '50%'}}/>
+                <img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>
             </Grid>
             <Grid item sm={9} style={{}}>
                 <Typography variant="h2" gutterBottom>{props.fandom}</Typography>

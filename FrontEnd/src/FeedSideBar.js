@@ -118,7 +118,7 @@ export default function SideBar(props) {
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: 'auto' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
               <FandomHeader fandom={fandomName}/>
