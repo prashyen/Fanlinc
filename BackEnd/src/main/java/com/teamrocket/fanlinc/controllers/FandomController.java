@@ -36,9 +36,5 @@ public class FandomController {
     return fandomService.addJoinedFandom(request);
   }
 
-  @RequestMapping(value = BASE_PATH + "/fandomDetails", method = RequestMethod.GET)
-  @ResponseBody
-  public GetFandomDetailsResponse getFandomDetails(@RequestParam("fandomName") String fandomName) {
-    return fandomService.getFandomDetails(fandomName);
-  }
+
 }

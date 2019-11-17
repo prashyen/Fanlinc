@@ -134,29 +134,5 @@ public class FandomService {
     return new AddJoinedFandomResponse(request.getType(), request.getLevel());
   }
 
-  /**
-   * Given a fandom name, checks if the requested fandom exists and if it does return the fandoms
-   * details
-   *
-   * @param fandomName {@link String} - the requested fandoms name
-   * @return {@link GetFandomDetailsResponse} - an object containing the fandoms name, genre,
-   * description and photourl
-   * @throws FandomNotFoundException - if the requested fandom cannot be found
-   * @throws BadRequestException - if the fandomName is empty
-   */
-  @Transactional
-  public GetFandomDetailsResponse getFandomDetails(String fandomName) {
-    // make sure the fandomName is valid
-    if (fandomName == null || ("").equals(fandomName)) {
-      throw new BadRequestException("You must input fandomName");
-    }
-    Fandom fandom = fandomRepository.findByFandomName(fandomName);
-    if (fandom == null) {
-      throw new FandomNotFoundException(
-          "The fandom with the name, " + fandomName + " does not exist");
-    }
-    // if the fandom was found output it's details
-    return new GetFandomDetailsResponse(fandom.getFandomName(), fandom.getGenre(),
-        fandom.getDescription(), fandom.getDisplayPhotoURL());
-  }
+
 }
