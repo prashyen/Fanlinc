@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
-import { useStyles } from './postModalStyle';
+import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
 
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
 const addPostURL = 'http://localhost:8080/post/addPost';
 
 export default function PostModal(props) {
-  const { open, handleClose, loggedInUser } = props;
+  const { open, handleClose, loggedInUser, handleTrigger } = props;
   const { values, handleChange } = useForm(null, initialState);
   const [fandomName, setFandomName] = useState('');
   const postedBy = loggedInUser;
@@ -64,7 +64,7 @@ export default function PostModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          break;
+          return Promise.resolve();
         case 404:
           throw new Error('Username and/or fandom name not found');
         case 400:
@@ -102,12 +102,13 @@ export default function PostModal(props) {
       }
     }).then((data) => {
       setFandoms({ data });
+      return Promise.resolve();
     }).catch((err) => {
       alert(err);
     });
   };
 
-  const classes = useStyles();
+  const classes = useStylesModal();
 
   const handleFandomNameChange = (event) => {
     setFandomName(event.target.value);
@@ -115,7 +116,7 @@ export default function PostModal(props) {
 
   const handleReset = (event) => {
     values.imageURL = '';
-    values.text = '';
+    values.content = '';
     values.title = '';
     values.level = '';
     values.type = '';
@@ -126,6 +127,7 @@ export default function PostModal(props) {
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
+    handleTrigger(true);
   };
 
   const handlePost = (event) => {
@@ -297,6 +299,7 @@ export default function PostModal(props) {
 
 PostModal.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
-  open: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleTrigger: PropTypes.func.isRequired,
 };
