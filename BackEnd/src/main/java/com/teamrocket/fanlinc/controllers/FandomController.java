@@ -6,9 +6,13 @@ import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
 import com.teamrocket.fanlinc.services.FandomService;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FandomController {
@@ -35,6 +39,4 @@ public class FandomController {
       @Valid @RequestBody AddJoinedFandomRequest request) {
     return fandomService.addJoinedFandom(request);
   }
-
-
 }
