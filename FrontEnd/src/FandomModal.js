@@ -85,14 +85,12 @@ export default function FandomModal(props) {
   };
 
   const handleResetClose = (event) => {
-    console.log("closed");
     handleReset(event);
     handleClose();
   };
 
   // On clicking join
   const handleJoin = (event) => {
-    console.log("join button clicked");
     handleSubmit();
     handleResetClose(event);
   };
