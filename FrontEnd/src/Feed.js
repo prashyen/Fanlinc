@@ -24,6 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import moment from 'moment';
 import AddIcon from '@material-ui/icons/Add';
+import Avatar from '@material-ui/core/Avatar';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
@@ -94,17 +95,6 @@ export default function Feed(props) {
   const Bold = ({ children }) =>
     <Box fontWeight="fontWeightBold" display="inline" ml={1.5} >{children}</Box>
 
-const useStyles = makeStyles(theme => ({
-  cardMedia: {
-    width: 160,
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-    details: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-}));
   // Card component for the posts
   return (
     <>
@@ -141,14 +131,19 @@ const useStyles = makeStyles(theme => ({
           {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
-              <Card style = {{display: "flex"}}>
+              <Card style = {{display: "flex", width: '70vw'}}>
+                <Grid container xs={1} justify="center"  >
+                    <Avatar style={{padding: 10}}>H</Avatar>
+                </Grid>
                 <div className={classes.cardDetails}>
-                  <CardContent flex= '1 0 auto'>
+                      <CardContent flex= '1 0 auto'>
+
                       <Typography component="h2" variant="h5">
                         {postEntry.post.title}
                       </Typography>
+
                       <Typography variant="subtitle2" color="textSecondary">
-                          <Box fontWeight="fontWeightBold" display="inline">Posted By: </Box>{ postEntry.post.postedBy }
+                          <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
                           <Bold>Fandom:</Bold> { postEntry.post.fandomName }
                           <Bold>Level: </Bold> { postEntry.post.level }
                           <Bold>Type: </Bold>{ postEntry.post.type }
@@ -163,7 +158,7 @@ const useStyles = makeStyles(theme => ({
                    </Grid>
                 </div>
               <CardMedia style={{ width: "160px", height: "160px" }} component="img" image='https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg'/>
-               <CardHeader
+               <CardHeader style={{padding:0}}
                   action={
                     postEntry.post.postedBy === loggedInUser ? (
                       <div>
@@ -189,7 +184,7 @@ const useStyles = makeStyles(theme => ({
                           </MenuItem>
                         </Menu>
                       </div>
-                    ) : null
+                    ) : <Box m={3} />
                   }
                 />
               </Card>
