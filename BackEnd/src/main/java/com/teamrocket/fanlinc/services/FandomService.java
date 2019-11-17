@@ -142,6 +142,7 @@ public class FandomService {
    * @return {@link GetFandomDetailsResponse} - an object containing the fandoms name, genre,
    * description and photourl
    * @throws FandomNotFoundException - if the requested fandom cannot be found
+   * @throws BadRequestException - if the fandomName is empty
    */
   @Transactional
   public GetFandomDetailsResponse getFandomDetails(String fandomName) {
