@@ -132,23 +132,24 @@ export default function Feed(props) {
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card style = {{display: "flex", width: '70vw'}}>
-                <Grid container xs={1} justify="center"  >
-                    <Avatar style={{padding: 10}}>H</Avatar>
+                <Grid item justify="center">
+                    <div style={{paddingTop: 20, paddingLeft:20}}>
+                        <Avatar >H</Avatar>
+                    </div>
                 </Grid>
                 <div className={classes.cardDetails}>
                       <CardContent flex= '1 0 auto'>
-
                       <Typography component="h2" variant="h5">
                         {postEntry.post.title}
                       </Typography>
 
-                      <Typography variant="subtitle2" color="textSecondary">
+                      <Typography variant="body2" color="textSecondary">
                           <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
                           <Bold>Fandom:</Bold> { postEntry.post.fandomName }
                           <Bold>Level: </Bold> { postEntry.post.level }
                           <Bold>Type: </Bold>{ postEntry.post.type }
                       </Typography>
-                       <Typography variant="subtitle2" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                       <Typography variant="caption" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
                        </Typography>
                       <Typography variant="subtitle1" >
                         {postEntry.post.content}
