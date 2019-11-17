@@ -132,7 +132,7 @@ public class FandomServiceImplTests {
   }
 
   @Test
-  public void addJoinedFandom_UserNotFound_ThrowsException() {
+  public void addJoinedFandom_UserDoesNotExist_ThrowsException() {
     AddJoinedFandomRequest request = new AddJoinedFandomRequest(
         EXAMPLE_LEVEL, EXAMPLE_TYPE, EXAMPLE_FANDOM_NAME, EXAMPLE_USER
     );
@@ -145,7 +145,7 @@ public class FandomServiceImplTests {
   }
 
   @Test
-  public void addJoinedFandom_FandomNotFound_ThrowsException() {
+  public void addJoinedFandom_FandomDoesNotExist_ThrowsException() {
     AddJoinedFandomRequest request = new AddJoinedFandomRequest(
         EXAMPLE_LEVEL, EXAMPLE_TYPE, EXAMPLE_FANDOM_NAME, EXAMPLE_USER
     );

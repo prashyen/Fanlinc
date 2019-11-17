@@ -21,6 +21,12 @@ public class EditPostRequest {
   @NotNull
   private Date postedTime;
 
+  public EditPostRequest(@NotEmpty String postedBy,
+      @NotNull Date postedTime) {
+    this.postedBy = postedBy;
+    this.postedTime = postedTime;
+  }
+
   public String getTitle() {
     return title;
   }
@@ -47,5 +53,25 @@ public class EditPostRequest {
 
   public Date getPostedTime() {
     return postedTime;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public void setPostPhotoURL(String postPhotoURL) {
+    this.postPhotoURL = postPhotoURL;
   }
 }
