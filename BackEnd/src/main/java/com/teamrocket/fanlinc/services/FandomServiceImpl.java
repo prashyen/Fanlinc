@@ -78,15 +78,15 @@ public class FandomServiceImpl implements FandomService {
    * the fandom
    *
    * @param request a {@link AddJoinedFandomRequest} object containing the information about the
-   * user and fandom relationship
+   *                user and fandom relationship
    * @return a {@link AddJoinedFandomResponse} object containing the relationship type and level
-   * @throws FandomNotFoundException if a fandom with the requested name does not exist
-   * @throws UserNotFoundException if a user with the given username does not exist
+   * @throws FandomNotFoundException          if a fandom with the requested name does not exist
+   * @throws UserNotFoundException            if a user with the given username does not exist
    * @throws UserAlreadyJoinedFandomException if the user with given username already joined the
-   * fandom
-   * @throws InvalidTypeException if request type is not one of {"General", "Cosplayer",
-   * "Vendor/Artist"}
-   * @throws InvalidLevelException if request level is not one of {"1", "2", "3", "4"}
+   *                                          fandom
+   * @throws InvalidTypeException             if request type is not one of {"General", "Cosplayer",
+   *                                          "Vendor/Artist"}
+   * @throws InvalidLevelException            if request level is not one of {"1", "2", "3", "4"}
    */
   @Transactional()
   public AddJoinedFandomResponse addJoinedFandom(AddJoinedFandomRequest request) {
