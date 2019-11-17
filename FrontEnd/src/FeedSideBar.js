@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Feed from './Feed';
+import FandomHeader from './fandomHeader'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,6 +121,7 @@ export default function SideBar(props) {
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
+              <FandomHeader fandom={fandomName}/>
               <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
             </TabPanel>
           ))}
