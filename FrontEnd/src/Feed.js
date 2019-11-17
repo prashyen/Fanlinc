@@ -5,11 +5,17 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import './css/PostModal.css';
 import EditIcon from '@material-ui/icons/Edit';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Hidden from '@material-ui/core/Hidden';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import logo from './img/fanlinc_logo.png';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,6 +33,7 @@ import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
 import DeleteModal from './DeleteModal';
+
 
 export default function Feed(props) {
   const postModal = useModal();
@@ -84,7 +91,20 @@ export default function Feed(props) {
     setCurrPost(null);
     setUpdateTrigger(true);
   };
+  const Bold = ({ children }) =>
+    <Box fontWeight="fontWeightBold" display="inline" ml={1.5} >{children}</Box>
 
+const useStyles = makeStyles(theme => ({
+  cardMedia: {
+    width: 160,
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+}));
   // Card component for the posts
   return (
     <>
@@ -117,58 +137,63 @@ export default function Feed(props) {
       </div>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
+        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '0' }}>
           {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
-              <Card className={classes.card}>
+              <Card style = {{display: "flex"}}>
                 <div className={classes.cardDetails}>
-                  <CardHeader
-                    action={
-                      postEntry.post.postedBy === loggedInUser ? (
-                        <div>
-                          <IconButton value={index} onClick={handleEllipseClick}>
-                            <MoreVertIcon />
-                          </IconButton>
-                          <Menu
-                            anchorEl={anchorEl}
-                            open={ellipseOpen}
-                            onClose={handleEllipseClose}
-                          >
-                            <MenuItem onClick={editModal.handleOpen}>
-                              <ListItemIcon>
-                                <EditIcon fontSize="small" />
-                              </ListItemIcon>
-                              <ListItemText primary="Edit Post" />
-                            </MenuItem>
-                            <MenuItem onClick={deleteModal.handleOpen}>
-                              <ListItemIcon>
-                                <DeleteIcon fontSize="small" />
-                              </ListItemIcon>
-                              <ListItemText primary="Delete Post" />
-                            </MenuItem>
-                          </Menu>
-                        </div>
-                      ) : null
-                    }
-                  />
-                  <CardContent>
+                  <CardContent flex= '1 0 auto'>
                       <Typography component="h2" variant="h5">
                         {postEntry.post.title}
                       </Typography>
-                      <Typography variant="subtitle1" color="textSecondary">
-                      Posted By: { postEntry.post.postedBy } Fandom: { postEntry.post.fandomName } Level: { postEntry.post.level } Type: { postEntry.post.type }
+                      <Typography variant="subtitle2" color="textSecondary">
+                          <Box fontWeight="fontWeightBold" display="inline">Posted By: </Box>{ postEntry.post.postedBy }
+                          <Bold>Fandom:</Bold> { postEntry.post.fandomName }
+                          <Bold>Level: </Bold> { postEntry.post.level }
+                          <Bold>Type: </Bold>{ postEntry.post.type }
                       </Typography>
                        <Typography variant="subtitle2" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
                        </Typography>
-                      <Typography variant="subtitle1" paragraph>
+                      <Typography variant="subtitle1" >
                         {postEntry.post.content}
                       </Typography>
-                    </CardContent>
+                  </CardContent>
+                  <Grid item>
+                   </Grid>
                 </div>
+              <CardMedia style={{ width: "160px", height: "160px" }} component="img" image='https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg'/>
+               <CardHeader
+                  action={
+                    postEntry.post.postedBy === loggedInUser ? (
+                      <div>
+                        <IconButton value={index} onClick={handleEllipseClick}>
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          anchorEl={anchorEl}
+                          open={ellipseOpen}
+                          onClose={handleEllipseClose}
+                        >
+                          <MenuItem onClick={editModal.handleOpen}>
+                            <ListItemIcon>
+                              <EditIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Edit Post" />
+                          </MenuItem>
+                          <MenuItem onClick={deleteModal.handleOpen}>
+                            <ListItemIcon>
+                              <DeleteIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Delete Post" />
+                          </MenuItem>
+                        </Menu>
+                      </div>
+                    ) : null
+                  }
+                />
               </Card>
               {/* end Card */}
-
             </Grid>
           ))}
         </Grid>
