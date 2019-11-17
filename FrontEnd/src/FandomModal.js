@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
-import { useStyles } from './postModalStyle';
+import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
 
 const initialState = {
@@ -75,7 +75,7 @@ export default function FandomModal(props) {
   // Fandom Drop Down List
   const FandomList = ["Naruto", "Avengers", "Game of Thrones", "Fortnite", "PubG", "One Piece", "Harry Potter"];
 
-  const classes = useStyles();
+  const classes = useStylesModal();
 
   const handleReset = (event) => {
     values.fandomName = '';
@@ -119,7 +119,7 @@ export default function FandomModal(props) {
             <div className="modal-body">
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                    <FormControl variant="outlined" fullWidth>
+                    <FormControl fullWidth="true" variant="outlined" fullWidth>
                         <InputLabel>
                             Fandom Name
                         </InputLabel>
@@ -144,7 +144,7 @@ export default function FandomModal(props) {
                 {/*End of Fandom Name Select Grid Item*/}
 
                 <Grid item xs={4}>
-                  <FormControl variant="outlined" fullWidth>
+                  <FormControl fullWidth="true" variant="outlined" fullWidth>
                     <InputLabel>
                       Level
                     </InputLabel>
@@ -168,7 +168,7 @@ export default function FandomModal(props) {
                 <Grid item xs={4}>
                   <FormControl
                     variant="outlined"
-                    fullWidth
+                    fullWidth="true"
                   >
                     <InputLabel>
                       Type
