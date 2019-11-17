@@ -60,13 +60,13 @@ export default function FandomModal(props) {
         case 200:
           return response.json();
         case 404:
-          throw new Error("Fandom not found.");
+          throw new Error('Fandom not found.');
         case 409:
-          throw new Error("User already joined fandom.");
+          throw new Error('User already joined fandom.');
         case 400:
-          throw new Error("Invalid type or Field.");
+          throw new Error('Invalid type or Field.');
         default:
-          throw new Error("Something went wrong joining a fandom.");
+          throw new Error('Something went wrong joining a fandom.');
       }
     }).catch((err) => {
       alert(err);
@@ -127,6 +127,7 @@ export default function FandomModal(props) {
                         </InputLabel>
                         <Select
                           labelWidth={110}
+                          autoWidth={true}
                           onChange={handleChange}
                           value={values.fandomName}
                           required
@@ -151,6 +152,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       labelWidth={40}
+                      autoWidth={true}
                       onChange={handleChange}
                       value={values.level}
                       required
@@ -175,6 +177,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       onChange={handleChange}
+                      autoWidth={true}
                       value={values.type}
                       required
                       labelWidth={35}
