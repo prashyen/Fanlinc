@@ -9,8 +9,8 @@ import static org.mockito.Mockito.when;
 
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
+import com.teamrocket.fanlinc.exceptions.InvalidEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
-import com.teamrocket.fanlinc.exceptions.InvalidTitleEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
 import com.teamrocket.fanlinc.exceptions.PostNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
@@ -57,6 +57,7 @@ public class PostServiceImplTests {
   private static final String NEW_LEVEL = "3";
   private static final String NEW_CONTENT = "content2";
   private static final String NEW_PHOTO_URL = "http://www.example2.com";
+  private static final String NEW_FANDOM = "fandom2";
 
   @InjectMocks
   PostServiceImpl postService;
@@ -99,6 +100,7 @@ public class PostServiceImplTests {
     joined = mock(Joined.class);
     when(userRepository.findByUsername(EXAMPLE_USER)).thenReturn(user);
     when(fandomRepository.findByFandomName(EXAMPLE_FANDOM)).thenReturn(fandom);
+    when(fandomRepository.findByFandomName(NEW_FANDOM)).thenReturn(fandom);
     when(
         joinedRepository.findJoinedByUsernameAndFandomName(EXAMPLE_USER, EXAMPLE_FANDOM)
     ).thenReturn(joined);
@@ -406,7 +408,7 @@ public class PostServiceImplTests {
     EditPostRequest request = new EditPostRequest(EXAMPLE_USER, EXAMPLE_POSTED_TIME);
     request.setTitle("");
 
-    assertThatExceptionOfType(InvalidTitleEditException.class).isThrownBy(
+    assertThatExceptionOfType(InvalidEditException.class).isThrownBy(
         () -> postService.editPost(request)
     ).withMessage("Title cannot be an empty string");
   }
@@ -499,6 +501,42 @@ public class PostServiceImplTests {
     assertThat(response.getPostedTime()).isEqualTo(EXAMPLE_POSTED_TIME);
     assertThat(response.getUsername()).isEqualTo(EXAMPLE_USER);
     assertThat(response.getModifiedFields()).contains("type");
+  }
+
+  @Test
+  public void editPost_EmptyFandom_ThrowsException() {
+    EditPostRequest request = new EditPostRequest(EXAMPLE_USER, EXAMPLE_POSTED_TIME);
+    request.setFandom("");
+
+    assertThatExceptionOfType(InvalidEditException.class).isThrownBy(
+        () -> postService.editPost(request)
+    ).withMessage("Fandom cannot be an empty string");
+  }
+
+  @Test
+  public void editPost_FandomDoesNotExist_ThrowsException() {
+    EditPostRequest request = new EditPostRequest(EXAMPLE_USER, EXAMPLE_POSTED_TIME);
+    request.setFandom(NEW_FANDOM);
+
+    when(fandomRepository.findByFandomName(NEW_FANDOM)).thenReturn(null);
+
+    assertThatExceptionOfType(FandomNotFoundException.class).isThrownBy(
+        () -> postService.editPost(request)
+    ).withMessage("Fandom with the name: " + NEW_FANDOM + " does not exist");
+  }
+
+  @Test
+  public void editPost_NewFandom_PostEditedAndCorrectResponse() {
+    EditPostRequest request = new EditPostRequest(EXAMPLE_USER, EXAMPLE_POSTED_TIME);
+    request.setFandom(NEW_FANDOM);
+
+    EditPostResponse response = postService.editPost(request);
+
+    verify(postRepository).save(examplePost);
+    assertThat(examplePost.getFandomName()).isEqualTo(NEW_FANDOM);
+    assertThat(response.getPostedTime()).isEqualTo(EXAMPLE_POSTED_TIME);
+    assertThat(response.getUsername()).isEqualTo(EXAMPLE_USER);
+    assertThat(response.getModifiedFields()).contains("fandom");
   }
 
 }

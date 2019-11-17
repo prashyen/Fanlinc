@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 
 public class EditPostRequest {
 
-
   private String title;
 
   private String content;
@@ -14,6 +13,8 @@ public class EditPostRequest {
   private String level;
 
   private String type;
+
+  private String fandom;
 
   private String postPhotoURL;
   @NotEmpty
@@ -55,6 +56,10 @@ public class EditPostRequest {
     return postedTime;
   }
 
+  public String getFandom() {
+    return fandom;
+  }
+
   public void setTitle(String title) {
     this.title = title;
   }
@@ -74,4 +79,9 @@ public class EditPostRequest {
   public void setPostPhotoURL(String postPhotoURL) {
     this.postPhotoURL = postPhotoURL;
   }
+
+  public void setFandom(String fandom) {
+    this.fandom = fandom;
+  }
+
 }

@@ -2,8 +2,8 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.PostBuilder;
 import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
+import com.teamrocket.fanlinc.exceptions.InvalidEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
-import com.teamrocket.fanlinc.exceptions.InvalidTitleEditException;
 import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
 import com.teamrocket.fanlinc.exceptions.PostNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
@@ -154,7 +154,8 @@ public class PostServiceImpl implements PostService {
     if (requestedFandom == null) {
       throw new FandomNotFoundException("Fandom with the name " + fandomName + " does not exist");
     }
-    if (!levels.contains(level) && !level.equals("noFilter")) { // check if the requested level and type are valid
+    if (!levels.contains(level) && !level
+        .equals("noFilter")) { // check if the requested level and type are valid
       throw new InvalidLevelException("Level must be one of " + levels.toString() + " or noFilter");
     }
     if (!types.contains(type) && !type.equals("noFilter")) { // check if the given type is valid
@@ -236,7 +237,10 @@ public class PostServiceImpl implements PostService {
    * @throws InvalidLevelException if the level specified is not 1,2,3,4 or noFilter
    * @throws InvalidTypeException if the type specified is not "General", "Cosplayer",
    * "Vendor/Artist" or "noFilter"
-   * @throws InvalidTitleEditException if title, level or type are passed in as empty strings
+   * @throws InvalidEditException if title, fandom, level or type are passed in as empty or invalid
+   * strings
+   * @throws FandomNotFoundException if a fandom that does not exist is requested
+   * @throws UserNotInFandomException if the given user is not in the requested fandom
    */
   public EditPostResponse editPost(EditPostRequest request) {
     // relevant post based on username and time it was posted
@@ -254,11 +258,28 @@ public class PostServiceImpl implements PostService {
     // ensure title level and type are not empty
     // check which properties need to be changed and change if they need to
     if (("").equals(request.getTitle())) {
-      throw new InvalidTitleEditException("Title cannot be an empty string");
+      throw new InvalidEditException("Title cannot be an empty string");
 
     } else if (request.getTitle() != null) {
       originalPost.setTitle(request.getTitle());
       modifiedFields.add("title");
+    }
+
+    if (("").equals(request.getFandom())) {
+      throw new InvalidEditException("Fandom cannot be an empty string");
+    }
+
+    if (request.getFandom() != null) {
+      // check if the given fandom exists
+      Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandom());
+      if (requestedFandom == null) {
+        throw new FandomNotFoundException(
+            "Fandom with the name: " + request.getFandom() + " does not exist");
+      }
+
+      // if the fandom exists and the user has joined the fandom then make the edit
+      originalPost.setFandomName(request.getFandom());
+      modifiedFields.add("fandom");
     }
 
     if (request.getPostPhotoURL() != null) {
