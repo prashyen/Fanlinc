@@ -142,9 +142,9 @@ export default function Feed(props) {
                     </Typography>
                     <Typography component="div" variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
-                      <Bold>Fandom:</Bold> { postEntry.post.fandomName }
+                      <Bold>Fandom: </Bold> { postEntry.post.fandomName }
                       <Bold>Level: </Bold> { postEntry.post.level }
-                      <Bold>Type: </Bold>{ postEntry.post.type }
+                      <Bold>Type: </Bold> { postEntry.post.type }
                     </Typography>
                     <Typography variant="caption" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
                     </Typography>
