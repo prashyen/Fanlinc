@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
+import useModal from './useModal';
+import LeaveFandomModal from './LeaveFandomModal';
 
 /*
 Displays the fandom details.
@@ -15,6 +17,7 @@ Props
 */
 export default function FandomHeader(props) {
   const { fandom, loggedInUser } = props;
+  const { open, handleOpen, handleClose } = useModal();
   /* State of fandom genre & description before and after the fetch call */
   const [fandomGenre, setFandomGenre] = useState('');
   const [fandomDescription, setFandomDescription] = useState('');
@@ -49,38 +52,6 @@ export default function FandomHeader(props) {
       });
   }, [fandom]);
 
-  const leaveFandomURL = 'http://localhost:8080/fandom/leaveFandom';
-  /**
-   * Handles the clicking of the leave fandom button and sends a leave fandom request to the url:
-   * http://localhost:8080/fandom/leaveFandom
-   */
-  function handleSubmit() {
-    // Request to join Fandom
-    fetch(leaveFandomURL, {
-      method: 'post',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        fandomName: fandom,
-        username: loggedInUser,
-      }),
-    }).then((response) => {
-      switch (response.status) {
-        case 200:
-          return response.json();
-        case 404:
-          throw new Error('User is not part of the fandom.');
-        default:
-          throw new Error('Something went wrong leaving a fandom.');
-      }
-    }).catch((err) => {
-      alert(err);
-    });
-  }
-
   return (
     <>
       <CssBaseline />
@@ -98,9 +69,15 @@ export default function FandomHeader(props) {
         </Grid>
         <Grid item sm={9}>
           <Typography variant="h2" gutterBottom>{fandom}</Typography>
-          <Fab color="primary" size="small" aria-label="add" onClick={handleSubmit}>
+          <Fab color="primary" size="small" aria-label="add" onClick={handleOpen}>
             <DeleteIcon />
           </Fab>
+          <LeaveFandomModal
+            loggedInUser={loggedInUser}
+            open={open}
+            handleClose={handleClose}
+            fandomName={fandom}
+          />
           <Typography variant="subtitle2" gutterBottom>
 Genre:
             {' '}
