@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: 224,
   },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
 }));
 
 export default function ProfileSideBar(props) {
@@ -67,7 +64,6 @@ export default function ProfileSideBar(props) {
       });
   }, [getUserDetailsAPI]);
 
-  console.log(location);
   return (
     <>
       <CssBaseline />
