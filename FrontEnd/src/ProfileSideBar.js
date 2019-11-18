@@ -60,9 +60,11 @@ export default function SideBar(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [fandoms, setFandoms] = useState([]);
-  const [picture, setPicture] = useState("");
+  const [picture, setPicture] = useState('');
   const [location, setlocation] = useState("");
   const [bio, setbio] = useState("");
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
   const { loggedInUser } = props;
 
   const handleChange = (event, newValue) => {
@@ -92,16 +94,17 @@ export default function SideBar(props) {
       }
     })
       .then((data) => {
-        setPicture(data.ProfilePhotoUrl);
+        setPicture(data.profilePhotoUrl);
         setlocation(data.location);
         setbio(data.bio);
+        setfName(data.firstName);
+        setlName(data.lastName);
       }).catch((err) => {
         alert(err);
       });
   }, []);
 
   console.log(location);
-
   return (
     <>
       <CssBaseline />
@@ -113,21 +116,25 @@ export default function SideBar(props) {
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw'}}>
           <Typography variant="body" component="h2" align="center" gutterBottom>
-               {picture}
+               <img src={""+ picture +""} border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>
+               {/*<img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>*/}
           </Typography>
           <Typography variant="body" component="h2" align="center" gutterBottom>
               {loggedInUser}
+          </Typography>
+          <Typography variant="body" component="h2" align="center" gutterBottom>
+              {fName} {lName}
           </Typography>
           <Typography variant="body" component="h3" align="center" style={{display: "inline-block"}} gutterButtom>
               {location}
           </Typography>
           <Typography variant="body" component="h2" align="center" fontStyle="italic" gutterButtom>
-              bio: {bio}
+              Bio: {bio}
           </Typography>
         </Grid>
         {/* Sidebar End */}
 
-        {/* Main Feed Start */}
+        {/* Main Feed Start (Doesn't work right now)*/}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
