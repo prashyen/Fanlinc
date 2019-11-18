@@ -48,7 +48,7 @@ export default function Feed(props) {
 
     // alter api url for retrieving user posts
     if (postsType === 'user') {
-      filterPostsURL = `http://localhost:8080/post/postByUser?userName=${filterParam}`;
+      filterPostsURL = `http://localhost:8080/post/postsByUser?username=${filterParam}`;
     }
     fetch(filterPostsURL, {
       method: 'get',
