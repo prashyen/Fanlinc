@@ -17,10 +17,9 @@ export default function FandomHeader(props) {
     const [fandomDescription, setFandomDescription] = useState('');
     const [fandomPhoto, setFandomPhoto] = useState('');
 
-    /*The API call this component will make*/
-    const getFandomDetailsAPI = `http://localhost:8080/fandom/fandomDetails?fandomName=${props.fandom}`;
-
     useEffect(() => {
+        /*The API call this component will make*/
+        const getFandomDetailsAPI = `http://localhost:8080/fandom/fandomDetails?fandomName=${props.fandom}`;
         fetch(getFandomDetailsAPI, {
           method: 'GET',
           mode: 'cors',
@@ -45,7 +44,7 @@ export default function FandomHeader(props) {
           }).catch((err) => {
             alert(err);
           });
-    }, [getFandomDetailsAPI]);
+    }, []);
 
 
     return(
