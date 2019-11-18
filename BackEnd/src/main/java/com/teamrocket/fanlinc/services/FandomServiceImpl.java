@@ -16,6 +16,7 @@ import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.LeaveFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
@@ -156,5 +157,29 @@ public class FandomServiceImpl implements FandomService {
     // if the fandom was found output it's details
     return new GetFandomDetailsResponse(fandom.getFandomName(), fandom.getGenre(),
         fandom.getDescription(), fandom.getDisplayPhotoURL());
+  }
+
+  /**
+   * Removes the joined relationship between fandom and user specified
+   *
+   * @param request a {@link LeaveFandomRequest} object containing the fandom the user wants to leave
+   * @throws FandomAlreadyExistsException if a fandom with the requested name was already created
+   */
+  @Transactional()
+  public void leaveFandom(LeaveFandomRequest request) {
+    Joined requestedRelation =
+            joinedRepository.findJoinedByUsernameAndFandomName(
+                    request.getUsername(), request.getFandomName());
+    System.out.println(requestedRelation);
+    // ensure the requested fandom has already been created
+    if (requestedRelation == null) {
+      // if the requested fandom isn't there output exception
+      throw new FandomAlreadyExistsException(
+              "A fandom with the name " + request.getFandomName() + " and user " +
+                      request.getUsername() + " does not exist");
+    }
+
+    // Relationship exists, delete it
+    joinedRepository.delete(requestedRelation);
   }
 }
