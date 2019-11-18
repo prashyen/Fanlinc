@@ -10,6 +10,12 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Feed from './Feed';
 
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import useModal from './useModal';
+import FandomModal from './FandomModal';
+import './css/FandomModal.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -66,6 +72,9 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
+
+  const { open, handleOpen, handleClose } = useModal();
+
   useEffect(() => {
     const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
     fetch(getFandomListAPI, {
@@ -84,13 +93,13 @@ export default function SideBar(props) {
         default:
           throw new Error('Something went wrong when retrieving fandoms');
       }
-    })
-      .then((data) => {
+    }).then((data) => {
         setFandoms(data.fandomNames);
       }).catch((err) => {
         alert(err);
       });
   }, [loggedInUser]);
+
 
   return (
     <>
@@ -98,10 +107,20 @@ export default function SideBar(props) {
 
       {/* Feed Body */}
       <Grid container>
-
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
+        <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
+          <div className="joinFandomButton">
+              <Fab color="primary" variant="extended"  size="small" aria-label="add" onClick={handleOpen}>
+                <AddIcon className={classes.extendedIcon}/>
+                Join a New Fandom
+              </Fab>
+              <FandomModal
+                open={open}
+                handleClose={handleClose}
+                loggedInUser={loggedInUser}
+              />
+          </div>
           <Tabs
             orientation="vertical"
             variant="scrollable"
@@ -116,15 +135,16 @@ export default function SideBar(props) {
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+        <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-              <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
+                <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
             </TabPanel>
           ))}
         </Grid>
         {/* Feed End */}
       </Grid>
+
     </>
   );
 }
