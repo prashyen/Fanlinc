@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import SideBar from './ProfileSideBar';
+import ProfileSideBar from './ProfileSideBar';
 
 export default function Profile(props) {
   const { loggedInUser, removeCookie } = props;
@@ -14,7 +14,7 @@ export default function Profile(props) {
         removeCookie={removeCookie}
       />
 
-      <SideBar
+      <ProfileSideBar
         loggedInUser={loggedInUser}
       />
 

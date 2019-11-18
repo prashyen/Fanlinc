@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -22,41 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-function TabPanel(props) {
-  const {
-    children, value, index, ...other
-  } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
-
-export default function SideBar(props) {
+export default function ProfileSideBar(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [fandoms, setFandoms] = useState([]);
@@ -71,7 +35,6 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
-  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
   // Need to get pic, location, and bio. Preferably first and last name too
   const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${loggedInUser}`;
 
@@ -102,7 +65,7 @@ export default function SideBar(props) {
       }).catch((err) => {
         alert(err);
       });
-  }, []);
+  }, [getUserDetailsAPI]);
 
   console.log(location);
   return (
@@ -144,6 +107,6 @@ export default function SideBar(props) {
   );
 }
 
-SideBar.propTypes = {
+ProfileSideBar.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
 };
