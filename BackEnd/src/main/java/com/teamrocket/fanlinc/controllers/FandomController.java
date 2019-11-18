@@ -41,6 +41,7 @@ public class FandomController {
     return fandomService.addJoinedFandom(request);
   }
 
+  @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/fandomDetails", method = RequestMethod.GET, params = {
       "fandomName!="})
   @ResponseBody
