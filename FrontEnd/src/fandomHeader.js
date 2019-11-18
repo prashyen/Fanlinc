@@ -60,7 +60,7 @@ export default function FandomHeader(props) {
         >
             {/* Grid has 12 columns width - photo:details = 3:9 */}
             <Grid item sm={3} style={{ }}>
-                <img src={""+ fandomPhoto +""} border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>
+                <img src={""+ fandomPhoto +""} alt="fandom display photo" border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>
             </Grid>
             <Grid item sm={9} style={{}}>
                 <Typography variant="h2" gutterBottom>{props.fandom}</Typography>
