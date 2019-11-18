@@ -61,7 +61,6 @@ export default function FandomHeader(props) {
             {/* Grid has 12 columns width - photo:details = 3:9 */}
             <Grid item sm={3} style={{ }}>
                 <img src={""+ fandomPhoto +""} border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>
-                {/*<img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>*/}
             </Grid>
             <Grid item sm={9} style={{}}>
                 <Typography variant="h2" gutterBottom>{props.fandom}</Typography>
