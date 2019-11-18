@@ -21,13 +21,13 @@ const initialState = {
   level: '',
 };
 
-
-
 export default function FandomModal(props) {
-  const { open, handleClose, loggedInUser } = props;
+  const {
+    open, handleClose, loggedInUser, handleTrigger,
+  } = props;
   const { values, handleChange } = useForm(null, initialState);
 
-  const joinFandomURL = `http://localhost:8080/fandom/addJoinedFandom`;
+  const joinFandomURL = 'http://localhost:8080/fandom/addJoinedFandom';
   /**
    * Handles the clicking of the join button and sends a join fandom request to the url:
    * http://localhost:8080/fandom/addJoinedFandom
@@ -45,14 +45,14 @@ export default function FandomModal(props) {
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify({
-        "level": level,
-        "type": type,
-        "fandomName": fandomName,
-        "username": loggedInUser
-      })
+        level,
+        type,
+        fandomName,
+        username: loggedInUser,
+      }),
     }).then((response) => {
       switch (response.status) {
         case 200:
@@ -78,6 +78,7 @@ export default function FandomModal(props) {
     values.level = '';
     values.type = '';
     handleChange(event);
+    handleTrigger(false);
   };
 
   const handleResetClose = (event) => {
@@ -115,29 +116,29 @@ export default function FandomModal(props) {
             <div className="modal-body">
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                    <FormControl fullWidth="true" variant="outlined">
-                        <InputLabel>
+                  <FormControl fullWidth="true" variant="outlined">
+                    <InputLabel>
                             Fandom Name
-                        </InputLabel>
-                        <Select
-                          labelWidth={110}
-                          autoWidth={true}
-                          onChange={handleChange}
-                          value={values.fandomName}
-                          required
-                          name="fandomName"
-                        >
-                          <MenuItem value={"Naruto"}>Naruto</MenuItem>
-                          <MenuItem value={"Avengers"}>Avengers</MenuItem>
-                          <MenuItem value={"Game of Thrones"}>Game of Thrones</MenuItem>
-                          <MenuItem value={"Fortnite"}>Fortnite</MenuItem>
-                          <MenuItem value={"PubG"}>PubG</MenuItem>
-                          <MenuItem value={"One Piece"}>One Piece</MenuItem>
-                          <MenuItem value={"Harry Potter"}>Harry Potter</MenuItem>
-                        </Select>
-                    </FormControl>
+                    </InputLabel>
+                    <Select
+                      labelWidth={110}
+                      autoWidth
+                      onChange={handleChange}
+                      value={values.fandomName}
+                      required
+                      name="fandomName"
+                    >
+                      <MenuItem value="Naruto">Naruto</MenuItem>
+                      <MenuItem value="Avengers">Avengers</MenuItem>
+                      <MenuItem value="Game of Thrones">Game of Thrones</MenuItem>
+                      <MenuItem value="Fortnite">Fortnite</MenuItem>
+                      <MenuItem value="PubG">PubG</MenuItem>
+                      <MenuItem value="One Piece">One Piece</MenuItem>
+                      <MenuItem value="Harry Potter">Harry Potter</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
-                {/*End of Fandom Name Select Grid Item*/}
+                {/* End of Fandom Name Select Grid Item */}
 
                 <Grid item xs={4}>
                   <FormControl fullWidth="true" variant="outlined">
@@ -146,7 +147,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       labelWidth={40}
-                      autoWidth={true}
+                      autoWidth
                       onChange={handleChange}
                       value={values.level}
                       required
@@ -159,7 +160,7 @@ export default function FandomModal(props) {
                     </Select>
                   </FormControl>
                 </Grid>
-                {/*End of Level Select Grid Item*/}
+                {/* End of Level Select Grid Item */}
 
                 <Grid item xs={4}>
                   <FormControl
@@ -171,7 +172,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       onChange={handleChange}
-                      autoWidth={true}
+                      autoWidth
                       value={values.type}
                       required
                       labelWidth={35}
@@ -183,10 +184,10 @@ export default function FandomModal(props) {
                     </Select>
                   </FormControl>
                 </Grid>
-                {/*End of Type Select Grid Item*/}
+                {/* End of Type Select Grid Item */}
 
               </Grid>
-              {/*End of Grid Container*/}
+              {/* End of Grid Container */}
 
             </div>
             <div className="modal-footer">
@@ -217,4 +218,5 @@ FandomModal.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleTrigger: PropTypes.func.isRequired,
 };
