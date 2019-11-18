@@ -18,6 +18,7 @@ import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
+import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -77,15 +78,15 @@ public class FandomServiceImpl implements FandomService {
    * the fandom
    *
    * @param request a {@link AddJoinedFandomRequest} object containing the information about the
-   * user and fandom relationship
+   *                user and fandom relationship
    * @return a {@link AddJoinedFandomResponse} object containing the relationship type and level
-   * @throws FandomNotFoundException if a fandom with the requested name does not exist
-   * @throws UserNotFoundException if a user with the given username does not exist
+   * @throws FandomNotFoundException          if a fandom with the requested name does not exist
+   * @throws UserNotFoundException            if a user with the given username does not exist
    * @throws UserAlreadyJoinedFandomException if the user with given username already joined the
-   * fandom
-   * @throws InvalidTypeException if request type is not one of {"General", "Cosplayer",
-   * "Vendor/Artist"}
-   * @throws InvalidLevelException if request level is not one of {"1", "2", "3", "4"}
+   *                                          fandom
+   * @throws InvalidTypeException             if request type is not one of {"General", "Cosplayer",
+   *                                          "Vendor/Artist"}
+   * @throws InvalidLevelException            if request level is not one of {"1", "2", "3", "4"}
    */
   @Transactional()
   public AddJoinedFandomResponse addJoinedFandom(AddJoinedFandomRequest request) {
@@ -134,5 +135,26 @@ public class FandomServiceImpl implements FandomService {
 
     joinedRepository.save(joined);
     return new AddJoinedFandomResponse(request.getType(), request.getLevel());
+  }
+
+  /**
+   * Given a fandom name, checks if the requested fandom exists and if it does return the fandoms
+   * details
+   *
+   * @param fandomName {@link String} - the requested fandoms name
+   * @return {@link GetFandomDetailsResponse} - an object containing the fandoms name, genre,
+   * description and photourl
+   * @throws FandomNotFoundException - if the requested fandom cannot be found
+   */
+  @Transactional
+  public GetFandomDetailsResponse getFandomDetails(String fandomName) {
+    Fandom fandom = fandomRepository.findByFandomName(fandomName);
+    if (fandom == null) {
+      throw new FandomNotFoundException(
+          "The fandom with the name, " + fandomName + " does not exist");
+    }
+    // if the fandom was found output it's details
+    return new GetFandomDetailsResponse(fandom.getFandomName(), fandom.getGenre(),
+        fandom.getDescription(), fandom.getDisplayPhotoURL());
   }
 }

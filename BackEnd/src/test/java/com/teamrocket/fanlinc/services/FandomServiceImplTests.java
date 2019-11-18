@@ -25,6 +25,7 @@ import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
+import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;
@@ -182,6 +183,23 @@ public class FandomServiceImplTests {
     verify(joinedRepository).save(any(Joined.class));
     assertThat(response.getLevel()).isEqualTo(EXAMPLE_LEVEL);
     assertThat(response.getType()).isEqualTo(EXAMPLE_TYPE);
+  }
+
+  @Test
+  public void getFandomDetails_GetExistingFandom_CorrectResponse() {
+    GetFandomDetailsResponse response = fandomService.getFandomDetails(EXAMPLE_FANDOM_NAME);
+    assertThat(response.getDescription()).isEqualTo(EXAMPLE_DESCRIPTION);
+    assertThat(response.getDisplayPhotoURL()).isEqualTo(EXAMPLE_DISPLAY_PHOTO_URL);
+    assertThat(response.getFandomName()).isEqualTo(EXAMPLE_FANDOM_NAME);
+    assertThat(response.getGenre()).isEqualTo(EXAMPLE_GENRE);
+  }
+
+  @Test
+  public void getFandomDetail_GetNonExistingFandom_ThrowsException() {
+    when(fandomRepository.findByFandomName("Example")).thenReturn(null);
+    assertThatExceptionOfType(FandomNotFoundException.class)
+        .isThrownBy(() -> fandomService.getFandomDetails("Example"))
+        .withMessage("The fandom with the name, Example does not exist");
   }
 
 }
