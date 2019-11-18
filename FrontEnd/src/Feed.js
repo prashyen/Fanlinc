@@ -92,38 +92,44 @@ export default function Feed(props) {
   return (
     <>
       <div className="margin">
-        <Fab color="primary" size="small" aria-label="add" onClick={postModal.handleOpen}>
-          <AddIcon />
-        </Fab>
-        <PostModal
-          open={postModal.open}
-          handleClose={postModal.handleClose}
-          loggedInUser={loggedInUser}
-          handleTrigger={setUpdateTrigger}
-        />
-        {currPost != null ? (
-          <div>
-            <EditModal
-              post={postsAndUsers[currPost].post}
-              open={editModal.open}
-              handleClose={editModal.handleClose}
-              menuHandleClose={handleEllipseClose}
+        <Grid container spacing={2}>
+          <Grid item xs={11}>
+            <FilterOptions
+              levelFilter={levelFilter}
+              typeFilter={typeFilter}
+              setLevelFilter={setLevelFilter}
+              setTypeFilter={setTypeFilter}
             />
-            <DeleteModal
-              post={postsAndUsers[currPost].post}
-              open={deleteModal.open}
-              handleClose={deleteModal.handleClose}
-              menuHandleClose={handleEllipseClose}
+          </Grid>
+          <Grid item xs={1}>
+            <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+              <AddIcon />
+            </Fab>
+            <PostModal
+              open={postModal.open}
+              handleClose={postModal.handleClose}
+              loggedInUser={loggedInUser}
+              handleTrigger={setUpdateTrigger}
             />
-          </div>
-        ) : null}
+          </Grid>
+        </Grid>
       </div>
-      <FilterOptions
-        levelFilter={levelFilter}
-        typeFilter={typeFilter}
-        setLevelFilter={setLevelFilter}
-        setTypeFilter={setTypeFilter}
-      />
+      {currPost != null ? (
+        <div>
+          <EditModal
+            post={postsAndUsers[currPost].post}
+            open={editModal.open}
+            handleClose={editModal.handleClose}
+            menuHandleClose={handleEllipseClose}
+          />
+          <DeleteModal
+            post={postsAndUsers[currPost].post}
+            open={deleteModal.open}
+            handleClose={deleteModal.handleClose}
+            menuHandleClose={handleEllipseClose}
+          />
+        </div>
+      ) : null}
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
