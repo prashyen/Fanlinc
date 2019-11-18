@@ -18,10 +18,10 @@ export default function FandomHeader(props) {
     const [fandomPhoto, setFandomPhoto] = useState('');
 
     /*The API call this component will make*/
-    const getFandomDetailstAPI = `http://localhost:8080/fandom/fandomDetails?fandomName=${props.fandom}`;
+    const getFandomDetailsAPI = `http://localhost:8080/fandom/fandomDetails?fandomName=${props.fandom}`;
 
     useEffect(() => {
-        fetch(getFandomDetailstAPI, {
+        fetch(getFandomDetailsAPI, {
           method: 'GET',
           mode: 'cors',
           headers: {
