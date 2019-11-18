@@ -111,11 +111,18 @@ export default function SideBar(props) {
 
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
-          <Typography variant="body" component="h2" gutterBottom>
+        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw'}}>
+          <Typography variant="body" component="h2" align="center" gutterBottom>
+               {picture}
+          </Typography>
+          <Typography variant="body" component="h2" align="center" gutterBottom>
+              {loggedInUser}
+          </Typography>
+          <Typography variant="body" component="h3" align="center" style={{display: "inline-block"}} gutterButtom>
               {location}
-              {bio}
-              {picture}
+          </Typography>
+          <Typography variant="body" component="h2" align="center" fontStyle="italic" gutterButtom>
+              bio: {bio}
           </Typography>
         </Grid>
         {/* Sidebar End */}
