@@ -1,17 +1,19 @@
 package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddUserRequest;
-import com.teamrocket.fanlinc.requests.UserDetailsRequest;
-import com.teamrocket.fanlinc.requests.UserFandomsRequest;
-import com.teamrocket.fanlinc.requests.ValidateUserRequest;
 import com.teamrocket.fanlinc.responses.AddUserResponse;
 import com.teamrocket.fanlinc.responses.UserDetailsResponse;
 import com.teamrocket.fanlinc.responses.UserFandomsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
 import com.teamrocket.fanlinc.services.AccountService;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AccountController {
@@ -42,14 +44,14 @@ public class AccountController {
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/userDetails", method = RequestMethod.GET)
   @ResponseBody
-  public UserDetailsResponse getUserDetails(@RequestParam(name="username") String username) {
+  public UserDetailsResponse getUserDetails(@RequestParam(name = "username") String username) {
     return accountService.getUserDetails(username);
   }
 
   @CrossOrigin
   @RequestMapping(value = BASE_PATH + "/userFandoms", method = RequestMethod.GET)
   @ResponseBody
-  public UserFandomsResponse getUserFandoms(@RequestParam(name="username") String username) {
+  public UserFandomsResponse getUserFandoms(@RequestParam(name = "username") String username) {
     return accountService.getUserFandoms(username);
   }
 }
