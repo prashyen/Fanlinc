@@ -52,6 +52,7 @@ export default function Feed(props) {
     }
     fetch(filterPostsURL, {
       method: 'get',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',

@@ -134,15 +134,11 @@ export default function SideBar(props) {
         </Grid>
         {/* Sidebar End */}
 
-        {/* Main Feed Start (Doesn't work right now)*/}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
-          {fandoms.map((fandomName) => (
-            <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-              <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
-            </TabPanel>
-          ))}
+        {/* Main Feed Start*/}
+        <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+            <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user"/>
         </Grid>
-        {/* Feed End */}
+        {/* Feed End*/}
       </Grid>
     </>
   );
