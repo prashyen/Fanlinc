@@ -489,6 +489,18 @@ Responsibilities:
 
 Collaborators:
 
+Class name: GetFandomResponse
+
+Parent class (if any):
+
+Subclasses (if any):
+
+Responsibilities:
+
+-   Response from getFandomDetails API containing all fandom info
+
+Collaborators:
+
 Class name: UserNotInFandomException\
 Parent class (if any): RuntimeException\
 Subclasses (if any):\
