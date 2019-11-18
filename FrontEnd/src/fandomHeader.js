@@ -6,30 +6,52 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
-import GroupIcon from '@material-ui/icons/Group';
 
 /*
 Displays the fandom details.
 Props
     fandom: the fandom for which this header contains Details
-
 */
 export default function FandomHeader(props) {
     /*State of fandom genre & description before and after the fetch call*/
     const [fandomGenre, setFandomGenre] = useState('');
     const [fandomDescription, setFandomDescription] = useState('');
+    const [fandomPhoto, setFandomPhoto] = useState('');
 
     /*The API call this component will make*/
     const getFandomDetailstAPI = `http://localhost:8080/fandom/fandomDetails?fandomName=${props.fandom}`;
 
-//    const description = `Comic hero story`;
-//    const genre = `Action`;
+    useEffect(() => {
+        fetch(getFandomDetailstAPI, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+             Accept: 'application/json',
+             'Content-Type': 'application/json',
+          },
+        }).then((response) => {
+          switch (response.status) {
+            case 200:
+              return response.json();
+            case 404:
+              throw new Error('Fandom not found');
+            default:
+              throw new Error('Something went wrong when retrieving fandom details');
+          }
+        })
+          .then((data) => {
+            setFandomGenre(data.genre);
+            setFandomDescription(data.description);
+            setFandomPhoto(data.displayPhotoURL);
+          }).catch((err) => {
+            alert(err);
+          });
+    }, []);
+
 
     return(
     <>
         <CssBaseline />
-
         {/*Fandom Header Start*/}
         <Grid
             container
@@ -40,14 +62,14 @@ export default function FandomHeader(props) {
         >
             {/* Grid has 12 columns width - photo:details = 3:9 */}
             <Grid item sm={3} style={{ }}>
-                <img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>
+                <img src={""+ fandomPhoto +""} border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>
+                {/*<img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>*/}
             </Grid>
             <Grid item sm={9} style={{}}>
                 <Typography variant="h2" gutterBottom>{props.fandom}</Typography>
-                <Typography variant="subtitle2" gutterBottom>Genre: Action</Typography>
-                <Typography variant="body1" gutterBottom>Aliquam sit amet tortor nisl. Mauris quis hendrerit nisl. Nulla pretium, nibh id ullamcorper tincidunt, nibh erat semper quam, eu gravida erat urna facilisis dui. Sed finibus sapien et erat molestie imperdiet.</Typography>
+                <Typography variant="subtitle2" gutterBottom>Genre: {fandomGenre}</Typography>
+                <Typography variant="body1" gutterBottom>{fandomDescription}</Typography>
             </Grid>
-
 
         {/*Fandom Header End*/}
         </Grid>
