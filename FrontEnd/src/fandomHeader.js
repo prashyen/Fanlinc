@@ -45,7 +45,7 @@ export default function FandomHeader(props) {
           }).catch((err) => {
             alert(err);
           });
-    }, []);
+    }, [getFandomDetailsAPI]);
 
 
     return(
