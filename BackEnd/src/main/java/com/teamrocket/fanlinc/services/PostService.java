@@ -303,7 +303,5 @@ public class PostService {
     postRepository.save(originalPost);
     return new EditPostResponse(originalPost.getPostedBy(), originalPost.getPostedTime(),
         modifiedFields);
-//
-    //a
   }
 }
