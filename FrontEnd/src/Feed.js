@@ -13,8 +13,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import logo from './img/fanlinc_logo.png';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Menu from '@material-ui/core/Menu';
@@ -94,7 +92,7 @@ export default function Feed(props) {
   };
   const Bold = ({ children }) =>
     <Box fontWeight="fontWeightBold" display="inline" ml={1.5} >{children}</Box>
-
+  const isURL = require('is-url');
   // Card component for the posts
   return (
     <>
@@ -132,8 +130,8 @@ export default function Feed(props) {
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card style = {{display: "flex", width: '70vw'}}>
-                <Grid item justify="center">
-                    <div style={{paddingTop: 20, paddingLeft:20}}>
+                <Grid item>
+                    <div style={{paddingTop: 25, paddingLeft:20}}>
                         <Avatar >H</Avatar>
                     </div>
                 </Grid>
@@ -158,7 +156,12 @@ export default function Feed(props) {
                   <Grid item>
                    </Grid>
                 </div>
-              <CardMedia style={{ width: "160px", height: "160px" }} component="img" image='https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg'/>
+               <div>
+                {isURL(postEntry.post.postPhotoUrl) ? (
+                    <CardMedia style={{ width: "160px", height: "160px" }} component="img" image={postEntry.post.postPhotoUrl}/>
+                    ): null
+                }
+               </div>
                <CardHeader style={{padding:0}}
                   action={
                     postEntry.post.postedBy === loggedInUser ? (
