@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -62,8 +61,8 @@ export default function FandomHeader(props) {
         >
             {/* Grid has 12 columns width - photo:details = 3:9 */}
             <Grid item sm={3} style={{ }}>
-                <img src={""+ fandomPhoto +""} border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>
-                {/*<img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="200px" height="200px" style={{borderRadius: '50%'}}/>*/}
+                <img src={""+ fandomPhoto +""} border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>
+                {/*<img src="https://i.ibb.co/5MT1vZg/OnePiece.png" alt="OnePiece" border="0" width="150px" height="150px" style={{borderRadius: '50%'}}/>*/}
             </Grid>
             <Grid item sm={9} style={{}}>
                 <Typography variant="h2" gutterBottom>{props.fandom}</Typography>
