@@ -119,7 +119,7 @@ export default function FandomModal(props) {
             <div className="modal-body">
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                    <FormControl fullWidth="true" variant="outlined" fullWidth>
+                    <FormControl fullWidth="true" variant="outlined">
                         <InputLabel>
                             Fandom Name
                         </InputLabel>
@@ -144,7 +144,7 @@ export default function FandomModal(props) {
                 {/*End of Fandom Name Select Grid Item*/}
 
                 <Grid item xs={4}>
-                  <FormControl fullWidth="true" variant="outlined" fullWidth>
+                  <FormControl fullWidth="true" variant="outlined">
                     <InputLabel>
                       Level
                     </InputLabel>
