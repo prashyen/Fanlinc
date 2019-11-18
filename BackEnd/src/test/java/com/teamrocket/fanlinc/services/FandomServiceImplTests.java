@@ -187,7 +187,6 @@ public class FandomServiceImplTests {
 
   @Test
   public void getFandomDetails_GetExistingFandom_CorrectResponse() {
-    fandomRepository.save(fandom);
     GetFandomDetailsResponse response = fandomService.getFandomDetails(EXAMPLE_FANDOM_NAME);
     assertThat(response.getDescription()).isEqualTo(EXAMPLE_DESCRIPTION);
     assertThat(response.getDisplayPhotoURL()).isEqualTo(EXAMPLE_DISPLAY_PHOTO_URL);
@@ -196,8 +195,7 @@ public class FandomServiceImplTests {
   }
 
   @Test
-  public void getFandomDetail_GetNonExistingFandomNoFandom_ThrowsException() {
-    fandomRepository.save(fandom);
+  public void getFandomDetail_GetNonExistingFandom_ThrowsException() {
     assertThatExceptionOfType(FandomNotFoundException.class)
         .isThrownBy(() -> fandomService.getFandomDetails("Example"))
         .withMessage("The fandom with the name, Example does not exist");
