@@ -196,6 +196,7 @@ public class FandomServiceImplTests {
 
   @Test
   public void getFandomDetail_GetNonExistingFandom_ThrowsException() {
+    when(fandomRepository.findByFandomName("Example")).thenReturn(null);
     assertThatExceptionOfType(FandomNotFoundException.class)
         .isThrownBy(() -> fandomService.getFandomDetails("Example"))
         .withMessage("The fandom with the name, Example does not exist");
