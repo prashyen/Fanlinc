@@ -11,9 +11,7 @@ import './css/PostModal.css';
 import EditIcon from '@material-ui/icons/Edit';
 import CardHeader from '@material-ui/core/CardHeader';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Hidden from '@material-ui/core/Hidden';
 import CardMedia from '@material-ui/core/CardMedia';
-import { makeStyles } from '@material-ui/core/styles';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -92,7 +90,9 @@ export default function Feed(props) {
   };
   const Bold = ({ children }) =>
     <Box fontWeight="fontWeightBold" display="inline" ml={1.5} >{children}</Box>
+
   const isURL = require('is-url');
+
   // Card component for the posts
   return (
     <>
@@ -130,39 +130,35 @@ export default function Feed(props) {
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
               <Card style = {{display: "flex", width: '70vw'}}>
-                <Grid item>
-                    <div style={{paddingTop: 25, paddingLeft:20}}>
-                        <Avatar >H</Avatar>
-                    </div>
-                </Grid>
-                <div className={classes.cardDetails}>
-                      <CardContent flex= '1 0 auto'>
-                      <Typography component="h2" variant="h5">
-                        {postEntry.post.title}
-                      </Typography>
-
-                      <Typography variant="body2" color="textSecondary">
-                          <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
-                          <Bold>Fandom:</Bold> { postEntry.post.fandomName }
-                          <Bold>Level: </Bold> { postEntry.post.level }
-                          <Bold>Type: </Bold>{ postEntry.post.type }
-                      </Typography>
-                       <Typography variant="caption" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
-                       </Typography>
-                      <Typography variant="subtitle1" >
-                        {postEntry.post.content}
-                      </Typography>
-                  </CardContent>
-                  <Grid item>
-                   </Grid>
+                <div style={{paddingTop: 25, paddingLeft:20}}>
+                   {isURL(postEntry.user.profilePhotoUrl) ? (
+                        <Avatar src= {postEntry.user.profilePhotoUrl} />
+                   ): <Avatar>{postEntry.post.postedBy.charAt(0)} </Avatar>}
                 </div>
-               <div>
-                {isURL(postEntry.post.postPhotoUrl) ? (
+                <div className={classes.cardDetails}>
+                  <CardContent flex= '1 0 auto'>
+                    <Typography component="h2" variant="h5">
+                        {postEntry.post.title}
+                    </Typography>
+                    <Typography component="div" variant="body2" color="textSecondary">
+                      <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
+                      <Bold>Fandom:</Bold> { postEntry.post.fandomName }
+                      <Bold>Level: </Bold> { postEntry.post.level }
+                      <Bold>Type: </Bold>{ postEntry.post.type }
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                      {postEntry.post.content}
+                     </Typography>
+                  </CardContent>
+                </div>
+                <div>
+                  {isURL(postEntry.post.postPhotoUrl) ? (
                     <CardMedia style={{ width: "160px", height: "160px" }} component="img" image={postEntry.post.postPhotoUrl}/>
-                    ): null
-                }
-               </div>
-               <CardHeader style={{padding:0}}
+                    ) : null}
+                </div>
+                <CardHeader style={{padding:0}}
                   action={
                     postEntry.post.postedBy === loggedInUser ? (
                       <div>
@@ -188,7 +184,7 @@ export default function Feed(props) {
                           </MenuItem>
                         </Menu>
                       </div>
-                    ) : <Box m={3} />
+                    ) : <Box m={3}/>
                   }
                 />
               </Card>
