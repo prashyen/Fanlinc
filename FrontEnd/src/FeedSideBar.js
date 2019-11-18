@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Feed from './Feed';
+import FandomHeader from './fandomHeader'
 
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
@@ -72,7 +73,6 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
-
   const { open, handleOpen, handleClose } = useModal();
 
   useEffect(() => {
@@ -100,13 +100,12 @@ export default function SideBar(props) {
       });
   }, [loggedInUser]);
 
-
   return (
     <>
       <CssBaseline />
 
       {/* Feed Body */}
-      <Grid container>
+      <Grid container direction="row">
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
@@ -135,10 +134,11 @@ export default function SideBar(props) {
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
-        <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+        <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: 'auto' }}>
           {fandoms.map((fandomName) => (
             <TabPanel value={value} index={fandoms.indexOf(fandomName)}>
-                <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
+              <FandomHeader fandom={fandomName}/>
+              <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
             </TabPanel>
           ))}
         </Grid>
@@ -147,7 +147,7 @@ export default function SideBar(props) {
 
     </>
   );
-}
+};
 
 SideBar.propTypes = {
   loggedInUser: PropTypes.string.isRequired,
