@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
+import React from 'react';
 
 import './css/FandomModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,10 +9,8 @@ import Select from '@material-ui/core/Select';
 import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
 import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
@@ -53,7 +51,7 @@ export default function FandomModal(props) {
         "level": level,
         "type": type,
         "fandomName": fandomName,
-        "username": props.loggedInUser
+        "username": loggedInUser
       })
     }).then((response) => {
       switch (response.status) {
@@ -64,7 +62,7 @@ export default function FandomModal(props) {
         case 409:
           throw new Error('User already joined fandom.');
         case 400:
-          throw new Error('Invalid type or Field.');
+          throw new Error('Invalid type or level.');
         default:
           throw new Error('Something went wrong joining a fandom.');
       }
@@ -72,8 +70,6 @@ export default function FandomModal(props) {
       alert(err);
     });
   }
-  // Fandom Drop Down List
-  const FandomList = ["Naruto", "Avengers", "Game of Thrones", "Fortnite", "PubG", "One Piece", "Harry Potter"];
 
   const classes = useStylesModal();
 
