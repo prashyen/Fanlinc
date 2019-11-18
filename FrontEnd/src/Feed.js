@@ -30,6 +30,7 @@ import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
 import DeleteModal from './DeleteModal';
+import FilterOptions from './FilterOptions';
 
 
 export default function Feed(props) {
@@ -43,14 +44,16 @@ export default function Feed(props) {
   const { postsType, filterParam, loggedInUser } = props;
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const classes = useStylesPosts();
-  let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=noFilter&type=noFilter`;
-
-  // alter api url for retrieving user posts
-  if (postsType === 'user') {
-    filterPostsURL = `http://localhost:8080/post/postByUser?userName=${filterParam}`;
-  }
+  const [levelFilter, setLevelFilter] = useState('noFilter');
+  const [typeFilter, setTypeFilter] = useState('noFilter');
 
   useEffect(() => {
+    let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=${levelFilter}&type=${typeFilter}`;
+
+    // alter api url for retrieving user posts
+    if (postsType === 'user') {
+      filterPostsURL = `http://localhost:8080/post/postByUser?userName=${filterParam}`;
+    }
     fetch(filterPostsURL, {
       method: 'get',
       headers: {
@@ -76,7 +79,7 @@ export default function Feed(props) {
       .catch((err) => {
         alert(err);
       });
-  }, [filterParam, updateTrigger]);
+  }, [filterParam, levelFilter, typeFilter, updateTrigger, postsType]);
 
   const handleEllipseClick = (event) => {
     setCurrPost(event.currentTarget.value);
@@ -123,6 +126,12 @@ export default function Feed(props) {
           </div>
         ) : null}
       </div>
+      <FilterOptions
+        levelFilter={levelFilter}
+        typeFilter={typeFilter}
+        setLevelFilter={setLevelFilter}
+        setTypeFilter={setTypeFilter}
+      />
       <CssBaseline />
       <Container maxWidth="lg">
         <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '0' }}>

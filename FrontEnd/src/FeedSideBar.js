@@ -66,9 +66,8 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
-  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
-
   useEffect(() => {
+    const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
     fetch(getFandomListAPI, {
       method: 'get',
       mode: 'cors',
@@ -91,7 +90,7 @@ export default function SideBar(props) {
       }).catch((err) => {
         alert(err);
       });
-  }, []);
+  }, [loggedInUser]);
 
   return (
     <>

@@ -1,23 +1,18 @@
-package com.teamrocket.fanlinc.models;
+package com.teamrocket.fanlinc.responses;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
+public class GetFandomDetailsResponse {
 
-@NodeEntity
-public class Fandom {
-  @Id @GeneratedValue private Long id;
-private String  fandomName;
+  private String fandomName;
   private String genre;
   private String description;
   private String displayPhotoURL;
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
+  public GetFandomDetailsResponse(String fandomName, String genre, String description,
+      String displayPhotoURL) {
+    this.fandomName = fandomName;
+    this.genre = genre;
+    this.description = description;
+    this.displayPhotoURL = displayPhotoURL;
   }
 
   public String getFandomName() {
