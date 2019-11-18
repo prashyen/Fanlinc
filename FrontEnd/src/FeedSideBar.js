@@ -11,6 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import Feed from './Feed';
 import FandomHeader from './fandomHeader'
 
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import useModal from './useModal';
+import FandomModal from './FandomModal';
+import './css/FandomModal.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -67,7 +73,6 @@ export default function SideBar(props) {
     setValue(newValue);
   };
 
-
   useEffect(() => {
     const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
     fetch(getFandomListAPI, {
@@ -86,8 +91,7 @@ export default function SideBar(props) {
         default:
           throw new Error('Something went wrong when retrieving fandoms');
       }
-    })
-      .then((data) => {
+    }).then((data) => {
         setFandoms(data.fandomNames);
       }).catch((err) => {
         alert(err);
@@ -100,10 +104,20 @@ export default function SideBar(props) {
 
       {/* Feed Body */}
       <Grid container>
-
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: '80vw' }}>
+        <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
+          <div className="joinFandomButton">
+              <Fab color="primary" variant="extended"  size="small" aria-label="add" onClick={handleOpen}>
+                <AddIcon className={classes.extendedIcon}/>
+                Join a New Fandom
+              </Fab>
+              <FandomModal
+                open={open}
+                handleClose={handleClose}
+                loggedInUser={loggedInUser}
+              />
+          </div>
           <Tabs
             orientation="vertical"
             variant="scrollable"
@@ -128,6 +142,7 @@ export default function SideBar(props) {
         </Grid>
         {/* Feed End */}
       </Grid>
+
     </>
   );
 }
