@@ -75,8 +75,6 @@ export default function SideBar(props) {
 
   const { open, handleOpen, handleClose } = useModal();
 
-  const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${props.loggedInUser}`;
-
   useEffect(() => {
     const getFandomListAPI = `http://localhost:8080/account/userFandoms?username=${loggedInUser}`;
     fetch(getFandomListAPI, {
