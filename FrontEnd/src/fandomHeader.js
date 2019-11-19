@@ -17,7 +17,7 @@ Props
     fandom: the fandom for which this header contains Details
 */
 export default function FandomHeader(props) {
-  const { fandom, loggedInUser } = props;
+  const { fandom, loggedInUser, handleTrigger } = props;
   const { open, handleOpen, handleClose } = useModal();
   /* State of fandom genre & description before and after the fetch call */
   const [fandomGenre, setFandomGenre] = useState('');
@@ -77,6 +77,7 @@ export default function FandomHeader(props) {
               loggedInUser={loggedInUser}
               open={open}
               handleClose={handleClose}
+              handleTrigger={handleTrigger}
               fandomName={fandom}
             />
             <Typography variant="subtitle2" gutterBottom>
@@ -99,4 +100,5 @@ Genre:
 FandomHeader.propTypes = {
   fandom: PropTypes.string.isRequired,
   loggedInUser: PropTypes.string.isRequired,
+  handleTrigger: PropTypes.func.isRequired,
 };

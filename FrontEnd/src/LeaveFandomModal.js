@@ -14,8 +14,13 @@ import PropTypes from 'prop-types';
 
 export default function LeaveFandomModal(props) {
   const {
-    open, handleClose, fandomName, loggedInUser,
+    open, handleClose, fandomName, loggedInUser, handleTrigger,
   } = props;
+
+  const handleCloseModal = () => {
+    handleClose();
+    handleTrigger(true);
+  };
 
   const leaveFandomURL = 'http://localhost:8080/fandom/leaveFandom';
   /**
@@ -38,7 +43,7 @@ export default function LeaveFandomModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
-          return response.json();
+          return Promise.resolve();
         case 404:
           throw new Error('User is not part of the fandom.');
         default:
@@ -47,7 +52,7 @@ export default function LeaveFandomModal(props) {
     }).catch((err) => {
       alert(err);
     });
-    handleClose();
+    handleCloseModal();
   }
 
   return (
@@ -61,7 +66,7 @@ export default function LeaveFandomModal(props) {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <IconButton onClick={handleClose}>
+              <IconButton onClick={handleCloseModal}>
                 <CloseIcon />
               </IconButton>
             </Grid>
@@ -87,4 +92,5 @@ LeaveFandomModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   fandomName: PropTypes.string.isRequired,
   loggedInUser: PropTypes.string.isRequired,
+  handleTrigger: PropTypes.func.isRequired,
 };
