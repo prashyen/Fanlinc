@@ -590,6 +590,18 @@ Responsibilities:
 
 Collaborators:
 
+Class name: LeaveFandomRequest
+
+Parent class (if any):
+
+Subclasses (if any):
+
+Responsibilities:
+
+-   Request to delete a relationship between a fandom and a user
+
+Collaborators:
+
 Component Breakdown for Front-End React Components
 --------------------------------------------------
 

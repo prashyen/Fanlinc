@@ -2,12 +2,7 @@ package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.builders.FandomBuilder;
 import com.teamrocket.fanlinc.builders.JoinedBuilder;
-import com.teamrocket.fanlinc.exceptions.FandomAlreadyExistsException;
-import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
-import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
-import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
-import com.teamrocket.fanlinc.exceptions.UserAlreadyJoinedFandomException;
-import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
+import com.teamrocket.fanlinc.exceptions.*;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
@@ -16,6 +11,7 @@ import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.LeaveFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
@@ -42,6 +38,43 @@ public class FandomServiceImpl implements FandomService {
     this.fandomRepository = fandomRepository;
   }
 
+  /**
+   * Removes the joined relationship between fandom and user specified
+   *
+   * @param request a {@link LeaveFandomRequest} object containing the fandom the user wants to leave
+   * @throws UserNotFoundException if User does not exist
+   * @throws FandomNotFoundException if Fandom does not exist
+   * @throws UserNotInFandomException if User has not joined requested fandom
+   */
+  @Transactional()
+  public void leaveFandom(LeaveFandomRequest request) {
+    User requestedUser = userRepository.findByUsername(request.getUsername());
+    // ensure the requested username exists
+    if (requestedUser == null) {
+      throw new UserNotFoundException(
+              "User with username " + request.getUsername() + " does not exist");
+    }
+    Fandom requestedFandom = fandomRepository.findByFandomName(request.getFandomName());
+    // ensure the requested fandom has already been created
+    if (requestedFandom == null) {
+      // Fandom has not been created yet
+      throw new FandomNotFoundException(
+              "Fandom with name " + request.getFandomName() + " does not exist");
+    }
+    Joined requestedRelation =
+            joinedRepository.findJoinedByUsernameAndFandomName(
+                    request.getUsername(), request.getFandomName());
+
+    // ensure the requested relation has already been created
+    if (requestedRelation == null) {
+      // if the requested relation isn't there output exception
+      throw new UserNotInFandomException(
+              "User is not in " + request.getFandomName());
+    }
+
+    // Relationship exists, delete it
+    joinedRepository.delete(requestedRelation);
+  }
   /**
    * Checks if a fandom with a given name exists in the database and if not it will create that
    * fandom with the given info
@@ -157,4 +190,5 @@ public class FandomServiceImpl implements FandomService {
     return new GetFandomDetailsResponse(fandom.getFandomName(), fandom.getGenre(),
         fandom.getDescription(), fandom.getDisplayPhotoURL());
   }
+
 }

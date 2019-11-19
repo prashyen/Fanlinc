@@ -1,3 +1,4 @@
+
 package com.teamrocket.fanlinc.services;
 
 import com.teamrocket.fanlinc.requests.AddPostRequest;
