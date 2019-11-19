@@ -17,12 +17,6 @@ import useModal from './useModal';
 import FandomModal from './FandomModal';
 import './css/FandomModal.css';
 
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import useModal from './useModal';
-import FandomModal from './FandomModal';
-import './css/FandomModal.css';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
