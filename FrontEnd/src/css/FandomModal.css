@@ -17,9 +17,10 @@
 
   .modal-footer{
     display: flex;
-    justfy-content: center;
+    flex-direction: row;
+    justify-content: flex-end;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
 
   .modal {

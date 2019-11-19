@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
-
 import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,36 +16,42 @@ import PropTypes from 'prop-types';
 import { useStylesModal } from './materialUIStyle';
 import useForm from './useForm';
 
-const initialState = {
-  title: '',
-  content: '',
-  imageURL: '',
-  type: '',
-  level: '',
-};
 
-const addPostURL = 'http://localhost:8080/post/addPost';
+const editPostURL = 'http://localhost:8080/post/editPost';
 
-export default function PostModal(props) {
-  const { open, handleClose, loggedInUser, handleTrigger } = props;
-  const { values, handleChange } = useForm(null, initialState);
-  const [fandomName, setFandomName] = useState('');
-  const postedBy = loggedInUser;
+export default function EditModal(props) {
+  const {
+    post, open, handleClose, menuHandleClose,
+  } = props;
+  const {
+    title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl,
+  } = post;
+
+  const initialValues = {
+    title,
+    content,
+    postPhotoUrl,
+    type,
+    level,
+  };
+  const { values, handleChange } = useForm(null, initialValues);
+
+  const [newFandomName, setNewFandomName] = useState(fandomName);
   /**
-   * Handles the clicking of the post button and sends a post request to the url:
-   * http://localhost:8080/post/addPost
+   * Handles the clicking of the edit post button and sends a edit post request to the url:
+   * http://localhost:8080/post/editPost
    */
   function handleSubmit() {
     const {
       title,
       content,
       level,
-      imageURL,
+      postPhotoUrl,
       type,
     } = values;
 
-    fetch(addPostURL, {
-      method: 'post',
+    fetch(editPostURL, {
+      method: 'PATCH',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
@@ -58,8 +63,8 @@ export default function PostModal(props) {
         level,
         postedBy,
         type,
-        fandomName,
-        postPhotoURL: imageURL,
+        postedTime,
+        postPhotoUrl,
       }),
     }).then((response) => {
       switch (response.status) {
@@ -68,9 +73,9 @@ export default function PostModal(props) {
         case 404:
           throw new Error('Username and/or fandom name not found');
         case 400:
-          throw new Error(`Invalid type/level and/or you are not part of${fandomName}`);
+          throw new Error('Invalid type/level');
         default:
-          throw new Error('Uh Oh! Something went wrong when creating the post.');
+          throw new Error('Uh Oh! Something went wrong when editing the post.');
       }
     }).catch((err) => {
       alert(err);
@@ -111,28 +116,29 @@ export default function PostModal(props) {
   const classes = useStylesModal();
 
   const handleFandomNameChange = (event) => {
-    setFandomName(event.target.value);
+    setNewFandomName(event.target.value);
   };
 
   const handleReset = (event) => {
-    values.imageURL = '';
-    values.content = '';
-    values.title = '';
-    values.level = '';
-    values.type = '';
-    setFandomName('');
+    values.postPhotoUrl = initialValues.postPhotoUrl;
+    values.content = initialValues.content;
+    values.title = initialValues.title;
+    values.level = initialValues.level;
+    values.type = initialValues.type;
+    setNewFandomName(fandomName);
     handleChange(event);
   };
 
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
-    handleTrigger(true);
+    menuHandleClose();
   };
 
   const handlePost = (event) => {
     handleSubmit();
     handleResetClose(event);
+    menuHandleClose();
   };
 
   if (open) {
@@ -158,7 +164,7 @@ export default function PostModal(props) {
         >
           <div className={classes.paper}>
             <div className="modal-header">
-              <h3>Create Post</h3>
+              <h3>Edit Post</h3>
             </div>
             <div className="modal-body">
               <Grid container spacing={1}>
@@ -207,6 +213,7 @@ export default function PostModal(props) {
                     <FormControl
                       variant="outlined"
                       fullWidth
+                      disabled
                     >
                       <InputLabel>
                         Fandom
@@ -214,7 +221,7 @@ export default function PostModal(props) {
 
                       <Select
                         onChange={handleFandomNameChange}
-                        value={fandomName}
+                        value={newFandomName}
                         type="text"
                         required
                         labelWidth={60}
@@ -251,9 +258,9 @@ export default function PostModal(props) {
                     margin="normal"
                     fullWidth
                     label="Paste Image URL Here"
-                    name="imageURL"
+                    name="postPhotoUrl"
                     type="text"
-                    value={values.imageURL}
+                    value={values.postPhotoUrl}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -287,7 +294,7 @@ export default function PostModal(props) {
                 className={classes.button}
                 onClick={handlePost}
               >
-                Post
+                Save Changes
               </Button>
             </div>
           </div>
@@ -297,9 +304,9 @@ export default function PostModal(props) {
   );
 }
 
-PostModal.propTypes = {
-  loggedInUser: PropTypes.string.isRequired,
+EditModal.propTypes = {
+  post: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleTrigger: PropTypes.func.isRequired,
+  menuHandleClose: PropTypes.func.isRequired,
 };
