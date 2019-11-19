@@ -9,12 +9,7 @@ import static org.mockito.Mockito.when;
 
 import com.teamrocket.fanlinc.builders.FandomBuilder;
 import com.teamrocket.fanlinc.builders.JoinedBuilder;
-import com.teamrocket.fanlinc.exceptions.FandomAlreadyExistsException;
-import com.teamrocket.fanlinc.exceptions.FandomNotFoundException;
-import com.teamrocket.fanlinc.exceptions.InvalidLevelException;
-import com.teamrocket.fanlinc.exceptions.InvalidTypeException;
-import com.teamrocket.fanlinc.exceptions.UserAlreadyJoinedFandomException;
-import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
+import com.teamrocket.fanlinc.exceptions.*;
 import com.teamrocket.fanlinc.models.Fandom;
 import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
@@ -23,6 +18,7 @@ import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.LeaveFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
@@ -202,4 +198,50 @@ public class FandomServiceImplTests {
         .withMessage("The fandom with the name, Example does not exist");
   }
 
+  @Test
+  public void leaveFandom_UserNotFoundException_ThrowsException() {
+    LeaveFandomRequest request = new LeaveFandomRequest(EXAMPLE_FANDOM_NAME, EXAMPLE_USER);
+
+    when(
+            userRepository.findByUsername(EXAMPLE_USER)
+    ).thenReturn(null);
+
+    assertThatExceptionOfType(UserNotFoundException.class)
+        .isThrownBy(() -> fandomService.leaveFandom(request))
+        .withMessage("User with username " + EXAMPLE_USER + " does not exist");
+  }
+
+  @Test
+  public void leaveFandom_FandomNotFoundException_ThrowsException() {
+    LeaveFandomRequest request = new LeaveFandomRequest(EXAMPLE_FANDOM_NAME, EXAMPLE_USER);
+
+    when(
+            fandomRepository.findByFandomName(EXAMPLE_FANDOM_NAME)
+    ).thenReturn(null);
+
+    assertThatExceptionOfType(FandomNotFoundException.class)
+        .isThrownBy(() -> fandomService.leaveFandom(request))
+        .withMessage("Fandom with name " + EXAMPLE_FANDOM_NAME + " does not exist");
+  }
+
+  @Test
+  public void leaveFandom_UserNotInFandomException_ThrowsException() {
+    LeaveFandomRequest request = new LeaveFandomRequest(EXAMPLE_FANDOM_NAME, EXAMPLE_USER);
+
+    assertThatExceptionOfType(UserNotInFandomException.class)
+            .isThrownBy(() -> fandomService.leaveFandom(request))
+            .withMessage("User is not in " + EXAMPLE_FANDOM_NAME);
+  }
+
+  @Test
+  public void leaveFandom_RelationExists_CorrectMethodCalled() {
+    LeaveFandomRequest request = new LeaveFandomRequest(EXAMPLE_FANDOM_NAME, EXAMPLE_USER);
+
+    when(
+            joinedRepository.findJoinedByUsernameAndFandomName(EXAMPLE_USER, EXAMPLE_FANDOM_NAME)
+    ).thenReturn(joined);
+    fandomService.leaveFandom(request);
+
+    verify(joinedRepository).delete(joined);
+  }
 }

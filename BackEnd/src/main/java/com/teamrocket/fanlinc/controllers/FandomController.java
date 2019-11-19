@@ -2,6 +2,7 @@ package com.teamrocket.fanlinc.controllers;
 
 import com.teamrocket.fanlinc.requests.AddFandomRequest;
 import com.teamrocket.fanlinc.requests.AddJoinedFandomRequest;
+import com.teamrocket.fanlinc.requests.LeaveFandomRequest;
 import com.teamrocket.fanlinc.responses.AddFandomResponse;
 import com.teamrocket.fanlinc.responses.AddJoinedFandomResponse;
 import com.teamrocket.fanlinc.responses.GetFandomDetailsResponse;
@@ -47,5 +48,11 @@ public class FandomController {
   @ResponseBody
   public GetFandomDetailsResponse getFandomDetails(@RequestParam("fandomName") String fandomName) {
     return fandomService.getFandomDetails(fandomName);
+  }
+
+  @CrossOrigin
+  @RequestMapping(value = BASE_PATH + "/leaveFandom", method = RequestMethod.DELETE)
+  public void leaveFandom(@Valid @RequestBody LeaveFandomRequest request) {
+    fandomService.leaveFandom(request);
   }
 }
