@@ -122,7 +122,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       labelWidth={110}
-                      autoWidth
+                      autoWidth="true"
                       onChange={handleChange}
                       value={values.fandomName}
                       required
@@ -147,7 +147,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       labelWidth={40}
-                      autoWidth
+                      autoWidth="true"
                       onChange={handleChange}
                       value={values.level}
                       required
@@ -172,7 +172,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       onChange={handleChange}
-                      autoWidth
+                      autoWidth="true"
                       value={values.type}
                       required
                       labelWidth={35}
