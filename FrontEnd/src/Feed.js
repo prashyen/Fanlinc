@@ -102,27 +102,25 @@ export default function Feed(props) {
       <div className="margin">
         {postsType === 'feed'
           ? (
-            <Grid container spacing={2}>
-              <Grid item xs={11}>
-                <FilterOptions
-                  levelFilter={levelFilter}
-                  typeFilter={typeFilter}
-                  setLevelFilter={setLevelFilter}
-                  setTypeFilter={setTypeFilter}
-                />
-              </Grid>
-              <Grid item xs={1}>
-                <Fab color="primary" size="small" onClick={postModal.handleOpen}>
-                  <AddIcon />
-                </Fab>
-                <PostModal
-                  open={postModal.open}
-                  handleClose={postModal.handleClose}
-                  loggedInUser={loggedInUser}
-                  handleTrigger={setUpdateTrigger}
-                />
-              </Grid>
-            </Grid>
+            <>
+            <div style={{ paddingRight: 12 }}>
+              <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+                <AddIcon />
+              </Fab>
+              </div>
+              <PostModal
+                open={postModal.open}
+                handleClose={postModal.handleClose}
+                loggedInUser={loggedInUser}
+                handleTrigger={setUpdateTrigger}
+              />
+              <FilterOptions
+                levelFilter={levelFilter}
+                typeFilter={typeFilter}
+                setLevelFilter={setLevelFilter}
+                setTypeFilter={setTypeFilter}
+              />
+            </>
           ) : null}
       </div>
       {currPost != null ? (
@@ -147,7 +145,7 @@ export default function Feed(props) {
           {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
-              <Card style={{ display: 'flex', width: '70vw' }}>
+              <Card style={{ display: 'flex', width: '65vw' }}>
                 <div style={{ paddingTop: 25, paddingLeft: 20 }}>
                   {isURL(postEntry.user.profilePhotoUrl) ? (
                     <Avatar src={postEntry.user.profilePhotoUrl} />

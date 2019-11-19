@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Container from '@material-ui/core/Container';
 import Fab from '@material-ui/core/Fab';
 import useModal from './useModal';
 import LeaveFandomModal from './LeaveFandomModal';
@@ -55,40 +56,41 @@ export default function FandomHeader(props) {
   return (
     <>
       <CssBaseline />
-      {/* Fandom Header Start */}
-      <Grid
-        container
-        direction="row"
-        width="100%"
-        justify="flex-start"
-        alignItems="center"
-      >
-        {/* Grid has 12 columns width - photo:details = 3:9 */}
-        <Grid item sm={3}>
-          <img src={`${fandomPhoto}`} alt="representing fandom" border="0" width="150px" height="150px" style={{ borderRadius: '50%' }} />
-        </Grid>
-        <Grid item sm={9}>
-          <Typography variant="h2" gutterBottom>{fandom}</Typography>
-          <Fab color="secondary" size="small" aria-label="add" onClick={handleOpen}>
-            <DeleteIcon />
-          </Fab>
-          <LeaveFandomModal
-            loggedInUser={loggedInUser}
-            open={open}
-            handleClose={handleClose}
-            fandomName={fandom}
-          />
-          <Typography variant="subtitle2" gutterBottom>
+      <Container maxWidth="lg">
+        {/* Fandom Header Start */}
+        <Grid
+          container
+          direction="row"
+          style={{ display: 'flex', width: '68vw' }}
+          alignItems="center"
+        >
+          {/* Grid has 12 columns width - photo:details = 3:9 */}
+          <Grid item sm={3}>
+            <img src={`${fandomPhoto}`} alt="representing fandom" border="0" width="150px" height="150px" style={{ borderRadius: '50%' }} />
+          </Grid>
+          <Grid item sm={9}>
+            <Fab color="secondary" size="small" onClick={handleOpen}>
+              <DeleteIcon />
+            </Fab>
+            <Typography variant="h2" gutterBottom>{fandom}</Typography>
+            <LeaveFandomModal
+              loggedInUser={loggedInUser}
+              open={open}
+              handleClose={handleClose}
+              fandomName={fandom}
+            />
+            <Typography variant="subtitle2" gutterBottom>
 Genre:
-            {' '}
-            {fandomGenre}
-          </Typography>
-          <Typography variant="body1" gutterBottom>{fandomDescription}</Typography>
-        </Grid>
+              {' '}
+              {fandomGenre}
+            </Typography>
+            <Typography variant="body1" gutterBottom>{fandomDescription}</Typography>
+          </Grid>
 
-        {/* Fandom Header End */}
-      </Grid>
-      <Divider />
+          {/* Fandom Header End */}
+        </Grid>
+        <Divider />
+      </Container>
     </>
   );
 }
