@@ -56,20 +56,20 @@ export default function ProfileSideBar(props) {
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto'}}>
-          <div variant="body" component="h2" align="center" gutterBottom>
+          <div align="center">
                <img src={""+ picture +""} border="0" width="150px" height="150px"
                style={{borderRadius: '50%', paddingTop: "10px"}} alt="User profile"/>
           </div>
-          <Typography variant="overline" component="h2" align="center" gutterBottom>
+          <Typography variant="overline" component="h2" align="center">
               {loggedInUser}
           </Typography>
-          <Typography variant="h6" component="h3" align="center" gutterBottom>
+          <Typography variant="h6" component="h3" align="center">
               {fName} {lName}
           </Typography>
-          <Typography variant="caption" component="span" align="center" style={{display: "inline-block"}} gutterButtom>
+          <Typography variant="caption" component="span" align="center" style={{display: "inline-block"}}>
               {location}
           </Typography>
-          <Typography variant="body1" component="p" align="center" fontStyle="italic" gutterButtom>
+          <Typography variant="body1" component="p" align="center" fontStyle="italic">
               Bio: {bio}
           </Typography>
         </Grid>
