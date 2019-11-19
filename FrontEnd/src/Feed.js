@@ -92,8 +92,7 @@ export default function Feed(props) {
     setCurrPost(null);
     setUpdateTrigger(true);
   };
-  const Bold = ({ children }) =>
-    <Box fontWeight="fontWeightBold" display="inline" ml={1.5} >{children}</Box>
+  const Bold = ({ children }) => <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>{children}</Box>;
 
   const isURL = require('is-url');
 
@@ -101,74 +100,95 @@ export default function Feed(props) {
   return (
     <>
       <div className="margin">
-        <Fab color="primary" size="small" aria-label="add" onClick={postModal.handleOpen}>
-          <AddIcon />
-        </Fab>
-        <PostModal
-          open={postModal.open}
-          handleClose={postModal.handleClose}
-          loggedInUser={loggedInUser}
-          handleTrigger={setUpdateTrigger}
-        />
-        {currPost != null ? (
-          <div>
-            <EditModal
-              post={postsAndUsers[currPost].post}
-              open={editModal.open}
-              handleClose={editModal.handleClose}
-              menuHandleClose={handleEllipseClose}
-            />
-            <DeleteModal
-              post={postsAndUsers[currPost].post}
-              open={deleteModal.open}
-              handleClose={deleteModal.handleClose}
-              menuHandleClose={handleEllipseClose}
-            />
-          </div>
-        ) : null}
+        {postsType === 'feed'
+          ? (
+            <>
+            <div style={{ paddingRight: 12 }}>
+              <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+                <AddIcon />
+              </Fab>
+              </div>
+              <PostModal
+                open={postModal.open}
+                handleClose={postModal.handleClose}
+                loggedInUser={loggedInUser}
+                handleTrigger={setUpdateTrigger}
+              />
+              <FilterOptions
+                levelFilter={levelFilter}
+                typeFilter={typeFilter}
+                setLevelFilter={setLevelFilter}
+                setTypeFilter={setTypeFilter}
+              />
+            </>
+          ) : null}
       </div>
-      <FilterOptions
-        levelFilter={levelFilter}
-        typeFilter={typeFilter}
-        setLevelFilter={setLevelFilter}
-        setTypeFilter={setTypeFilter}
-      />
+      {currPost != null ? (
+        <div>
+          <EditModal
+            post={postsAndUsers[currPost].post}
+            open={editModal.open}
+            handleClose={editModal.handleClose}
+            menuHandleClose={handleEllipseClose}
+          />
+          <DeleteModal
+            post={postsAndUsers[currPost].post}
+            open={deleteModal.open}
+            handleClose={deleteModal.handleClose}
+            menuHandleClose={handleEllipseClose}
+          />
+        </div>
+      ) : null}
       <CssBaseline />
       <Container maxWidth="lg">
-        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '0' }}>
+        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
           {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
-              <Card style = {{display: "flex", width: '70vw'}}>
-                <div style={{paddingTop: 25, paddingLeft:20}}>
-                   {isURL(postEntry.user.profilePhotoUrl) ? (
-                        <Avatar src= {postEntry.user.profilePhotoUrl} />
-                   ): <Avatar>{postEntry.post.postedBy.charAt(0)} </Avatar>}
+              <Card style={{ display: 'flex', width: '65vw' }}>
+                <div style={{ paddingTop: 25, paddingLeft: 20 }}>
+                  {isURL(postEntry.user.profilePhotoUrl) ? (
+                    <Avatar src={postEntry.user.profilePhotoUrl} />
+                  ) : (
+                    <Avatar>
+                      {postEntry.post.postedBy.charAt(0)}
+                      {' '}
+                    </Avatar>
+                  )}
                 </div>
                 <div className={classes.cardDetails}>
-                  <CardContent flex= '1 0 auto'>
+                  <CardContent flex="1 0 auto">
                     <Typography component="h2" variant="h5">
-                        {postEntry.post.title}
+                      {postEntry.post.title}
                     </Typography>
                     <Typography component="div" variant="body2" color="textSecondary">
-                      <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>{ postEntry.post.postedBy }
-                      <Bold>Fandom: </Bold> { postEntry.post.fandomName }
-                      <Bold>Level: </Bold> { postEntry.post.level }
-                      <Bold>Type: </Bold> { postEntry.post.type }
+                      <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>
+                      { postEntry.post.postedBy }
+                      <Bold>Fandom: </Bold>
+                      {' '}
+                      { postEntry.post.fandomName }
+                      <Bold>Level: </Bold>
+                      {' '}
+                      { postEntry.post.level }
+                      <Bold>Type: </Bold>
+                      {' '}
+                      { postEntry.post.type }
                     </Typography>
-                    <Typography variant="caption" color="textSecondary">{moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
+                    <Typography variant="caption" color="textSecondary">
+                      {moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
                     </Typography>
-                    <Typography variant="subtitle1" >
+                    <Typography variant="subtitle1">
                       {postEntry.post.content}
-                     </Typography>
+                    </Typography>
                   </CardContent>
                 </div>
                 <div>
                   {isURL(postEntry.post.postPhotoUrl) ? (
-                    <CardMedia style={{ width: "160px", height: "160px" }} component="img" image={postEntry.post.postPhotoUrl}/>
-                    ) : null}
+                    <CardMedia style={{ width: '160px', height: '160px' }} component="img" image={postEntry.post.postPhotoUrl} />
+                  ) : null}
                 </div>
-                <CardHeader style={{padding:0}}
+                <CardHeader
+                  style={{ padding: 0 }}
                   action={
                     postEntry.post.postedBy === loggedInUser ? (
                       <div>
@@ -194,7 +214,7 @@ export default function Feed(props) {
                           </MenuItem>
                         </Menu>
                       </div>
-                    ) : <Box m={3}/>
+                    ) : <Box m={3} />
                   }
                 />
               </Card>
