@@ -92,27 +92,30 @@ export default function Feed(props) {
   return (
     <>
       <div className="margin">
-        <Grid container spacing={2}>
-          <Grid item xs={11}>
-            <FilterOptions
-              levelFilter={levelFilter}
-              typeFilter={typeFilter}
-              setLevelFilter={setLevelFilter}
-              setTypeFilter={setTypeFilter}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <Fab color="primary" size="small" onClick={postModal.handleOpen}>
-              <AddIcon />
-            </Fab>
-            <PostModal
-              open={postModal.open}
-              handleClose={postModal.handleClose}
-              loggedInUser={loggedInUser}
-              handleTrigger={setUpdateTrigger}
-            />
-          </Grid>
-        </Grid>
+        {postsType === 'feed'
+          ? (
+            <Grid container spacing={2}>
+              <Grid item xs={11}>
+                <FilterOptions
+                  levelFilter={levelFilter}
+                  typeFilter={typeFilter}
+                  setLevelFilter={setLevelFilter}
+                  setTypeFilter={setTypeFilter}
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+                  <AddIcon />
+                </Fab>
+                <PostModal
+                  open={postModal.open}
+                  handleClose={postModal.handleClose}
+                  loggedInUser={loggedInUser}
+                  handleTrigger={setUpdateTrigger}
+                />
+              </Grid>
+            </Grid>
+          ) : null}
       </div>
       {currPost != null ? (
         <div>
@@ -172,7 +175,21 @@ export default function Feed(props) {
                       {postEntry.post.title}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
-                      Posted By: { postEntry.post.postedBy } Fandom: { postEntry.post.fandomName } Level: { postEntry.post.level } Type: { postEntry.post.type }
+                      Posted By:
+                      {' '}
+                      { postEntry.post.postedBy }
+                      {' '}
+Fandom:
+                      {' '}
+                      { postEntry.post.fandomName }
+                      {' '}
+Level:
+                      {' '}
+                      { postEntry.post.level }
+                      {' '}
+Type:
+                      {' '}
+                      { postEntry.post.type }
                     </Typography>
                     <Typography variant="subtitle2" color="textSecondary">
                       {moment(postEntry.post.postedTime).format('dddd, MMMM Do YYYY, h:mm:ss a')}
