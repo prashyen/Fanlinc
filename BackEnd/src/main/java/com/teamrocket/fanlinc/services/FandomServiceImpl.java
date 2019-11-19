@@ -42,8 +42,8 @@ public class FandomServiceImpl implements FandomService {
    * Removes the joined relationship between fandom and user specified
    *
    * @param request a {@link LeaveFandomRequest} object containing the fandom the user wants to leave
-   * @throws UserNotFoundException if User does not exists
-   * @throws FandomNotFoundException if Fandom does not exists
+   * @throws UserNotFoundException if User does not exist
+   * @throws FandomNotFoundException if Fandom does not exist
    * @throws UserNotInFandomException if User has not joined requested fandom
    */
   @Transactional()
@@ -65,9 +65,9 @@ public class FandomServiceImpl implements FandomService {
             joinedRepository.findJoinedByUsernameAndFandomName(
                     request.getUsername(), request.getFandomName());
 
-    // ensure the requested fandom has already been created
+    // ensure the requested relation has already been created
     if (requestedRelation == null) {
-      // if the requested fandom isn't there output exception
+      // if the requested relation isn't there output exception
       throw new UserNotInFandomException(
               "User is not in " + request.getFandomName());
     }

@@ -9,8 +9,7 @@ public class LeaveFandomRequest {
     @NotEmpty
     private String username;
 
-    public LeaveFandomRequest(@NotEmpty String fandomName,
-                            @NotEmpty String username) {
+    public LeaveFandomRequest(String fandomName, String username) {
         this.fandomName = fandomName;
         this.username = username;
     }
