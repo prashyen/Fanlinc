@@ -228,10 +228,6 @@ public class FandomServiceImplTests {
   public void leaveFandom_UserNotInFandomException_ThrowsException() {
     LeaveFandomRequest request = new LeaveFandomRequest(EXAMPLE_FANDOM_NAME, EXAMPLE_USER);
 
-    when(
-            joinedRepository.findJoinedByUsernameAndFandomName(EXAMPLE_USER, EXAMPLE_FANDOM_NAME)
-    ).thenReturn(null);
-
     assertThatExceptionOfType(UserNotInFandomException.class)
             .isThrownBy(() -> fandomService.leaveFandom(request))
             .withMessage("User is not in " + EXAMPLE_FANDOM_NAME);
@@ -246,6 +242,6 @@ public class FandomServiceImplTests {
     ).thenReturn(joined);
     fandomService.leaveFandom(request);
 
-    verify(joinedRepository).delete(any(Joined.class));
+    verify(joinedRepository).delete(joined);
   }
 }
