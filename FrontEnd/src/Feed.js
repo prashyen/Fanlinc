@@ -141,7 +141,7 @@ export default function Feed(props) {
       ) : null}
       <CssBaseline />
       <Container maxWidth="lg">
-        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '0' }}>
+        <Grid container direction="column" alignItems="center" spacing={2} style={{ minHeight: '80vh' }}>
           {postsAndUsers.map((postEntry, index) => (
             <Grid item key={postEntry.post.id} xs={12}>
               {/* creating card for each of the post */}
