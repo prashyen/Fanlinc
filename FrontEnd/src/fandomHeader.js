@@ -61,7 +61,7 @@ export default function FandomHeader(props) {
         <Grid
           container
           direction="row"
-          style={{ display: 'flex', width: '68vw' }}
+          style={{ display: 'flex', width: '65vw' }}
           alignItems="center"
         >
           {/* Grid has 12 columns width - photo:details = 3:9 */}
