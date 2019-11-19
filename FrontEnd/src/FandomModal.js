@@ -78,7 +78,7 @@ export default function FandomModal(props) {
     values.level = '';
     values.type = '';
     handleChange(event);
-    handleTrigger(false);
+    handleTrigger(true);
   };
 
   const handleResetClose = (event) => {

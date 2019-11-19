@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -83,7 +83,7 @@ export default function PostModal(props) {
    * Handles updating the Fandom Dropdown using a get request from the url:
    * http://localhost:8080/account/userFandoms
    */
-  const update = () => {
+  useEffect(() =>  {
     fetch(getUserFandoms, {
       method: 'GET',
       mode: 'cors',
@@ -106,7 +106,7 @@ export default function PostModal(props) {
     }).catch((err) => {
       alert(err);
     });
-  };
+  }, [getUserFandoms]);
 
   const classes = useStylesModal();
 
@@ -135,9 +135,6 @@ export default function PostModal(props) {
     handleResetClose(event);
   };
 
-  if (open) {
-    update();
-  }
 
   return (
     <Modal

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/PostModal.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -64,7 +64,7 @@ export default function EditModal(props) {
         postedBy,
         type,
         postedTime,
-        postPhotoUrl,
+        postPhotoURL: postPhotoUrl,
       }),
     }).then((response) => {
       switch (response.status) {
@@ -88,7 +88,7 @@ export default function EditModal(props) {
    * Handles updating the Fandom Dropdown using a get request from the url:
    * http://localhost:8080/account/userFandoms
    */
-  const update = () => {
+  useEffect(() => {
     fetch(getUserFandoms, {
       method: 'GET',
       mode: 'cors',
@@ -111,7 +111,7 @@ export default function EditModal(props) {
     }).catch((err) => {
       alert(err);
     });
-  };
+  }, [getUserFandoms]);
 
   const classes = useStylesModal();
 
@@ -141,9 +141,6 @@ export default function EditModal(props) {
     menuHandleClose();
   };
 
-  if (open) {
-    update();
-  }
 
   return (
     <Modal

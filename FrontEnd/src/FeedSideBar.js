@@ -95,7 +95,7 @@ export default function SideBar(props) {
           throw new Error('Something went wrong when retrieving fandoms');
       }
     }).then((data) => {
-      setUpdateTrigger(true);
+      setUpdateTrigger(false);
       setFandoms(data.fandomNames);
     }).catch((err) => {
       alert(err);

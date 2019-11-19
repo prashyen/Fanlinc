@@ -69,7 +69,7 @@ export default function FandomHeader(props) {
         </Grid>
         <Grid item sm={9}>
           <Typography variant="h2" gutterBottom>{fandom}</Typography>
-          <Fab color="primary" size="small" aria-label="add" onClick={handleOpen}>
+          <Fab color="secondary" size="small" aria-label="add" onClick={handleOpen}>
             <DeleteIcon />
           </Fab>
           <LeaveFandomModal
