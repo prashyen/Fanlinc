@@ -32,13 +32,13 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 * TEAM-12: Filter Posts
     * Add filter functionality to post feed component                                      [Assigned to Carl Alvares]
     * Update feed to filter to logged in user's type and level by default                  [Assigned to Abel Debalkew]
+	* Refactor Feed to display posts in a nicer way                                        [Assigned to Ruidan Ji]
 * TEAM-49: Test Application
     * Add unit tests to the back-end                                                       [Assigned to Carl Alvares]
     * Add more default users and posts to default database for testing the feed            [Assigned to Aamir Haroon]
 * TEAM-13: Like/Unlike Posts
     * Update Post model and post response to add list of users who liked post              [Assigned to Rahul Ramani]
     * Implement modifyLikes API                                                            [Assigned to Rahul Ramani]
-    * Refactor Feed to display posts in a nicer way                                        [Assigned to Ruidan Ji]
     * Add like counter to posts in Feed component                                          [Assigned to Ruidan Ji]
 * TEAM-57: View Fandom Details on Feed
     * Implement getFandomDetails API [Assigned to Rahul Ramani]
@@ -60,7 +60,7 @@ We set priorities for the sprint and divided tasks among ourselves as outlined b
 | TEAM-57  | Medium   | As a user, I want to be able to see information about a fandom when I view its posts                                                                             |       8      | Information about the fandom and the fandom's display photo should appear above the feed for the fandom                                      |
 | TEAM-49  | Medium   | As a developer, I want to be able to test my front-end and back-end applications with a sample database to ensure that they work as intended                     |       0      | Application should have a default database for testing purposes, and should have unit tests to ensure code works as intended                 |
 
-## User stories that were not completed/stared in Sprint 3
+## User stories that were not completed/started in Sprint 3
 * TEAM-13: Like/Unlike Posts
 * TEAM-5: Edit Fandoms
 * TEAM-6: Edit Profile
