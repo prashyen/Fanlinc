@@ -1,3 +1,4 @@
+
 # Sprint 3 Retrospective Meeting 
 
 ## Participants:
@@ -9,6 +10,12 @@
 * Ruidan Ji
 * Tahasun Tarannum
 * Carl Alvares
+
+
+### Unfinished Stories
+* 	As a user, I should be able to like and unlike a post so that I can interact with content I see
+    CoS: Select the like or unlike button below the post, and the post indicates that it has been liked or unliked respectively.
+
 
 ### Practices to continue to next sprint
 
