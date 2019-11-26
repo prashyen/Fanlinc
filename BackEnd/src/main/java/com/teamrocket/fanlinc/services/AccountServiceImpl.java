@@ -4,7 +4,9 @@ import com.teamrocket.fanlinc.builders.UserBuilder;
 import com.teamrocket.fanlinc.builders.UserDetailsResponseBuilder;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UsernameNotUniqueException;
+import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
+import com.teamrocket.fanlinc.models.UserFandomDetails;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddUserRequest;
@@ -12,6 +14,7 @@ import com.teamrocket.fanlinc.responses.AddUserResponse;
 import com.teamrocket.fanlinc.responses.UserDetailsResponse;
 import com.teamrocket.fanlinc.responses.UserFandomsResponse;
 import com.teamrocket.fanlinc.responses.ValidateUserResponse;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,7 +119,7 @@ public class AccountServiceImpl implements AccountService {
    * Checks if given user exist, if so returns all the fandom names the user has joined
    *
    * @param username username of given user
-   * @return a {@link UserFandomsResponse} object containing the fandom names
+   * @return a {@link UserFandomsResponse} object containing list of fandom names, level and type
    * @throws UserNotFoundException if a user with the given username does not exist
    */
   @Transactional(readOnly = true)
@@ -127,7 +130,11 @@ public class AccountServiceImpl implements AccountService {
     if (requestedUser == null) {
       throw new UserNotFoundException("User with username " + username + " not found");
     }
-    List<String> fandomNames = joinedRepository.findJoinedByUsername(username);
-    return new UserFandomsResponse(fandomNames);
+    List<Joined> fandomRelations = joinedRepository.findJoinedByUsername(username);
+    List<UserFandomDetails> userFandoms =  new ArrayList<UserFandomDetails>();
+    for (Joined fandom:fandomRelations){
+      userFandoms.add(new UserFandomDetails(fandom.getFandom().getFandomName(), fandom.getLevel(), fandom.getType()));
+    }
+    return new UserFandomsResponse(userFandoms);
   }
 }
