@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { useParams } from 'react-router-dom';
 import Feed from './Feed';
 
 export default function ProfileSideBar(props) {
@@ -13,9 +14,10 @@ export default function ProfileSideBar(props) {
   const [fName, setfName] = useState('');
   const [lName, setlName] = useState('');
   const { loggedInUser } = props;
+  const { username } = useParams();
 
   // Need to get pic, location, and bio. Preferably first and last name too
-  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${loggedInUser}`;
+  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${username}`;
 
   useEffect(() => {
     fetch(getUserDetailsAPI, {
@@ -67,7 +69,7 @@ export default function ProfileSideBar(props) {
             />
           </div>
           <Typography variant="overline" component="h2" align="center">
-            {loggedInUser}
+            {username}
           </Typography>
           <Typography variant="h6" component="h3" align="center">
             {fName}
@@ -87,7 +89,7 @@ export default function ProfileSideBar(props) {
 
         {/* Main Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
-          <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user" />
+          <Feed filterParam={username} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
         {/* Feed End */}
       </Grid>
