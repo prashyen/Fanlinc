@@ -62,7 +62,7 @@ export default function ProfileSideBar(props) {
           <div
             align="center"
             style={{
-              width: '15vw', height: '30vh', paddingLeft: '20px', paddingTop: '10px', paddingBottom: '10px',
+              width: '15vw', height: '30vh', paddingLeft: '10%', paddingTop: '7%', paddingBottom: '5%',
             }}
           >
             {isURL(picture) ? (
