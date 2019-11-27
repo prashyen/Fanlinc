@@ -55,31 +55,41 @@ export default function ProfileSideBar(props) {
 
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto'}}>
+        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
           <div align="center">
-               <img src={""+ picture +""} border="0" width="150px" height="150px"
-               style={{borderRadius: '50%', paddingTop: "10px"}} alt="User profile"/>
+            <img
+              src={picture}
+              border="0"
+              width="150px"
+              height="150px"
+              style={{ borderRadius: '50%', paddingTop: '10px' }}
+              alt="User profile"
+            />
           </div>
           <Typography variant="overline" component="h2" align="center">
-              {loggedInUser}
+            {loggedInUser}
           </Typography>
           <Typography variant="h6" component="h3" align="center">
-              {fName} {lName}
+            {fName}
+            {' '}
+            {lName}
           </Typography>
-          <Typography variant="caption" component="span" align="center" style={{display: "inline-block"}}>
-              {location}
+          <Typography variant="caption" component="span" align="center" style={{ display: 'inline-block' }}>
+            {location}
           </Typography>
           <Typography variant="body1" component="p" align="center" fontStyle="italic">
-              Bio: {bio}
+              Bio:
+            {' '}
+            {bio}
           </Typography>
         </Grid>
         {/* Sidebar End */}
 
-        {/* Main Feed Start*/}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
-            <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user"/>
+        {/* Main Feed Start */}
+        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
+          <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
-        {/* Feed End*/}
+        {/* Feed End */}
       </Grid>
     </>
   );
