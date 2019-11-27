@@ -30,8 +30,15 @@ export const theme = createMuiTheme({
 });
 
 export const useStylesLogin = makeStyles((theme) => ({
-  root: {
+  register: {
     height: '150vh',
+    background: `url(${Image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+
+  },
+  login: {
+    height: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',

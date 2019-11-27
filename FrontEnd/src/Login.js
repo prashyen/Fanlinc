@@ -73,7 +73,7 @@ export default function Login(props) {
       <Grid
         container
         component="main"
-        className={classes.root}
+        className={classes.login}
         direction="column"
         alignItems="center"
         justify="center"

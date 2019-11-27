@@ -104,7 +104,7 @@ export default function Register(props) {
       <Grid
         container
         component="main"
-        className={classes.root}
+        className={classes.register}
         direction="column"
         alignItems="center"
         justify="center"
