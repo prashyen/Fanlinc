@@ -60,7 +60,7 @@ export default function ProfileSideBar(props) {
         <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
           <div align="center">
             <img
-              src={`${picture}`}
+              src={picture}
               border="0"
               width="150px"
               height="150px"
@@ -88,7 +88,7 @@ export default function ProfileSideBar(props) {
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
           <Feed filterParam={username} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
         {/* Feed End */}
