@@ -116,10 +116,11 @@ public class AccountServiceImpl implements AccountService {
   }
 
   /**
-   * Checks if given user exist, if so returns all the fandom names the user has joined
+   * Checks if given user exist, if so returns all the fandom names, levels and types for the
+   * fandoms the user has joined the user has joined
    *
    * @param username username of given user
-   * @return a {@link UserFandomsResponse} object containing list of fandom names, level and type
+   * @return a {@link UserFandomsResponse} object containing list of fandom names, levels and types
    * @throws UserNotFoundException if a user with the given username does not exist
    */
   @Transactional(readOnly = true)
@@ -131,9 +132,10 @@ public class AccountServiceImpl implements AccountService {
       throw new UserNotFoundException("User with username " + username + " not found");
     }
     List<Joined> fandomRelations = joinedRepository.findJoinedByUsername(username);
-    List<UserFandomDetails> userFandoms =  new ArrayList<UserFandomDetails>();
-    for (Joined fandom:fandomRelations){
-      userFandoms.add(new UserFandomDetails(fandom.getFandom().getFandomName(), fandom.getLevel(), fandom.getType()));
+    List<UserFandomDetails> userFandoms = new ArrayList<UserFandomDetails>();
+    for (Joined fandom : fandomRelations) {
+      userFandoms.add(new UserFandomDetails(fandom.getFandom().getFandomName(), fandom.getLevel(),
+          fandom.getType()));
     }
     return new UserFandomsResponse(userFandoms);
   }

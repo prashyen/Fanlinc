@@ -9,7 +9,10 @@ import static org.mockito.Mockito.when;
 import com.teamrocket.fanlinc.builders.UserBuilder;
 import com.teamrocket.fanlinc.exceptions.UserNotFoundException;
 import com.teamrocket.fanlinc.exceptions.UsernameNotUniqueException;
+import com.teamrocket.fanlinc.models.Fandom;
+import com.teamrocket.fanlinc.models.Joined;
 import com.teamrocket.fanlinc.models.User;
+import com.teamrocket.fanlinc.models.UserFandomDetails;
 import com.teamrocket.fanlinc.repositories.JoinedRepository;
 import com.teamrocket.fanlinc.repositories.UserRepository;
 import com.teamrocket.fanlinc.requests.AddUserRequest;
@@ -40,6 +43,9 @@ public class AccountServiceImplTests {
   private static final String WRONG_PASSWORD = "wrong";
   private static final String EXAMPLE_FANDOM = "example";
   private static final String EXAMPLE_FANDOM_2 = "example2";
+  private static final String EXAMPLE_LEVEL = "1";
+  private static final String EXAMPLE_LEVEL_2 = "2";
+  private static final String EXAMPLE_TYPE = "General";
 
   @InjectMocks
   AccountServiceImpl accountService;
@@ -51,7 +57,7 @@ public class AccountServiceImplTests {
   JoinedRepository joinedRepository;
 
   private User user;
-  private List<String> fandoms;
+  private List<Joined> fandomDetails;
 
   @Before
   public void init() {
@@ -67,9 +73,6 @@ public class AccountServiceImplTests {
         .profilePhotoUrl(EXAMPLE_PROFILE_PHOTO_URL)
         .build();
     when(userRepository.findByUsername(EXAMPLE_USERNAME)).thenReturn(user);
-    fandoms = new ArrayList<>();
-    fandoms.add(EXAMPLE_FANDOM);
-    fandoms.add(EXAMPLE_FANDOM_2);
   }
 
   @Test
@@ -172,11 +175,38 @@ public class AccountServiceImplTests {
 
   @Test
   public void getUserFandoms_UserExists_CorrectResponse() {
-    when(joinedRepository.findJoinedByUsername(EXAMPLE_USERNAME)).thenReturn(fandoms);
+    fandomDetails = new ArrayList<>();
+    Joined exampleRelation = new Joined();
+    Fandom exampleFandomModel = new Fandom();
+    exampleFandomModel.setFandomName(EXAMPLE_FANDOM);
+    exampleRelation.setFandom(exampleFandomModel);
+    exampleRelation.setLevel(EXAMPLE_LEVEL);
+    exampleRelation.setType(EXAMPLE_TYPE);
+    fandomDetails.add(exampleRelation);
 
+    Joined exampleRelation2 = new Joined();
+    Fandom exampleFandomModel2 = new Fandom();
+    exampleFandomModel2.setFandomName(EXAMPLE_FANDOM_2);
+    exampleRelation2.setFandom(exampleFandomModel2);
+    exampleRelation2.setLevel(EXAMPLE_LEVEL_2);
+    exampleRelation2.setType(EXAMPLE_TYPE);
+    fandomDetails.add(exampleRelation2);
+    when(joinedRepository.findJoinedByUsername(EXAMPLE_USERNAME)).thenReturn(fandomDetails);
     UserFandomsResponse response = accountService.getUserFandoms(EXAMPLE_USERNAME);
 
-    assertThat(response.getFandomNames()).isEqualTo(fandoms);
+    List<UserFandomDetails> fandomDetailsResponse = new ArrayList<>();
+    fandomDetailsResponse.add(new UserFandomDetails(EXAMPLE_FANDOM, EXAMPLE_LEVEL, EXAMPLE_TYPE));
+    fandomDetailsResponse
+        .add(new UserFandomDetails(EXAMPLE_FANDOM_2, EXAMPLE_LEVEL_2, EXAMPLE_TYPE));
+    List<UserFandomDetails> actualResponse = response.getUserFandoms();
+    assertThat(actualResponse.size()).isEqualTo(2);
+    for (int i = 0; i < 2; i++) {
+      assertThat(actualResponse.get(i).getFandomName())
+          .isEqualTo(fandomDetailsResponse.get(i).getFandomName());
+      assertThat(actualResponse.get(i).getLevel())
+          .isEqualTo(fandomDetailsResponse.get(i).getLevel());
+      assertThat(actualResponse.get(i).getType()).isEqualTo(fandomDetailsResponse.get(i).getType());
+    }
   }
 
 }
