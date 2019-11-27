@@ -78,7 +78,7 @@ export default function ProfileSideBar(props) {
                 style={{
                   width: '100%',
                   height: '100%',
-                  fontSize: '800%',
+                  fontSize: '20vmin',
                 }}
                 alt="User profile"
               >
