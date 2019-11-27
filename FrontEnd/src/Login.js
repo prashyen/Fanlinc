@@ -70,18 +70,23 @@ export default function Login(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" className={classes.root}>
+      <Grid
+        container
+        component="main"
+        className={classes.root}
+        direction="column"
+        alignItems="center"
+        justify="center"
+      >
         <CssBaseline />
-        <Grid item />
         <Grid
           item
-          md={4}
+          xs={4}
           style={{ textAlign: 'center' }}
           component={Paper}
           elevation={0}
           square
         >
-
           <div className={classes.paper}>
             <img src={Fanlinclogo} height="70" width="70" alt="Fanlinc Logo" />
             <Typography component="h1" variant="h5">
