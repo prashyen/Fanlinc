@@ -25,7 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
-import { useStylesPosts } from './materialUIStyle';
+import { Copyright, Footer, useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
@@ -223,6 +223,9 @@ export default function Feed(props) {
           ))}
         </Grid>
       </Container>
+      <Box m={10} />
+      {/* Footer */}
+      <Footer/>
     </>
   );
 }
