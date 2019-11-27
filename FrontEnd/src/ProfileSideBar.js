@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { useParams } from 'react-router-dom';
 import Feed from './Feed';
 
 export default function ProfileSideBar(props) {
@@ -13,9 +14,10 @@ export default function ProfileSideBar(props) {
   const [fName, setfName] = useState('');
   const [lName, setlName] = useState('');
   const { loggedInUser } = props;
+  const { username } = useParams();
 
   // Need to get pic, location, and bio. Preferably first and last name too
-  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${loggedInUser}`;
+  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${username}`;
 
   useEffect(() => {
     fetch(getUserDetailsAPI, {
@@ -55,31 +57,41 @@ export default function ProfileSideBar(props) {
 
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto'}}>
+        <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
           <div align="center">
-               <img src={""+ picture +""} border="0" width="150px" height="150px"
-               style={{borderRadius: '50%', paddingTop: "10px"}} alt="User profile"/>
+            <img
+              src={`${picture}`}
+              border="0"
+              width="150px"
+              height="150px"
+              style={{ borderRadius: '50%', paddingTop: '10px' }}
+              alt="User profile"
+            />
           </div>
           <Typography variant="overline" component="h2" align="center">
-              {loggedInUser}
+            {username}
           </Typography>
           <Typography variant="h6" component="h3" align="center">
-              {fName} {lName}
+            {fName}
+            {' '}
+            {lName}
           </Typography>
-          <Typography variant="caption" component="span" align="center" style={{display: "inline-block"}}>
-              {location}
+          <Typography variant="caption" component="span" align="center" style={{ display: 'inline-block' }}>
+            {location}
           </Typography>
           <Typography variant="body1" component="p" align="center" fontStyle="italic">
-              Bio: {bio}
+              Bio:
+            {' '}
+            {bio}
           </Typography>
         </Grid>
         {/* Sidebar End */}
 
-        {/* Main Feed Start*/}
+        {/* Main Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
-            <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user"/>
+          <Feed filterParam={username} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
-        {/* Feed End*/}
+        {/* Feed End */}
       </Grid>
     </>
   );
