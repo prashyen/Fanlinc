@@ -46,6 +46,7 @@ public class AccountServiceImplTests {
   private static final String EXAMPLE_LEVEL = "1";
   private static final String EXAMPLE_LEVEL_2 = "2";
   private static final String EXAMPLE_TYPE = "General";
+  private static final String EXAMPLE_TYPE_2= "Cosplayer";
 
   @InjectMocks
   AccountServiceImpl accountService;
@@ -189,15 +190,16 @@ public class AccountServiceImplTests {
     exampleFandomModel2.setFandomName(EXAMPLE_FANDOM_2);
     exampleRelation2.setFandom(exampleFandomModel2);
     exampleRelation2.setLevel(EXAMPLE_LEVEL_2);
-    exampleRelation2.setType(EXAMPLE_TYPE);
+    exampleRelation2.setType(EXAMPLE_TYPE_2);
     fandomDetails.add(exampleRelation2);
+    
     when(joinedRepository.findJoinedByUsername(EXAMPLE_USERNAME)).thenReturn(fandomDetails);
     UserFandomsResponse response = accountService.getUserFandoms(EXAMPLE_USERNAME);
 
     List<UserFandomDetails> fandomDetailsResponse = new ArrayList<>();
     fandomDetailsResponse.add(new UserFandomDetails(EXAMPLE_FANDOM, EXAMPLE_LEVEL, EXAMPLE_TYPE));
     fandomDetailsResponse
-        .add(new UserFandomDetails(EXAMPLE_FANDOM_2, EXAMPLE_LEVEL_2, EXAMPLE_TYPE));
+        .add(new UserFandomDetails(EXAMPLE_FANDOM_2, EXAMPLE_LEVEL_2, EXAMPLE_TYPE_2));
     List<UserFandomDetails> actualResponse = response.getUserFandoms();
     assertThat(actualResponse.size()).isEqualTo(2);
     for (int i = 0; i < 2; i++) {
