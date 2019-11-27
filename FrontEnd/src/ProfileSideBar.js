@@ -92,6 +92,7 @@ export default function ProfileSideBar(props) {
           </Typography>
           <Typography variant="h6" component="h3" align="center">
             {fName}
+            {' '}
             {lName}
           </Typography>
           <Typography variant="caption" component="span" align="center" style={{ display: 'inline-block' }}>
@@ -106,7 +107,7 @@ export default function ProfileSideBar(props) {
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
-        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minheight: '80vw' }}>
+        <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
           <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
         {/* Feed End */}
