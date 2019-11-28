@@ -29,7 +29,6 @@ const initialState = {
   password_confirmation: '',
   bio: '',
   location: '',
-  profilePhotoUrl: '',
 };
 
 const addUserURL = 'http://localhost:8080/account/addUser';
@@ -38,10 +37,15 @@ export default function Register(props) {
   // use hook to store the states
   const { values, handleChange, handleSubmit } = useForm(submit, initialState);
   const [dateOfBirth, setSelectedDate] = useState(new Date('2019-09-31'));
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
   const { setCookie } = props;
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+  };
+
+  const handleUrlChange = (event) => {
+    setProfilePhotoUrl(event.target.value);
   };
 
   /**
@@ -57,7 +61,6 @@ export default function Register(props) {
       username,
       bio,
       location,
-      profilePhotoUrl,
     } = values;
 
     if (password !== passwordConfirmation) {
@@ -213,6 +216,17 @@ export default function Register(props) {
                 multiline
                 value={values.location}
                 onChange={handleChange}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Profile PhotoURL"
+                name="profilePhoto"
+                type="text"
+                placeholder="Profile Photo URL"
+                value={profilePhotoUrl}
+                onChange={handleUrlChange}
               />
               <TextField
                 variant="outlined"
