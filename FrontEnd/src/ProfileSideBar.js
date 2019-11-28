@@ -84,7 +84,7 @@ export default function ProfileSideBar(props) {
                 }}
                 alt="User profile"
               >
-                {fName.charAt(0)}
+                {username.charAt(0)}
                 {' '}
               </Avatar>
             )}
