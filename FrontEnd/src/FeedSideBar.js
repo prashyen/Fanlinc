@@ -96,7 +96,7 @@ export default function SideBar(props) {
       }
     }).then((data) => {
       setUpdateTrigger(false);
-      setFandoms(data.fandomNames);
+      setFandoms(data.userFandoms);
     }).catch((err) => {
       alert(err);
     });
@@ -132,17 +132,35 @@ export default function SideBar(props) {
             aria-label="Vertical tabs"
             className={classes.tabs}
           >
-            { fandoms.map((fandomName) => <Tab key={fandoms.indexOf(fandomName)} label={fandomName} {...a11yProps(fandoms.indexOf(fandomName))} />) }
+            {
+              fandoms.map((fandom) => (
+                <Tab
+                  key={fandom.fandomName}
+                  label={fandom.fandomName}
+                  {...a11yProps(fandoms.indexOf(fandom))}
+                />
+              ))
+            }
           </Tabs>
         </Grid>
         {/* Sidebar End */}
 
         {/* Main Feed Start */}
         <Grid item sm={9} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
-          {fandoms.map((fandomName) => (
-            <TabPanel key={fandomName} value={value} index={fandoms.indexOf(fandomName)}>
-              <FandomHeader fandom={fandomName} loggedInUser={loggedInUser} handleTrigger={setUpdateTrigger}/>
-              <Feed filterParam={fandomName} loggedInUser={loggedInUser} postsType="feed" />
+          {fandoms.map((fandom) => (
+            <TabPanel key={fandom.fandomName} value={value} index={fandoms.indexOf(fandom)}>
+              <FandomHeader
+                fandom={fandom.fandomName}
+                loggedInUser={loggedInUser}
+                handleTrigger={setUpdateTrigger}
+              />
+              <Feed
+                filterParam={fandom.fandomName}
+                defaultLevel={fandom.level}
+                defaultType={fandom.type}
+                loggedInUser={loggedInUser}
+                postsType="feed"
+              />
             </TabPanel>
           ))}
         </Grid>

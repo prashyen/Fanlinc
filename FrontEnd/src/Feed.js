@@ -25,6 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
+import isURL from 'is-url';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
 import EditModal from './EditModal';
@@ -41,11 +42,13 @@ export default function Feed(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const ellipseOpen = Boolean(anchorEl);
   const [currPost, setCurrPost] = useState(null);
-  const { postsType, filterParam, loggedInUser } = props;
+  const {
+    postsType, filterParam, loggedInUser, defaultLevel, defaultType,
+  } = props;
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const classes = useStylesPosts();
-  const [levelFilter, setLevelFilter] = useState('noFilter');
-  const [typeFilter, setTypeFilter] = useState('noFilter');
+  const [levelFilter, setLevelFilter] = useState(defaultLevel);
+  const [typeFilter, setTypeFilter] = useState(defaultType);
 
   useEffect(() => {
     let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=${levelFilter}&type=${typeFilter}`;
@@ -92,9 +95,6 @@ export default function Feed(props) {
     setCurrPost(null);
     setUpdateTrigger(true);
   };
-  const Bold = ({ children }) => <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>{children}</Box>;
-
-  const isURL = require('is-url');
 
   // Card component for the posts
   return (
@@ -103,10 +103,10 @@ export default function Feed(props) {
         {postsType === 'feed'
           ? (
             <>
-            <div style={{ paddingRight: 12 }}>
-              <Fab color="primary" size="small" onClick={postModal.handleOpen}>
-                <AddIcon />
-              </Fab>
+              <div style={{ paddingRight: 12 }}>
+                <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+                  <AddIcon />
+                </Fab>
               </div>
               <PostModal
                 open={postModal.open}
@@ -164,13 +164,13 @@ export default function Feed(props) {
                     <Typography component="div" variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>
                       { postEntry.post.postedBy }
-                      <Bold>Fandom: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Fandom: </Box>
                       {' '}
                       { postEntry.post.fandomName }
-                      <Bold>Level: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Level: </Box>
                       {' '}
                       { postEntry.post.level }
-                      <Bold>Type: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Type: </Box>
                       {' '}
                       { postEntry.post.type }
                     </Typography>
@@ -227,8 +227,15 @@ export default function Feed(props) {
   );
 }
 
+Feed.defaultProps = {
+  defaultLevel: 'noFilter',
+  defaultType: 'noFilter',
+};
+
 Feed.propTypes = {
   postsType: PropTypes.string.isRequired,
   filterParam: PropTypes.string.isRequired,
   loggedInUser: PropTypes.string.isRequired,
+  defaultLevel: PropTypes.string,
+  defaultType: PropTypes.string,
 };
