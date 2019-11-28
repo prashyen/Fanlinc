@@ -221,7 +221,7 @@ export default function Register(props) {
                 variant="outlined"
                 margin="normal"
                 fullWidth
-                label="Profile PhotoURL"
+                label="Profile Photo URL"
                 name="profilePhoto"
                 type="text"
                 placeholder="Profile Photo URL"
