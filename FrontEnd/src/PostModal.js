@@ -66,6 +66,7 @@ export default function PostModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
+          handleTrigger(true);
           return Promise.resolve();
         case 404:
           throw new Error('Username and/or fandom name not found');

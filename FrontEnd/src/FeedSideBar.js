@@ -132,7 +132,7 @@ export default function SideBar(props) {
             aria-label="Vertical tabs"
             className={classes.tabs}
             style={{width: '100%', alignItems: 'center'}}
-            centered='true'
+            centered
           >
             {
               fandoms.map((fandom) => (

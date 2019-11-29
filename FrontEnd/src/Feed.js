@@ -94,7 +94,7 @@ export default function Feed(props) {
   const handleEllipseClose = () => {
     setAnchorEl(null);
     setCurrPost(null);
-    setUpdateTrigger(true);
+    // setUpdateTrigger(true);
   };
 
   // Card component for the posts
@@ -131,12 +131,14 @@ export default function Feed(props) {
             open={editModal.open}
             handleClose={editModal.handleClose}
             menuHandleClose={handleEllipseClose}
+            setUpdateTrigger={setUpdateTrigger}
           />
           <DeleteModal
             post={postsAndUsers[currPost].post}
             open={deleteModal.open}
             handleClose={deleteModal.handleClose}
             menuHandleClose={handleEllipseClose}
+            setUpdateTrigger={setUpdateTrigger}
           />
         </div>
       ) : null}

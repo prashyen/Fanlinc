@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 
 export default function DeleteModal(props) {
   const {
-    open, handleClose, post, menuHandleClose,
+    open, handleClose, post, menuHandleClose, setUpdateTrigger,
   } = props;
 
   const { postedBy, postedTime } = post;
@@ -38,6 +38,7 @@ export default function DeleteModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
+          setUpdateTrigger(true);
           return Promise.resolve();
         case 404:
           throw new Error('Post not found');
@@ -93,4 +94,5 @@ DeleteModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   menuHandleClose: PropTypes.func.isRequired,
+  setUpdateTrigger: PropTypes.func.isRequired,
 };

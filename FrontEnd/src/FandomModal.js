@@ -56,6 +56,7 @@ export default function FandomModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
+          handleTrigger(true);
           return response.json();
         case 404:
           throw new Error('Fandom not found.');
@@ -78,12 +79,12 @@ export default function FandomModal(props) {
     values.level = '';
     values.type = '';
     handleChange(event);
-    handleTrigger(true);
   };
 
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
+    // handleTrigger(true);
   };
 
   // On clicking join
@@ -122,7 +123,7 @@ export default function FandomModal(props) {
                     </InputLabel>
                     <Select
                       labelWidth={110}
-                      autoWidth="true"
+                      autoWidth
                       onChange={handleChange}
                       value={values.fandomName}
                       required

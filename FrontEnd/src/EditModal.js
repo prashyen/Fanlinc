@@ -21,7 +21,7 @@ const editPostURL = 'http://localhost:8080/post/editPost';
 
 export default function EditModal(props) {
   const {
-    post, open, handleClose, menuHandleClose,
+    post, open, handleClose, menuHandleClose, setUpdateTrigger,
   } = props;
   const {
     title, postedBy, postedTime, content, type, level, fandomName, postPhotoUrl,
@@ -69,6 +69,7 @@ export default function EditModal(props) {
     }).then((response) => {
       switch (response.status) {
         case 200:
+          setUpdateTrigger(true);
           return Promise.resolve();
         case 404:
           throw new Error('Username and/or fandom name not found');
@@ -306,4 +307,5 @@ EditModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   menuHandleClose: PropTypes.func.isRequired,
+  setUpdateTrigger: PropTypes.func.isRequired,
 };
