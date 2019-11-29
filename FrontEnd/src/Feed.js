@@ -25,6 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 import isURL from 'is-url';
 import { useStylesPosts } from './materialUIStyle';
 import useModal from './useModal';
@@ -147,14 +148,19 @@ export default function Feed(props) {
               {/* creating card for each of the post */}
               <Card style={{ display: 'flex', width: '65vw' }}>
                 <div style={{ paddingTop: 25, paddingLeft: 20 }}>
-                  {isURL(postEntry.user.profilePhotoUrl) ? (
-                    <Avatar src={postEntry.user.profilePhotoUrl} />
-                  ) : (
-                    <Avatar>
-                      {postEntry.post.postedBy.charAt(0)}
-                      {' '}
-                    </Avatar>
-                  )}
+                  <Link
+                    underline="none"
+                    href={`/home/profile/${postEntry.post.postedBy}`}
+                  >
+                    {isURL(postEntry.user.profilePhotoUrl) ? (
+                      <Avatar src={postEntry.user.profilePhotoUrl} />
+                    ) : (
+                      <Avatar>
+                        {postEntry.post.postedBy.charAt(0)}
+                        {' '}
+                      </Avatar>
+                    )}
+                  </Link>
                 </div>
                 <div className={classes.cardDetails}>
                   <CardContent flex="1 0 auto">
