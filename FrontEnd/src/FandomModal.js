@@ -115,8 +115,6 @@ export default function FandomModal(props) {
             </div>
             <div className="modal-body">
               <Grid container
-                     alignContent="center"
-                     alignItems="center"
                      spacing={1}>
                 <Grid item xs={4}>
                   <FormControl fullWidth="true" variant="outlined">
