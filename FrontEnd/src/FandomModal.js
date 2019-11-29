@@ -105,8 +105,8 @@ export default function FandomModal(props) {
     >
       <Fade in={open}>
         <Grid
-          item
-          style={{ textAlign: 'center' }}
+          container
+          style={{ textAlign: 'center', flexDirection: 'row', justifyContent: 'center' }}
           elevation={0}
         >
           <div className={classes.paper}>
@@ -114,7 +114,10 @@ export default function FandomModal(props) {
               <h1>Join Fandom</h1>
             </div>
             <div className="modal-body">
-              <Grid container spacing={1}>
+              <Grid container
+                     alignContent="center"
+                     alignItems="center"
+                     spacing={1}>
                 <Grid item xs={4}>
                   <FormControl fullWidth="true" variant="outlined">
                     <InputLabel>
