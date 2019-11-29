@@ -8,6 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PropTypes from 'prop-types';
+import Link from '@material-ui/core/Link';
 import { headerStyle } from './headerStyle';
 import Fanlinclogo from './img/fanlinc_logo.png';
 
@@ -33,12 +34,14 @@ export default function Header(props) {
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <div>
-          <img
-            src={Fanlinclogo}
-            height="70"
-            width="70"
-            alt="Fanlinc logo"
-          />
+          <Link href="/home/feed">
+            <img
+              src={Fanlinclogo}
+              height="70"
+              width="70"
+              alt="Fanlinc logo"
+            />
+          </Link>
         </div>
         <Typography variant="h6" className={classes.title}>
             Fanlinc
@@ -66,6 +69,24 @@ export default function Header(props) {
             getContentAnchorEl={null}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
+            <Link
+              color="textPrimary"
+              underline="none"
+              href={`/home/profile/${loggedInUser}`}
+            >
+              <MenuItem>
+                Profile
+              </MenuItem>
+            </Link>
+            <Link
+              color="textPrimary"
+              underline="none"
+              href="/home/feed"
+            >
+              <MenuItem>
+                Feed
+              </MenuItem>
+            </Link>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>

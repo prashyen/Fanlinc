@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles , createMuiTheme } from '@material-ui/core/styles';
 import Image from './img/loginBackground.jpg';
 import orange from '@material-ui/core/colors/orange';
-
+import Container from '@material-ui/core/Container';
 
 export function Copyright() {
   return (
@@ -20,6 +20,22 @@ export function Copyright() {
   );
 }
 
+export function Footer() {
+  return (
+    <footer>
+      <Container maxWidth="lg">
+        <Typography variant="h6" align="center" gutterBottom>
+          Fanlinc
+        </Typography>
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+          Connecting Fans Together
+        </Typography>
+        <Copyright />
+      </Container>
+    </footer>
+  )
+}
+
 export const theme = createMuiTheme({
   palette: {
     primary: orange,
@@ -30,7 +46,14 @@ export const theme = createMuiTheme({
 });
 
 export const useStylesLogin = makeStyles((theme) => ({
-  root: {
+  register: {
+    height: '135vh',
+    background: `url(${Image})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+
+  },
+  login: {
     height: '100vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
@@ -107,6 +130,7 @@ export const useStylesModal = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+
   button: {
     color: '#ffffff',
     backgroundColor: '#1D1E3D',

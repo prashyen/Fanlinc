@@ -28,7 +28,9 @@ const initialState = {
 const addPostURL = 'http://localhost:8080/post/addPost';
 
 export default function PostModal(props) {
-  const { open, handleClose, loggedInUser, handleTrigger } = props;
+  const {
+    open, handleClose, loggedInUser, handleTrigger,
+  } = props;
   const { values, handleChange } = useForm(null, initialState);
   const [fandomName, setFandomName] = useState('');
   const postedBy = loggedInUser;
@@ -83,7 +85,7 @@ export default function PostModal(props) {
    * Handles updating the Fandom Dropdown using a get request from the url:
    * http://localhost:8080/account/userFandoms
    */
-  useEffect(() =>  {
+  useEffect(() => {
     fetch(getUserFandoms, {
       method: 'GET',
       mode: 'cors',
@@ -216,10 +218,10 @@ export default function PostModal(props) {
                         required
                         labelWidth={60}
                       >
-                        {fandoms.data.fandomNames.map((fandomName) => (
-                          <MenuItem key={fandomName} value={fandomName}>
+                        {fandoms.data.userFandoms.map((fandom) => (
+                          <MenuItem key={fandom.fandomName} value={fandom.fandomName}>
                             {' '}
-                            {fandomName}
+                            {fandom.fandomName}
                             {' '}
                           </MenuItem>
                         ))}
