@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles , createMuiTheme } from '@material-ui/core/styles';
 import Image from './img/loginBackground.jpg';
 import orange from '@material-ui/core/colors/orange';
-
+import Container from '@material-ui/core/Container';
 
 export function Copyright() {
   return (
@@ -18,6 +18,22 @@ export function Copyright() {
       .
     </Typography>
   );
+}
+
+export function Footer() {
+  return (
+    <footer>
+      <Container maxWidth="lg">
+        <Typography variant="h6" align="center" gutterBottom>
+          Fanlinc
+        </Typography>
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+          Connecting Fans Together
+        </Typography>
+        <Copyright />
+      </Container>
+    </footer>
+  )
 }
 
 export const theme = createMuiTheme({
