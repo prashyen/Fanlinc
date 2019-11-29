@@ -31,7 +31,7 @@ export const theme = createMuiTheme({
 
 export const useStylesLogin = makeStyles((theme) => ({
   register: {
-    height: '150vh',
+    height: '135vh',
     background: `url(${Image})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
