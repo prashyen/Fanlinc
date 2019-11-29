@@ -131,7 +131,7 @@ export default function SideBar(props) {
             onChange={handleChange}
             aria-label="Vertical tabs"
             className={classes.tabs}
-            style={{width: '95%', alignItems: 'center'}}
+            style={{width: '100%', alignItems: 'center'}}
             centered='true'
           >
             {
