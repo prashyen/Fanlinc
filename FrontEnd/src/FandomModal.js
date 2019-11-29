@@ -104,17 +104,17 @@ export default function FandomModal(props) {
       }}
     >
       <Fade in={open}>
-        <Grid
-          item
-          style={{ textAlign: 'center' }}
-          elevation={0}
-        >
-          <div className={classes.paper}>
-            <div className="modal-header">
+        <div className={classes.paper}>
+            <Grid
+              container
+              style={{ textAlign: 'center', flexDirection: 'row', justifyContent: 'center' }}
+              elevation={0}
+            >
+
+            <Grid item className="modal-header">
               <h1>Join Fandom</h1>
-            </div>
-            <div className="modal-body">
-              <Grid container spacing={1}>
+            </Grid>
+            <Grid item container className="modal-body" spacing={1}>
                 <Grid item xs={4}>
                   <FormControl fullWidth="true" variant="outlined">
                     <InputLabel>
@@ -185,12 +185,9 @@ export default function FandomModal(props) {
                   </FormControl>
                 </Grid>
                 {/* End of Type Select Grid Item */}
-
-              </Grid>
+            </Grid>
               {/* End of Grid Container */}
-
-            </div>
-            <div className="modal-footer">
+            <Grid className="modal-footer">
               <Button
                 variant="contained"
                 onClick={handleResetClose}
@@ -206,9 +203,9 @@ export default function FandomModal(props) {
               >
                 Join
               </Button>
-            </div>
-          </div>
+            </Grid>
         </Grid>
+        </div>
       </Fade>
     </Modal>
   );

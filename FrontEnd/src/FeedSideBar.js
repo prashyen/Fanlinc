@@ -111,8 +111,8 @@ export default function SideBar(props) {
       <Grid container direction="row">
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
-        <Grid item sm={3} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
-          <div className="joinFandomButton">
+        <Grid item sm={3} container direction="column" alignItems='center' style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
+          <div className="joinFandomButton" style={{width: '100%'}}>
             <Fab color="primary" variant="extended" size="small" aria-label="add" onClick={handleOpen}>
               <AddIcon className={classes.extendedIcon} />
                 Join a New Fandom
@@ -126,11 +126,13 @@ export default function SideBar(props) {
           </div>
           <Tabs
             orientation="vertical"
-            variant="scrollable"
+            variant="fullWidth"
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs"
             className={classes.tabs}
+            style={{width: '100%', alignItems: 'center'}}
+            centered='true'
           >
             {
               fandoms.map((fandom) => (
@@ -138,6 +140,7 @@ export default function SideBar(props) {
                   key={fandom.fandomName}
                   label={fandom.fandomName}
                   {...a11yProps(fandoms.indexOf(fandom))}
+                  style={{width: '100%'}}
                 />
               ))
             }
