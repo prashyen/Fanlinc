@@ -126,12 +126,13 @@ export default function SideBar(props) {
           </div>
           <Tabs
             orientation="vertical"
-            variant="scrollable"
+            variant="fullWidth"
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs"
             className={classes.tabs}
-            style={{width: '95%'}}
+            style={{width: '95%', alignItems: 'center'}}
+            centered='true'
           >
             {
               fandoms.map((fandom) => (
@@ -139,6 +140,7 @@ export default function SideBar(props) {
                   key={fandom.fandomName}
                   label={fandom.fandomName}
                   {...a11yProps(fandoms.indexOf(fandom))}
+                  style={{width: '100%'}}
                 />
               ))
             }
