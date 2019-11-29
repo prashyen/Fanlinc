@@ -25,7 +25,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
-import { Copyright, Footer, useStylesPosts } from './materialUIStyle';
+import { Footer, useStylesPosts } from './materialUIStyle';
 import Link from '@material-ui/core/Link';
 import isURL from 'is-url';
 import useModal from './useModal';
