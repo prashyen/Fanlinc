@@ -14,6 +14,6 @@ public interface JoinedRepository extends Neo4jRepository<Joined, Long> {
   Joined findJoinedByUsernameAndFandomName(
       @Param("username") String username, @Param("fandomName") String fandomName);
 
-  @Query("MATCH (a:User { username: {username} })-[:JOINED]->(fandom) RETURN fandom.fandomName")
-  List<String> findJoinedByUsername(@Param("username") String username);
+  @Query("MATCH (a:User { username: {username} })-[r:JOINED]->(fandom) RETURN r, fandom")
+  List<Joined> findJoinedByUsername(@Param("username") String username);
 }

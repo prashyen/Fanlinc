@@ -1,20 +1,22 @@
 package com.teamrocket.fanlinc.responses;
 
+import com.teamrocket.fanlinc.models.UserFandomDetails;
 import java.util.List;
 
 public class UserFandomsResponse {
 
-  private List<String> fandomNames;
+  private List<UserFandomDetails> userFandoms;
 
-  public UserFandomsResponse(List<String> fandomNames) {
-    this.fandomNames = fandomNames;
+  public UserFandomsResponse(
+      List<UserFandomDetails> userFandoms) {
+    this.userFandoms = userFandoms;
   }
 
-  public List<String> getFandomNames() {
-    return fandomNames;
+  public List<UserFandomDetails> getUserFandoms() {
+    return userFandoms;
   }
 
-  public void setFandomNames(List<String> fandomNames) {
-    this.fandomNames = fandomNames;
+  public void setUserFandoms(List<UserFandomDetails> userFandoms) {
+    this.userFandoms = userFandoms;
   }
 }

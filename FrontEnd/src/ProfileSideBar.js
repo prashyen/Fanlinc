@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import { useParams } from 'react-router-dom';
 import Feed from './Feed';
 
 export default function ProfileSideBar(props) {
@@ -13,9 +15,10 @@ export default function ProfileSideBar(props) {
   const [fName, setfName] = useState('');
   const [lName, setlName] = useState('');
   const { loggedInUser } = props;
+  const { username } = useParams();
 
   // Need to get pic, location, and bio. Preferably first and last name too
-  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${loggedInUser}`;
+  const getUserDetailsAPI = `http://localhost:8080/account/userDetails?username=${username}`;
 
   useEffect(() => {
     fetch(getUserDetailsAPI, {
@@ -46,6 +49,8 @@ export default function ProfileSideBar(props) {
       });
   }, [getUserDetailsAPI]);
 
+  const isURL = require('is-url');
+
   return (
     <>
       <CssBaseline />
@@ -56,18 +61,36 @@ export default function ProfileSideBar(props) {
         {/* Sidebar Start */}
         {/* Grid has 12 columns width - sidebar:feed = 3:9 */}
         <Grid item sm={2} container direction="column" style={{ backgroundColor: '#213972', color: 'white', height: 'auto' }}>
-          <div align="center">
-            <img
-              src={picture}
-              border="0"
-              width="150px"
-              height="150px"
-              style={{ borderRadius: '50%', paddingTop: '10px' }}
-              alt="User profile"
-            />
+          <div
+            align="center"
+            style={{
+              width: '15vw', height: '30vh', paddingLeft: '10%', paddingTop: '7%', paddingBottom: '5%',
+            }}
+          >
+            {isURL(picture) ? (
+              <img
+                src={picture}
+                width="100%"
+                height="100%"
+                style={{ borderRadius: '50%' }}
+                alt="User profile"
+              />
+            ) : (
+              <Avatar
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  fontSize: '20vmin',
+                }}
+                alt="User profile"
+              >
+                {username.charAt(0)}
+                {' '}
+              </Avatar>
+            )}
           </div>
           <Typography variant="overline" component="h2" align="center">
-            {loggedInUser}
+            {username}
           </Typography>
           <Typography variant="h6" component="h3" align="center">
             {fName}
@@ -87,7 +110,7 @@ export default function ProfileSideBar(props) {
 
         {/* Main Feed Start */}
         <Grid item sm={10} container direction="column" alignItems="center" alignContent="space-around" style={{ backgroundColor: 'white', minHeight: '100vh' }}>
-          <Feed filterParam={loggedInUser} loggedInUser={loggedInUser} postsType="user" />
+          <Feed filterParam={username} loggedInUser={loggedInUser} postsType="user" />
         </Grid>
         {/* Feed End */}
       </Grid>

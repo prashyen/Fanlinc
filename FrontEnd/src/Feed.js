@@ -26,6 +26,8 @@ import Fab from '@material-ui/core/Fab';
 import PropTypes from 'prop-types';
 import { IconButton } from '@material-ui/core';
 import { Copyright, Footer, useStylesPosts } from './materialUIStyle';
+import Link from '@material-ui/core/Link';
+import isURL from 'is-url';
 import useModal from './useModal';
 import EditModal from './EditModal';
 import PostModal from './PostModal';
@@ -92,9 +94,6 @@ export default function Feed(props) {
     setCurrPost(null);
     setUpdateTrigger(true);
   };
-  const Bold = ({ children }) => <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>{children}</Box>;
-
-  const isURL = require('is-url');
 
   // Card component for the posts
   return (
@@ -103,10 +102,10 @@ export default function Feed(props) {
         {postsType === 'feed'
           ? (
             <>
-            <div style={{ paddingRight: 12 }}>
-              <Fab color="primary" size="small" onClick={postModal.handleOpen}>
-                <AddIcon />
-              </Fab>
+              <div style={{ paddingRight: 12 }}>
+                <Fab color="primary" size="small" onClick={postModal.handleOpen}>
+                  <AddIcon />
+                </Fab>
               </div>
               <PostModal
                 open={postModal.open}
@@ -147,14 +146,19 @@ export default function Feed(props) {
               {/* creating card for each of the post */}
               <Card style={{ display: 'flex', width: '65vw' }}>
                 <div style={{ paddingTop: 25, paddingLeft: 20 }}>
-                  {isURL(postEntry.user.profilePhotoUrl) ? (
-                    <Avatar src={postEntry.user.profilePhotoUrl} />
-                  ) : (
-                    <Avatar>
-                      {postEntry.post.postedBy.charAt(0)}
-                      {' '}
-                    </Avatar>
-                  )}
+                  <Link
+                    underline="none"
+                    href={`/home/profile/${postEntry.post.postedBy}`}
+                  >
+                    {isURL(postEntry.user.profilePhotoUrl) ? (
+                      <Avatar src={postEntry.user.profilePhotoUrl} />
+                    ) : (
+                      <Avatar>
+                        {postEntry.post.postedBy.charAt(0)}
+                        {' '}
+                      </Avatar>
+                    )}
+                  </Link>
                 </div>
                 <div className={classes.cardDetails}>
                   <CardContent flex="1 0 auto">
@@ -164,13 +168,13 @@ export default function Feed(props) {
                     <Typography component="div" variant="body2" color="textSecondary">
                       <Box fontWeight="fontWeightBold" display="inline">Posted by: </Box>
                       { postEntry.post.postedBy }
-                      <Bold>Fandom: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Fandom: </Box>
                       {' '}
                       { postEntry.post.fandomName }
-                      <Bold>Level: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Level: </Box>
                       {' '}
                       { postEntry.post.level }
-                      <Bold>Type: </Bold>
+                      <Box fontWeight="fontWeightBold" display="inline" ml={1.5}>Type: </Box>
                       {' '}
                       { postEntry.post.type }
                     </Typography>
