@@ -223,10 +223,10 @@ export default function EditModal(props) {
                         required
                         labelWidth={60}
                       >
-                        {fandoms.data.fandomNames.map((fandomName) => (
-                          <MenuItem key={fandomName} value={fandomName}>
+                        {fandoms.data.userFandoms.map((fandom) => (
+                          <MenuItem key={fandom.fandomName} value={fandom.fandomName}>
                             {' '}
-                            {fandomName}
+                            {fandom.fandomName}
                             {' '}
                           </MenuItem>
                         ))}

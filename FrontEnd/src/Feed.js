@@ -43,11 +43,13 @@ export default function Feed(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const ellipseOpen = Boolean(anchorEl);
   const [currPost, setCurrPost] = useState(null);
-  const { postsType, filterParam, loggedInUser } = props;
+  const {
+    postsType, filterParam, loggedInUser, defaultLevel, defaultType,
+  } = props;
   const [updateTrigger, setUpdateTrigger] = useState(false);
   const classes = useStylesPosts();
-  const [levelFilter, setLevelFilter] = useState('noFilter');
-  const [typeFilter, setTypeFilter] = useState('noFilter');
+  const [levelFilter, setLevelFilter] = useState(defaultLevel);
+  const [typeFilter, setTypeFilter] = useState(defaultType);
 
   useEffect(() => {
     let filterPostsURL = `http://localhost:8080/post/filteredPosts?fandomName=${filterParam}&level=${levelFilter}&type=${typeFilter}`;
@@ -231,8 +233,15 @@ export default function Feed(props) {
   );
 }
 
+Feed.defaultProps = {
+  defaultLevel: 'noFilter',
+  defaultType: 'noFilter',
+};
+
 Feed.propTypes = {
   postsType: PropTypes.string.isRequired,
   filterParam: PropTypes.string.isRequired,
   loggedInUser: PropTypes.string.isRequired,
+  defaultLevel: PropTypes.string,
+  defaultType: PropTypes.string,
 };

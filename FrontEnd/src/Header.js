@@ -69,24 +69,24 @@ export default function Header(props) {
             getContentAnchorEl={null}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           >
-            <MenuItem>
-              <Link
-                color="textPrimary"
-                underline="none"
-                href={`/home/profile/${loggedInUser}`}
-              >
+            <Link
+              color="textPrimary"
+              underline="none"
+              href={`/home/profile/${loggedInUser}`}
+            >
+              <MenuItem>
                 Profile
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link
-                color="textPrimary"
-                underline="none"
-                href="/home/feed"
-              >
+              </MenuItem>
+            </Link>
+            <Link
+              color="textPrimary"
+              underline="none"
+              href="/home/feed"
+            >
+              <MenuItem>
                 Feed
-              </Link>
-            </MenuItem>
+              </MenuItem>
+            </Link>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
