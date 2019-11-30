@@ -84,7 +84,6 @@ export default function FandomModal(props) {
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
-    // handleTrigger(true);
   };
 
   // On clicking join
@@ -106,88 +105,88 @@ export default function FandomModal(props) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-            <Grid
-              container
-              style={{ textAlign: 'center', flexDirection: 'row', justifyContent: 'center' }}
-              elevation={0}
-            >
+          <Grid
+            container
+            style={{ textAlign: 'center', flexDirection: 'row', justifyContent: 'center' }}
+            elevation={0}
+          >
 
             <Grid item className="modal-header">
               <h1>Join Fandom</h1>
             </Grid>
             <Grid item container className="modal-body" spacing={1}>
-                <Grid item xs={4}>
-                  <FormControl fullWidth="true" variant="outlined">
-                    <InputLabel>
+              <Grid item xs={4}>
+                <FormControl fullWidth="true" variant="outlined">
+                  <InputLabel>
                             Fandom Name
-                    </InputLabel>
-                    <Select
-                      labelWidth={110}
-                      autoWidth
-                      onChange={handleChange}
-                      value={values.fandomName}
-                      required
-                      name="fandomName"
-                    >
-                      <MenuItem value="Naruto">Naruto</MenuItem>
-                      <MenuItem value="Avengers">Avengers</MenuItem>
-                      <MenuItem value="Game of Thrones">Game of Thrones</MenuItem>
-                      <MenuItem value="Fortnite">Fortnite</MenuItem>
-                      <MenuItem value="PubG">PubG</MenuItem>
-                      <MenuItem value="One Piece">One Piece</MenuItem>
-                      <MenuItem value="Harry Potter">Harry Potter</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {/* End of Fandom Name Select Grid Item */}
-
-                <Grid item xs={4}>
-                  <FormControl fullWidth="true" variant="outlined">
-                    <InputLabel>
-                      Level
-                    </InputLabel>
-                    <Select
-                      labelWidth={40}
-                      autoWidth="true"
-                      onChange={handleChange}
-                      value={values.level}
-                      required
-                      name="level"
-                    >
-                      <MenuItem value="1">1 - Limited</MenuItem>
-                      <MenuItem value="2">2 - Casual</MenuItem>
-                      <MenuItem value="3">3 - Very Involved</MenuItem>
-                      <MenuItem value="4">4 - Expert</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {/* End of Level Select Grid Item */}
-
-                <Grid item xs={4}>
-                  <FormControl
-                    variant="outlined"
-                    fullWidth="true"
+                  </InputLabel>
+                  <Select
+                    labelWidth={110}
+                    autoWidth
+                    onChange={handleChange}
+                    value={values.fandomName}
+                    required
+                    name="fandomName"
                   >
-                    <InputLabel>
+                    <MenuItem value="Naruto">Naruto</MenuItem>
+                    <MenuItem value="Avengers">Avengers</MenuItem>
+                    <MenuItem value="Game of Thrones">Game of Thrones</MenuItem>
+                    <MenuItem value="Fortnite">Fortnite</MenuItem>
+                    <MenuItem value="PubG">PubG</MenuItem>
+                    <MenuItem value="One Piece">One Piece</MenuItem>
+                    <MenuItem value="Harry Potter">Harry Potter</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              {/* End of Fandom Name Select Grid Item */}
+
+              <Grid item xs={4}>
+                <FormControl fullWidth="true" variant="outlined">
+                  <InputLabel>
+                      Level
+                  </InputLabel>
+                  <Select
+                    labelWidth={40}
+                    autoWidth="true"
+                    onChange={handleChange}
+                    value={values.level}
+                    required
+                    name="level"
+                  >
+                    <MenuItem value="1">1 - Limited</MenuItem>
+                    <MenuItem value="2">2 - Casual</MenuItem>
+                    <MenuItem value="3">3 - Very Involved</MenuItem>
+                    <MenuItem value="4">4 - Expert</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              {/* End of Level Select Grid Item */}
+
+              <Grid item xs={4}>
+                <FormControl
+                  variant="outlined"
+                  fullWidth="true"
+                >
+                  <InputLabel>
                       Type
-                    </InputLabel>
-                    <Select
-                      onChange={handleChange}
-                      autoWidth="true"
-                      value={values.type}
-                      required
-                      labelWidth={35}
-                      name="type"
-                    >
-                      <MenuItem value="General">General</MenuItem>
-                      <MenuItem value="Vendor/Artist">Vendor/Artist</MenuItem>
-                      <MenuItem value="Cosplayer">Cosplayer</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                {/* End of Type Select Grid Item */}
+                  </InputLabel>
+                  <Select
+                    onChange={handleChange}
+                    autoWidth="true"
+                    value={values.type}
+                    required
+                    labelWidth={35}
+                    name="type"
+                  >
+                    <MenuItem value="General">General</MenuItem>
+                    <MenuItem value="Vendor/Artist">Vendor/Artist</MenuItem>
+                    <MenuItem value="Cosplayer">Cosplayer</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              {/* End of Type Select Grid Item */}
             </Grid>
-              {/* End of Grid Container */}
+            {/* End of Grid Container */}
             <Grid className="modal-footer">
               <Button
                 variant="contained"
@@ -205,7 +204,7 @@ export default function FandomModal(props) {
                 Join
               </Button>
             </Grid>
-        </Grid>
+          </Grid>
         </div>
       </Fade>
     </Modal>

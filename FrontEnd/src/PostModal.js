@@ -130,7 +130,6 @@ export default function PostModal(props) {
   const handleResetClose = (event) => {
     handleReset(event);
     handleClose();
-    handleTrigger(true);
   };
 
   const handlePost = (event) => {
